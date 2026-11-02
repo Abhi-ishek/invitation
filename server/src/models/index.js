@@ -5,3 +5,4 @@ export * from './Order.js';
 export * from './Coupon.js';
 export * from './Review.js';
 export * from './ContactMessage.js';
+export * from './Otp.js';

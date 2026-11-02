@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    isPhoneVerified: {
+      type: Boolean,
+      default: false,
+    },
     password: {
       type: String,
       required: [true, 'Please enter a password'],

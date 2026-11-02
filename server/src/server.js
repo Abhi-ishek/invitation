@@ -20,6 +20,7 @@ import paymentRoutes from './routes/paymentRoutes.js';
 import couponRoutes from './routes/couponRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
+import otpRoutes from './routes/otpRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -76,6 +77,7 @@ app.get('/', (req, res) => {
       coupons: '/api/coupons/validate',
       reviews: '/api/reviews',
       contact: '/api/contact',
+      otp: '/api/otp',
     },
   });
 });
@@ -83,6 +85,7 @@ app.get('/', (req, res) => {
 // Mount Routes
 app.use('/api/health', healthRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/otp', otpRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);

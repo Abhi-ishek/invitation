@@ -63,4 +63,28 @@ export const useAuthStore = create((set, get) => ({
       return { success: false, message: err.message };
     }
   },
+
+  sendPhoneOtp: async (phone) => {
+    try {
+      const res = await api.post('/otp/send', { phone });
+      return { success: true, data: res.data };
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  },
+
+  verifyPhoneOtp: async (phone, otp) => {
+    try {
+      const res = await api.post('/otp/verify', { phone, otp });
+      const { user } = get();
+      if (user && res.data?.verified) {
+        const updatedUser = { ...user, phone: res.data.phone || phone, isPhoneVerified: true };
+        localStorage.setItem('ww_user', JSON.stringify(updatedUser));
+        set({ user: updatedUser });
+      }
+      return { success: true, data: res.data };
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  },
 }));

@@ -31,6 +31,11 @@ export const videoService = {
   
   // Contact
   submitContact: (contactData) => api.post('/contact', contactData),
+  
+  // Phone OTP Verification
+  sendPhoneOtp: (phone, purpose = 'phone_verification') => api.post('/otp/send', { phone, purpose }),
+  verifyPhoneOtp: (phone, otp, purpose = 'phone_verification') => api.post('/otp/verify', { phone, otp, purpose }),
+  getPhoneVerificationStatus: (phone) => api.get('/otp/status', { params: { phone } }),
 };
 
 export default videoService;
