@@ -36,6 +36,18 @@ export const videoService = {
   sendPhoneOtp: (phone, purpose = 'phone_verification') => api.post('/otp/send', { phone, purpose }),
   verifyPhoneOtp: (phone, otp, purpose = 'phone_verification') => api.post('/otp/verify', { phone, otp, purpose }),
   getPhoneVerificationStatus: (phone) => api.get('/otp/status', { params: { phone } }),
+  
+  // UPI QR Payments
+  generateUpiQr: (data) => api.post('/payment/upi/generate-qr', data),
+  confirmUpiPayment: (data) => api.post('/payment/upi/confirm', data),
+  
+  // Payment History
+  getPaymentHistory: (params = {}) => api.get('/payment/history', { params }),
+  getPaymentByOrder: (orderId) => api.get(`/payment/order/${orderId}`),
+
+  // Admin UPI Verification
+  getPendingUpiVerifications: () => api.get('/payment/admin/pending'),
+  verifyUpiPaymentByAdmin: (data) => api.patch('/payment/admin/verify', data),
 };
 
 export default videoService;

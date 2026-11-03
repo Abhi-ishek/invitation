@@ -62,6 +62,7 @@ export default function OrderTrackingPage() {
   const getStepIndex = (status) => {
     switch (status) {
       case 'Order Placed': return 0;
+      case 'Payment Verification': return 0;
       case 'In Production': return 1;
       case 'Preview Ready': return 2;
       case 'Completed': return 3;
@@ -149,6 +150,21 @@ export default function OrderTrackingPage() {
                 </span>
               </div>
             </div>
+
+            {/* UPI Payment Verification Banner */}
+            {(order.orderStatus === 'Payment Verification' || order.paymentStatus === 'under_review') && (
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-start gap-3">
+                <Clock className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5 animate-spin" />
+                <div className="space-y-1">
+                  <p className="font-bold text-amber-950">
+                    UPI Payment Verification in Progress
+                  </p>
+                  <p className="text-[11px] text-amber-800 leading-relaxed">
+                    We received your UPI payment reference and are cross-checking with our merchant account. Your order will automatically move to <strong>In Production</strong> once verified.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Vertical Timeline */}
             <div className="relative pl-6 sm:pl-8 space-y-8 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-gold/30">

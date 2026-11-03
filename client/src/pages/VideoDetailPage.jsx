@@ -50,7 +50,11 @@ export default function VideoDetailPage() {
     );
   }
 
-  const isInCart = items.some((item) => item.video._id === video._id);
+  const currentVideoId = String(video?._id || video?.id || '');
+  const isInCart = Boolean(currentVideoId) && items.some((item) => {
+    const itemProdId = String(item?.product?._id || item?.product?.id || item?.video?._id || '');
+    return Boolean(itemProdId) && itemProdId === currentVideoId;
+  });
 
   return (
     <div className="min-h-screen bg-cream py-10 sm:py-16">

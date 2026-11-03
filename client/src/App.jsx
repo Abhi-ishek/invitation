@@ -21,6 +21,7 @@ import AdminPage from './pages/AdminPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
+import PaymentHistoryPage from './pages/PaymentHistoryPage';
 
 export default function App() {
   return (
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="/track/:orderNumber" element={<OrderTrackingPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/my-orders" element={<MyOrdersPage />} />
+            <Route path="/payments" element={<PaymentHistoryPage />} />
             <Route path="/login" element={<AuthPage />} />
             <Route path="/register" element={<AuthPage />} />
             <Route path="/admin" element={<AdminPage />} />

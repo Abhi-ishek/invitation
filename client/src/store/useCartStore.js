@@ -11,7 +11,14 @@ export const useCartStore = create((set, get) => ({
 
   addItem: (product, customizationData = {}) => {
     set((state) => {
-      const existingIndex = state.items.findIndex((item) => item.product._id === product._id);
+      const targetId = String(product?._id || product?.id || '');
+      const existingIndex = targetId
+        ? state.items.findIndex((item) => {
+            const itemProdId = String(item?.product?._id || item?.product?.id || '');
+            return itemProdId === targetId;
+          })
+        : -1;
+
       let updatedItems;
       if (existingIndex > -1) {
         updatedItems = [...state.items];
@@ -44,8 +51,10 @@ export const useCartStore = create((set, get) => ({
 
   updateCustomization: (productId, data) => {
     set((state) => {
+      const targetId = String(productId || '');
       const updatedItems = state.items.map((item) => {
-        if (item.product._id === productId) {
+        const itemProdId = String(item?.product?._id || item?.product?.id || '');
+        if (targetId && itemProdId === targetId) {
           return {
             ...item,
             customizationData: { ...item.customizationData, ...data },
@@ -60,7 +69,11 @@ export const useCartStore = create((set, get) => ({
 
   removeItem: (productId) => {
     set((state) => {
-      const updatedItems = state.items.filter((item) => item.product._id !== productId);
+      const targetId = String(productId || '');
+      const updatedItems = state.items.filter((item) => {
+        const itemProdId = String(item?.product?._id || item?.product?.id || '');
+        return targetId ? itemProdId !== targetId : true;
+      });
       localStorage.setItem('ww_cart_items', JSON.stringify(updatedItems));
       return { items: updatedItems };
     });

@@ -153,8 +153,10 @@ export const verifyPhoneOtp = async (req, res, next) => {
       );
     }
 
-    // OTP is valid! Clean up OTP record
-    await Otp.deleteOne({ _id: otpRecord._id });
+    // OTP is valid! Mark as verified
+    otpRecord.isVerified = true;
+    otpRecord.expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 mins validity window
+    await otpRecord.save();
 
     // If authenticated user, mark their account as phone verified
     let updatedUser = null;

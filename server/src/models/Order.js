@@ -31,7 +31,7 @@ const orderItemSchema = new mongoose.Schema({
 const statusHistorySchema = new mongoose.Schema({
   status: {
     type: String,
-    enum: ['Order Placed', 'In Production', 'Preview Ready', 'Completed', 'Cancelled'],
+    enum: ['Order Placed', 'Payment Verification', 'In Production', 'Preview Ready', 'Completed', 'Cancelled'],
     required: true,
   },
   note: { type: String, default: '' },
@@ -72,7 +72,7 @@ const orderSchema = new mongoose.Schema(
     },
     paymentStatus: {
       type: String,
-      enum: ['pending', 'paid', 'failed'],
+      enum: ['pending', 'under_review', 'paid', 'failed'],
       default: 'pending',
     },
     paymentMethod: {
@@ -90,7 +90,7 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      enum: ['Order Placed', 'In Production', 'Preview Ready', 'Completed', 'Cancelled'],
+      enum: ['Order Placed', 'Payment Verification', 'In Production', 'Preview Ready', 'Completed', 'Cancelled'],
       default: 'Order Placed',
     },
     statusHistory: [statusHistorySchema],

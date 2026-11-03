@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const connectDB = async () => {
-  const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/wedding_wishcraft';
+  const mongoURI = process.env.MONGO_URI ;
   const isProduction = process.env.NODE_ENV === 'production';
 
   // Deployment sanity check

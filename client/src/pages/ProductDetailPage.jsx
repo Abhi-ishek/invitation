@@ -93,10 +93,15 @@ export default function ProductDetailPage() {
     );
   }
 
-  const isInCart = items.some((item) => item.product._id === product._id);
-  const isWishlisted = user?.wishlist?.some(
-    (w) => (typeof w === 'string' ? w : w._id) === product._id
-  );
+  const currentProductId = String(product?._id || product?.id || '');
+  const isInCart = Boolean(currentProductId) && items.some((item) => {
+    const itemProdId = String(item?.product?._id || item?.product?.id || '');
+    return Boolean(itemProdId) && itemProdId === currentProductId;
+  });
+  const isWishlisted = Boolean(currentProductId) && user?.wishlist?.some((w) => {
+    const wishlistId = String(typeof w === 'string' ? w : w?._id || w?.id || '');
+    return Boolean(wishlistId) && wishlistId === currentProductId;
+  });
 
   const handleAddToCart = () => {
     addItem(product, {

@@ -13,10 +13,16 @@ export default function VideoCard({ video }) {
   const { items, addItem } = useCartStore();
   const { user, toggleWishlist } = useAuthStore();
 
-  const isInCart = items.some((item) => item.product._id === video._id || item.product.id === video.id);
-  const isWishlisted = user?.wishlist?.some(
-    (w) => (typeof w === 'string' ? w : w._id || w.id) === (video._id || video.id)
-  );
+  const currentVideoId = String(video?._id || video?.id || '');
+  const isInCart = Boolean(currentVideoId) && items.some((item) => {
+    const itemProdId = String(item?.product?._id || item?.product?.id || item?.product || '');
+    return Boolean(itemProdId) && itemProdId === currentVideoId;
+  });
+
+  const isWishlisted = Boolean(currentVideoId) && user?.wishlist?.some((w) => {
+    const wishlistId = String(typeof w === 'string' ? w : w?._id || w?.id || '');
+    return Boolean(wishlistId) && wishlistId === currentVideoId;
+  });
 
   const handleWishlistClick = async (e) => {
     e.preventDefault();

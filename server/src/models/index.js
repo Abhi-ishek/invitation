@@ -6,3 +6,4 @@ export * from './Coupon.js';
 export * from './Review.js';
 export * from './ContactMessage.js';
 export * from './Otp.js';
+export * from './Payment.js';

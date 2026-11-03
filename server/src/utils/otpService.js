@@ -78,8 +78,15 @@ export const sendSmsOtp = async ({ phone, otp, purpose = 'phone_verification' })
         process.env.TWILIO_AUTH_TOKEN
       );
 
+      let smsBody = `Your Wedding Wishcraft verification code is: ${otp}. Valid for 10 minutes. Please do not share this code with anyone.`;
+      if (purpose === 'payment_confirmation') {
+        smsBody = `💍 Wedding Wishcraft: Payment confirmed for Order ${otp}! Your bespoke wedding invitation video is now in production. Thank you for choosing us!`;
+      } else if (purpose === 'payment_submitted') {
+        smsBody = `💍 Wedding Wishcraft: We received your UPI Reference for Order ${otp}. Our studio is verifying payment and will begin crafting your video!`;
+      }
+
       const message = await twilioClient.messages.create({
-        body: `Your Wedding Wishcraft verification code is: ${otp}. Valid for 10 minutes. Please do not share this code with anyone.`,
+        body: smsBody,
         from: process.env.TWILIO_PHONE_NUMBER,
         to: normalized,
       });
@@ -102,8 +109,13 @@ export const sendSmsOtp = async ({ phone, otp, purpose = 'phone_verification' })
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          variables_values: otp,
-          route: 'otp',
+          variables_values:
+            purpose === 'payment_confirmation'
+              ? `Payment confirmed for Order ${otp}`
+              : purpose === 'payment_submitted'
+              ? `Payment received for Order ${otp}, verification in progress`
+              : otp,
+          route: (purpose === 'payment_confirmation' || purpose === 'payment_submitted') ? 'q' : 'otp',
           numbers,
         }),
       });
@@ -119,7 +131,34 @@ export const sendSmsOtp = async ({ phone, otp, purpose = 'phone_verification' })
   }
 
   // Simulated Console Mode (default when no 3rd-party SMS provider credentials are set)
-  console.log(`
+  if (purpose === 'payment_confirmation') {
+    console.log(`
+╔═════════════════════════════════════════════════════════════════════╗
+║   💰  WEDDING WISHCRAFT — PAYMENT CONFIRMATION SMS                  ║
+╠═════════════════════════════════════════════════════════════════════╣
+║   📞  Recipient:    ${normalized.padEnd(44)}║
+║   🧾  Order No:     ${otp.padEnd(44)}║
+║   ✅  Status:       Payment Confirmed & Verified by Studio          ║
+║   💍  Message:      Thank you! Your bespoke wedding invitation      ║
+║                     video is now in active production.              ║
+║   ℹ️   Tip: Set TWILIO or FAST2SMS env vars for real carrier SMS    ║
+╚═════════════════════════════════════════════════════════════════════╝
+    `);
+  } else if (purpose === 'payment_submitted') {
+    console.log(`
+╔═════════════════════════════════════════════════════════════════════╗
+║   ⏳  WEDDING WISHCRAFT — UPI PAYMENT SUBMITTED SMS                 ║
+╠═════════════════════════════════════════════════════════════════════╣
+║   📞  Recipient:    ${normalized.padEnd(44)}║
+║   🧾  Order No:     ${otp.padEnd(44)}║
+║   🔍  Status:       UPI UTR Submitted — Verification in Progress    ║
+║   💍  Message:      We received your UPI payment reference. Our     ║
+║                     studio will verify & start video production!    ║
+║   ℹ️   Tip: Set TWILIO or FAST2SMS env vars for real carrier SMS    ║
+╚═════════════════════════════════════════════════════════════════════╝
+    `);
+  } else {
+    console.log(`
 ╔═════════════════════════════════════════════════════════════════════╗
 ║   📱  WEDDING WISHCRAFT — OTP SIMULATION CONSOLE                    ║
 ╠═════════════════════════════════════════════════════════════════════╣
@@ -129,7 +168,8 @@ export const sendSmsOtp = async ({ phone, otp, purpose = 'phone_verification' })
 ║   ⏳  Validity:   10 minutes                                        ║
 ║   ℹ️   Tip: Set TWILIO or FAST2SMS env vars for real carrier SMS    ║
 ╚═════════════════════════════════════════════════════════════════════╝
-  `);
+    `);
+  }
 
   return {
     success: true,
