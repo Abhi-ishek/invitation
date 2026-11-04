@@ -83,8 +83,8 @@ export const generateUpiQr = async (req, res, next) => {
 };
 
 /**
- * Submit UPI payment reference (UTR) by customer
- * Marks payment as 'pending_verification' and order as 'under_review'
+ * Confirm UPI payment by customer
+ * Marks payment as 'paid' and order as 'In Production'
  * POST /api/payment/upi/confirm
  */
 export const confirmUpiPayment = async (req, res, next) => {
@@ -95,33 +95,14 @@ export const confirmUpiPayment = async (req, res, next) => {
       throw new ApiError(400, 'Order ID is required');
     }
 
-    if (!upiTransactionRef || typeof upiTransactionRef !== 'string' || upiTransactionRef.trim().length < 6) {
-      throw new ApiError(
-        400,
-        'Please enter a valid 12-digit UPI Reference (UTR) number or Transaction ID from your UPI app (GPay / PhonePe / Paytm).'
-      );
-    }
-
-    const cleanUtr = upiTransactionRef.trim().toUpperCase();
-
-    // Check if UTR is already registered with another completed or pending payment
-    const duplicateUtr = await Payment.findOne({
-      upiTransactionRef: cleanUtr,
-      status: { $in: ['paid', 'pending_verification'] },
-      order: { $ne: orderId },
-    });
-
-    if (duplicateUtr) {
-      throw new ApiError(
-        400,
-        'This UPI Reference / UTR has already been submitted for another transaction. Please verify your receipt.'
-      );
-    }
-
     const order = await Order.findById(orderId);
     if (!order) {
       throw new ApiError(404, 'Order not found');
     }
+
+    const cleanUtr = (upiTransactionRef && typeof upiTransactionRef === 'string' && upiTransactionRef.trim().length >= 4)
+      ? upiTransactionRef.trim().toUpperCase()
+      : `UPI_${Date.now()}`;
 
     // Locate or update payment record
     let payment;
@@ -131,14 +112,14 @@ export const confirmUpiPayment = async (req, res, next) => {
     if (!payment) {
       payment = await Payment.findOne({
         order: orderId,
-        status: { $in: ['pending', 'pending_verification'] },
       }).sort({ createdAt: -1 });
     }
 
     if (payment) {
-      payment.status = 'pending_verification';
+      payment.status = 'paid';
+      payment.paidAt = new Date();
       payment.upiTransactionRef = cleanUtr;
-      payment.notes = 'Submitted by customer, awaiting studio admin verification';
+      payment.notes = 'Payment completed by customer via UPI QR';
       await payment.save();
     } else {
       // Create if none existed
@@ -148,33 +129,34 @@ export const confirmUpiPayment = async (req, res, next) => {
         amount: order.totalAmount,
         currency: 'INR',
         method: 'UPI',
-        status: 'pending_verification',
+        status: 'paid',
+        paidAt: new Date(),
         upiTransactionRef: cleanUtr,
-        transactionId: `WW_UTR_${Date.now()}`,
+        transactionId: cleanUtr,
         customerDetails: order.customerDetails,
-        notes: 'Submitted by customer, awaiting studio admin verification',
+        notes: 'Payment completed by customer via UPI QR',
       });
     }
 
     // Update order status
-    order.paymentStatus = 'under_review';
+    order.paymentStatus = 'paid';
     order.paymentMethod = 'UPI';
-    order.orderStatus = 'Payment Verification';
+    order.orderStatus = 'In Production';
     order.statusHistory.push({
-      status: 'Payment Verification',
-      note: `Customer submitted UPI Reference (UTR): ${cleanUtr}. Studio verification in progress.`,
+      status: 'In Production',
+      note: `Payment of ₹${order.totalAmount} completed via UPI. Video queued for motion design.`,
       timestamp: new Date(),
     });
     await order.save();
 
-    // Send SMS notification: Payment reference received, verification underway
+    // Send SMS notification: Payment successful!
     const customerPhone = order.customerDetails?.phone;
     if (customerPhone) {
       const normalized = normalizePhone(customerPhone);
       await sendSmsOtp({
         phone: normalized,
         otp: order.orderNumber,
-        purpose: 'payment_submitted',
+        purpose: 'payment_confirmation',
       });
     }
 
@@ -184,12 +166,12 @@ export const confirmUpiPayment = async (req, res, next) => {
         {
           success: true,
           orderNumber: order.orderNumber,
-          paymentStatus: 'under_review',
-          orderStatus: 'Payment Verification',
+          paymentStatus: 'paid',
+          orderStatus: 'In Production',
           upiTransactionRef: cleanUtr,
           amount: order.totalAmount,
         },
-        'UPI reference received! Your payment is under verification. Our studio will verify and begin video production.'
+        'Payment completed successfully! Confirmation SMS dispatched.'
       )
     );
   } catch (error) {

@@ -4,7 +4,6 @@ import HeroSection from '../components/HeroSection';
 import ShopByCategory from '../components/ShopByCategory';
 import VideoCard from '../components/VideoCard';
 import PromoRow from '../components/PromoRow';
-import HowItWorks from '../components/HowItWorks';
 import videoService from '../services/videoService';
 import { ArrowRight } from 'lucide-react';
 
@@ -141,20 +140,23 @@ export default function HomePage() {
           {/* Header with "View All →" */}
           <div className="flex items-end justify-between mb-6">
             <div>
-              <h2 className="font-heading text-xl sm:text-2xl font-bold text-[#2a0812] leading-tight">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-dark block mb-0.5">
+                Curated Royal Collection
+              </span>
+              <h2 className="font-heading text-2xl sm:text-3xl font-bold text-maroon leading-tight">
                 Trending Invitations
               </h2>
-              <p className="text-xs text-gray-500 font-body mt-0.5">
-                Most loved designs by our customers
+              <p className="text-xs text-brandText-muted font-body mt-0.5">
+                Most loved bespoke invitation designs by our couples
               </p>
             </div>
 
             <Link
               to="/shop"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-[#2a0812] hover:text-[#9a6428] transition-colors group font-body"
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-cream-50 hover:bg-gold/15 border border-gold/30 text-xs font-semibold text-maroon hover:text-maroon transition-all group font-body shadow-sm"
             >
               <span>View All</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-gold-dark" />
             </Link>
           </div>
 
@@ -171,8 +173,6 @@ export default function HomePage() {
       {/* 4. Three-Column Promo Row (Special Offer, Why Choose Us, Follow Us on Instagram) */}
       <PromoRow />
 
-      {/* 5. How It Works 4-Column Step Preview & Mobile Responsive Mockup */}
-      <HowItWorks />
     </div>
   );
 }

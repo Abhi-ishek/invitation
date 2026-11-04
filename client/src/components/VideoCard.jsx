@@ -50,9 +50,9 @@ export default function VideoCard({ video }) {
   return (
     <>
       <motion.div
-        whileHover={{ y: -4 }}
+        whileHover={{ y: -5 }}
         transition={{ duration: 0.25 }}
-        className="bg-white rounded-2xl overflow-hidden border border-[#edd7c2] shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-[#d4a85a] flex flex-col justify-between transition-all duration-300"
+        className="bg-white rounded-2xl overflow-hidden border border-gold/25 hover:border-gold/80 shadow-[0_4px_16px_rgba(58,10,30,0.04)] hover:shadow-luxury flex flex-col justify-between transition-all duration-300 group/card"
       >
         {/* Top Thumbnail Image */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#24060e] group">
@@ -68,23 +68,23 @@ export default function VideoCard({ video }) {
               loading="lazy"
               decoding="async"
               onLoad={() => setImgLoaded(true)}
-              className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${
+              className={`w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out ${
                 imgLoaded ? 'opacity-100' : 'opacity-0'
               }`}
             />
           </Link>
 
           {/* Subtle gradient vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
 
-          {/* Top Left Badge (Bestseller in amber, New in green) */}
+          {/* Top Left Badge */}
           <div className="absolute top-2.5 left-2.5 z-10 pointer-events-none">
             {video.badge === 'New' ? (
-              <span className="px-2.5 py-0.5 text-[10px] font-bold text-white bg-[#1fa45c] rounded-full shadow-sm tracking-wide">
+              <span className="px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full shadow-sm">
                 New
               </span>
             ) : (
-              <span className="px-2.5 py-0.5 text-[10px] font-bold text-white bg-[#c9893d] rounded-full shadow-sm tracking-wide">
+              <span className="px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-maroon bg-gradient-to-r from-gold-dark via-gold to-gold-light rounded-full shadow-sm">
                 Bestseller
               </span>
             )}
@@ -111,7 +111,7 @@ export default function VideoCard({ video }) {
               e.stopPropagation();
               setModalOpen(true);
             }}
-            className="absolute bottom-2.5 left-2.5 w-8 h-8 rounded-full bg-black/50 hover:bg-black/75 border border-white/60 text-white flex items-center justify-center transition-all group-hover:scale-110 shadow-md z-10"
+            className="absolute bottom-2.5 left-2.5 w-8 h-8 rounded-full bg-black/55 hover:bg-black/80 border border-gold/50 text-white flex items-center justify-center transition-all group-hover:scale-110 shadow-md z-10 backdrop-blur-sm"
             title="Watch 4K Preview"
           >
             <Play className="w-3.5 h-3.5 fill-white text-white ml-0.5" />
@@ -123,20 +123,20 @@ export default function VideoCard({ video }) {
           {/* Title */}
           <div>
             <Link to={productUrl} className="block group/title">
-              <h3 className="font-heading text-sm font-bold text-[#2a0812] group-hover/title:text-[#9a6428] line-clamp-1 leading-snug transition-colors">
+              <h3 className="font-heading text-sm font-bold text-maroon group-hover/title:text-gold-dark line-clamp-1 leading-snug transition-colors">
                 {video.title}
               </h3>
             </Link>
 
             {/* Sub-tags */}
-            <p className="text-[11px] text-gray-500 font-body mt-0.5 line-clamp-1">
+            <p className="text-[11px] text-brandText-muted font-body mt-0.5 line-clamp-1">
               {formattedTags}
             </p>
 
             {/* Rating */}
             <div className="flex items-center gap-1.5 text-xs mt-1.5 font-body">
-              <span className="text-[#c9893d] font-bold flex items-center gap-1">
-                <Star className="w-3 h-3 fill-[#c9893d] text-[#c9893d]" />
+              <span className="text-gold-dark font-bold flex items-center gap-1">
+                <Star className="w-3 h-3 fill-gold text-gold" />
                 {video.rating || 4.8}
               </span>
               <span className="text-gray-400 text-[11px]">
@@ -146,16 +146,16 @@ export default function VideoCard({ video }) {
 
             {/* Pricing Row */}
             <div className="flex items-baseline gap-2 mt-2 font-body">
-              <span className="text-sm font-bold text-[#2a0812]">
-                ₹ {video.price?.toLocaleString('en-IN')}
+              <span className="text-sm font-bold text-maroon">
+                ₹{video.price?.toLocaleString('en-IN')}
               </span>
               {video.originalPrice && (
                 <span className="text-xs text-gray-400 line-through">
-                  ₹ {video.originalPrice?.toLocaleString('en-IN')}
+                  ₹{video.originalPrice?.toLocaleString('en-IN')}
                 </span>
               )}
               {discountPercent > 0 && (
-                <span className="text-[10px] font-bold text-[#b55816]">
+                <span className="text-[10px] font-bold text-maroon bg-gold/20 border border-gold/30 px-1.5 py-0.5 rounded-full">
                   {discountPercent}% OFF
                 </span>
               )}
@@ -166,10 +166,10 @@ export default function VideoCard({ video }) {
           <div className="mt-3 pt-1">
             <button
               onClick={() => addItem(video)}
-              className={`w-full py-2 px-3 rounded-full text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition-all duration-200 font-body ${
+              className={`w-full py-2.5 px-3 rounded-full text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition-all duration-200 font-body ${
                 isInCart
-                  ? 'bg-emerald-700 text-white'
-                  : 'bg-[#320b17] hover:bg-[#471122] text-white'
+                  ? 'bg-emerald-700 text-white shadow-emerald-700/20'
+                  : 'bg-gradient-to-r from-[#320b17] via-[#471122] to-[#320b17] hover:from-[#471122] hover:to-[#5a1030] text-cream hover:text-gold-light hover:shadow-md active:scale-95'
               }`}
             >
               {isInCart ? (
@@ -178,7 +178,7 @@ export default function VideoCard({ video }) {
                 </>
               ) : (
                 <>
-                  <ShoppingBag className="w-3.5 h-3.5" /> Add to Cart
+                  <ShoppingBag className="w-3.5 h-3.5 text-gold-light" /> Add to Cart
                 </>
               )}
             </button>

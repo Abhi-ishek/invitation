@@ -129,37 +129,7 @@ export default function HowItWorks() {
                         onChange={() => setPaymentMethod('upi')}
                         className="accent-[#320b17]"
                       />
-                      <span>UPI / PhonePe / GPay</span>
-                    </label>
-                    <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="pay"
-                        checked={paymentMethod === 'cod'}
-                        onChange={() => setPaymentMethod('cod')}
-                        className="accent-[#320b17]"
-                      />
-                      <span>Cash on Delivery</span>
-                    </label>
-                    <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="pay"
-                        checked={paymentMethod === 'card'}
-                        onChange={() => setPaymentMethod('card')}
-                        className="accent-[#320b17]"
-                      />
-                      <span>Cards</span>
-                    </label>
-                    <label className="flex items-center gap-1.5 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="pay"
-                        checked={paymentMethod === 'net'}
-                        onChange={() => setPaymentMethod('net')}
-                        className="accent-[#320b17]"
-                      />
-                      <span>Net Banking</span>
+                      <span>UPI QR (GPay / PhonePe / Paytm / BHIM)</span>
                     </label>
                   </div>
                 </div>

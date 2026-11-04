@@ -106,7 +106,7 @@ export default function ShopByCategory() {
                   {/* Red 'Most Popular' Pill Badge on top */}
                   {cat.isPopular && (
                     <div className="absolute top-0.5 left-1/2 -translate-x-1/2 z-20">
-                      <span className="bg-[#b3192f] text-white text-[8px] font-bold px-2.5 py-0.5 rounded-full shadow-sm tracking-wider uppercase whitespace-nowrap block">
+                      <span className="bg-gradient-to-r from-maroon via-maroon-light to-maroon text-gold-light border border-gold/40 text-[8px] font-bold px-2.5 py-0.5 rounded-full shadow-sm tracking-wider uppercase whitespace-nowrap block">
                         Most Popular
                       </span>
                     </div>
@@ -114,15 +114,15 @@ export default function ShopByCategory() {
 
                   <Link
                     to={`/shop?category=${encodeURIComponent(cat.name)}`}
-                    className="flex flex-col items-center justify-center p-3 h-28 rounded-xl bg-white border border-[#edd7c2] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-md hover:border-[#d4a85a] transition-all text-center group relative z-10"
+                    className="flex flex-col items-center justify-center p-3 h-28 rounded-2xl bg-white border border-gold/20 shadow-[0_2px_10px_rgba(58,10,30,0.03)] hover:shadow-luxury hover:border-gold hover:-translate-y-1 transition-all text-center group relative z-10"
                   >
                     {/* Circular Icon Holder */}
-                    <div className="w-10 h-10 rounded-full bg-[#fbf5eb] border border-[#ebd6be] flex items-center justify-center mb-1.5 group-hover:scale-105 group-hover:bg-[#f6ebd7] transition-all">
+                    <div className="w-10 h-10 rounded-full bg-cream-50 border border-gold/30 flex items-center justify-center mb-1.5 group-hover:scale-110 group-hover:bg-gold/15 group-hover:border-gold transition-all">
                       {cat.icon}
                     </div>
 
                     {/* Label */}
-                    <span className="text-[11px] font-semibold text-[#2c0813] font-body line-clamp-2 leading-tight group-hover:text-[#9a6428] transition-colors">
+                    <span className="text-[11px] font-semibold text-brandText font-body line-clamp-2 leading-tight group-hover:text-gold-dark transition-colors">
                       {cat.name}
                     </span>
                   </Link>

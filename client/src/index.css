@@ -9,6 +9,11 @@
     box-sizing: border-box;
   }
 
+  html, body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
   body {
     background-color: #FFF8F0;
     color: #2B1A1F;
@@ -21,22 +26,16 @@
   }
 }
 
-/* Custom Luxury Scrollbar */
+/* Hide scrollbar completely while maintaining scroll functionality */
 ::-webkit-scrollbar {
-  width: 8px;
+  display: none;
+  width: 0px;
+  height: 0px;
 }
 
-::-webkit-scrollbar-track {
-  background: #FFF8F0;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #D4A85A;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3A0A1E;
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* Shimmer Animation */
@@ -56,4 +55,19 @@
   -webkit-background-clip: text;
   background-clip: text;
   animation: shimmer 4s linear infinite;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #D4A85A 0%, #F5E4CE 50%, #C49848 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.luxury-card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(58, 10, 30, 0.08), 0 0 0 1px rgba(212, 168, 90, 0.3);
 }

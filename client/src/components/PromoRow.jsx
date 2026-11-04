@@ -41,9 +41,9 @@ export default function PromoRow() {
               <div className="pt-2">
                 <Link
                   to="/shop"
-                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#f6e5ca] hover:bg-white text-[#2d0813] font-semibold text-xs transition-all font-body shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light hover:scale-105 text-maroon font-bold text-xs transition-all font-body shadow-md"
                 >
-                  <span>Shop Now</span>
+                  <span>Claim Offer</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -51,48 +51,48 @@ export default function PromoRow() {
           </div>
 
           {/* 2. Why Choose Us? */}
-          <div className="rounded-2xl bg-white border border-[#edd7c2] p-6 sm:p-7 flex flex-col justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
-            <h3 className="font-heading text-lg font-bold text-[#2c0813] text-center sm:text-left mb-5">
+          <div className="rounded-2xl bg-white border border-gold/25 hover:border-gold/50 p-6 sm:p-7 flex flex-col justify-between shadow-luxury transition-all">
+            <h3 className="font-heading text-lg font-bold text-maroon text-center sm:text-left mb-5">
               Why Choose Us?
             </h3>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3 text-center my-auto">
               {/* Item 1 */}
               <div className="flex flex-col items-center space-y-2">
-                <div className="w-11 h-11 rounded-xl bg-[#fbf5eb] border border-[#ebd8c5] flex items-center justify-center text-[#9a6428]">
+                <div className="w-11 h-11 rounded-2xl bg-cream-50 border border-gold/30 flex items-center justify-center text-gold-dark shadow-sm">
                   <Video className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-semibold text-[#2c0813] font-body leading-tight">
+                <span className="text-[11px] font-semibold text-brandText font-body leading-tight">
                   HD Quality Videos
                 </span>
               </div>
 
               {/* Item 2 */}
               <div className="flex flex-col items-center space-y-2">
-                <div className="w-11 h-11 rounded-xl bg-[#fbf5eb] border border-[#ebd8c5] flex items-center justify-center text-[#9a6428]">
+                <div className="w-11 h-11 rounded-2xl bg-cream-50 border border-gold/30 flex items-center justify-center text-gold-dark shadow-sm">
                   <Sparkles className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-semibold text-[#2c0813] font-body leading-tight">
+                <span className="text-[11px] font-semibold text-brandText font-body leading-tight">
                   Customisation Available
                 </span>
               </div>
 
               {/* Item 3 */}
               <div className="flex flex-col items-center space-y-2">
-                <div className="w-11 h-11 rounded-xl bg-[#fbf5eb] border border-[#ebd8c5] flex items-center justify-center text-[#9a6428]">
+                <div className="w-11 h-11 rounded-2xl bg-cream-50 border border-gold/30 flex items-center justify-center text-gold-dark shadow-sm">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-semibold text-[#2c0813] font-body leading-tight">
+                <span className="text-[11px] font-semibold text-brandText font-body leading-tight">
                   Secure Payments
                 </span>
               </div>
 
               {/* Item 4 */}
               <div className="flex flex-col items-center space-y-2">
-                <div className="w-11 h-11 rounded-xl bg-[#fbf5eb] border border-[#ebd8c5] flex items-center justify-center text-[#9a6428]">
+                <div className="w-11 h-11 rounded-2xl bg-cream-50 border border-gold/30 flex items-center justify-center text-gold-dark shadow-sm">
                   <Headphones className="w-5 h-5" />
                 </div>
-                <span className="text-[11px] font-semibold text-[#2c0813] font-body leading-tight">
+                <span className="text-[11px] font-semibold text-brandText font-body leading-tight">
                   24/7 Support
                 </span>
               </div>
@@ -100,7 +100,7 @@ export default function PromoRow() {
           </div>
 
           {/* 3. Follow Us On Instagram */}
-          <div className="rounded-2xl bg-[#f6eee3] border border-[#ebd8c5] p-6 sm:p-7 flex items-center justify-between shadow-[0_2px_10px_rgba(0,0,0,0.02)] overflow-hidden">
+          <div className="rounded-2xl bg-gradient-to-br from-[#faf3ea] to-[#f5e9d9] border border-gold/25 hover:border-gold/50 p-6 sm:p-7 flex items-center justify-between shadow-luxury overflow-hidden transition-all">
             {/* Left Content */}
             <div className="max-w-[55%] space-y-2 text-left">
               <h3 className="font-heading text-base font-bold text-[#2c0813]">

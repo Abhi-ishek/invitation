@@ -3,8 +3,24 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
-import { ShieldCheck, CheckCircle2, ArrowRight, CreditCard, Banknote, Smartphone, Lock, QrCode, X, Copy, Check } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, ArrowRight, CreditCard, Banknote, Smartphone, Lock, QrCode, X, Copy, Check, Calendar } from 'lucide-react';
 import confetti from 'canvas-confetti';
+
+const formatReadableDate = (dateStr) => {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00`);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString('en-IN', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+  } catch {
+    return dateStr;
+  }
+};
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
@@ -14,7 +30,7 @@ export default function CheckoutPage() {
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   const [phone, setPhone] = useState(user?.phone || '');
-  const [weddingDate, setWeddingDate] = useState('');
+  const [weddingDate, setWeddingDate] = useState(items[0]?.customizationData?.weddingDate || '');
   const [paymentMethod, setPaymentMethod] = useState('UPI');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -68,7 +84,7 @@ export default function CheckoutPage() {
           phone,
           weddingDate,
         },
-        paymentMethod: paymentMethod === 'COD' ? 'COD' : paymentMethod === 'UPI' ? 'UPI' : 'Razorpay',
+        paymentMethod: 'UPI',
         couponCode: coupon?.code,
       };
 
@@ -110,12 +126,6 @@ export default function CheckoutPage() {
   const handleConfirmUpiPayment = async () => {
     if (!qrData) return;
 
-    const trimmedRef = upiRefInput.trim();
-    if (!trimmedRef || trimmedRef.length < 6) {
-      setError('Please enter the 12-digit UPI Reference (UTR) number or Transaction ID from your UPI app receipt.');
-      return;
-    }
-
     setConfirmingPayment(true);
     setError('');
 
@@ -123,7 +133,6 @@ export default function CheckoutPage() {
       await videoService.confirmUpiPayment({
         orderId: qrData.orderId,
         paymentId: qrData.paymentId,
-        upiTransactionRef: trimmedRef,
       });
 
       setShowQrModal(false);
@@ -131,7 +140,7 @@ export default function CheckoutPage() {
       clearCart();
       navigate(`/order-success/${encodeURIComponent(qrData.orderNumber)}`);
     } catch (err) {
-      setError(err.message || 'Payment confirmation failed. Please check the UTR or contact support.');
+      setError(err.message || 'Payment confirmation failed. Please contact support.');
     } finally {
       setConfirmingPayment(false);
     }
@@ -212,102 +221,85 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-semibold text-brandText mb-1">
-                    Wedding Celebration Date
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. 18th December 2026"
-                    value={weddingDate}
-                    onChange={(e) => setWeddingDate(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-semibold text-brandText">
+                      Wedding Celebration Date
+                    </label>
+                    {weddingDate && (
+                      <span className="text-[11px] font-bold text-maroon bg-gold/15 px-2.5 py-0.5 rounded-full border border-gold/30">
+                        🗓️ {formatReadableDate(weddingDate)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="date"
+                      min={new Date().toISOString().split('T')[0]}
+                      value={weddingDate}
+                      onChange={(e) => setWeddingDate(e.target.value)}
+                      onClick={(e) => {
+                        if (typeof e.target.showPicker === 'function') {
+                          e.target.showPicker();
+                        }
+                      }}
+                      className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold cursor-pointer font-body shadow-inner"
+                    />
+                    <Calendar className="w-4 h-4 text-gold-dark absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
+                  <span className="text-[10px] text-brandText-muted mt-1 block">
+                    Tap to choose your wedding date from the calendar
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Payment Method Selection */}
+            {/* Payment Method - Exclusively UPI */}
             <div className="p-6 sm:p-7 bg-white rounded-3xl border border-gold/25 shadow-sm space-y-4">
-              <h3 className="font-heading text-lg font-bold text-maroon pb-2 border-b border-gold/15">
-                2. Choose Payment Method
-              </h3>
-
-              <div className="space-y-3">
-                {/* UPI QR Option */}
-                <label
-                  onClick={() => setPaymentMethod('UPI')}
-                  className={`flex items-center justify-between p-4 rounded-2xl border cursor-pointer transition-all ${
-                    paymentMethod === 'UPI'
-                      ? 'border-gold bg-gold/10 shadow-sm'
-                      : 'border-gold/25 bg-cream-50 hover:bg-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <QrCode className="w-5 h-5 text-maroon" />
-                    <div>
-                      <p className="font-bold text-xs text-maroon">UPI QR Code (GPay / PhonePe / Paytm / BHIM)</p>
-                      <p className="text-[10px] text-brandText-muted">Scan QR code with any UPI app — fastest verification</p>
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="payment"
-                    checked={paymentMethod === 'UPI'}
-                    onChange={() => setPaymentMethod('UPI')}
-                    className="accent-maroon"
-                  />
-                </label>
-
-                {/* Cards Option */}
-                <label
-                  onClick={() => setPaymentMethod('Cards')}
-                  className={`flex items-center justify-between p-4 rounded-2xl border cursor-pointer transition-all ${
-                    paymentMethod === 'Cards'
-                      ? 'border-gold bg-gold/10 shadow-sm'
-                      : 'border-gold/25 bg-cream-50 hover:bg-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <CreditCard className="w-5 h-5 text-maroon" />
-                    <div>
-                      <p className="font-bold text-xs text-maroon">Debit / Credit Cards & Net Banking</p>
-                      <p className="text-[10px] text-brandText-muted">All Indian & International banks supported via Razorpay</p>
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="payment"
-                    checked={paymentMethod === 'Cards'}
-                    onChange={() => setPaymentMethod('Cards')}
-                    className="accent-maroon"
-                  />
-                </label>
-
-                {/* COD Option */}
-                <label
-                  onClick={() => setPaymentMethod('COD')}
-                  className={`flex items-center justify-between p-4 rounded-2xl border cursor-pointer transition-all ${
-                    paymentMethod === 'COD'
-                      ? 'border-gold bg-gold/10 shadow-sm'
-                      : 'border-gold/25 bg-cream-50 hover:bg-white'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Banknote className="w-5 h-5 text-maroon" />
-                    <div>
-                      <p className="font-bold text-xs text-maroon">Cash on Delivery (Pay on Video Approval)</p>
-                      <p className="text-[10px] text-brandText-muted">Review your watermark preview before paying</p>
-                    </div>
-                  </div>
-                  <input
-                    type="radio"
-                    name="payment"
-                    checked={paymentMethod === 'COD'}
-                    onChange={() => setPaymentMethod('COD')}
-                    className="accent-maroon"
-                  />
-                </label>
+              <div className="flex items-center justify-between pb-2 border-b border-gold/15">
+                <h3 className="font-heading text-lg font-bold text-maroon">
+                  2. Payment Method
+                </h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <Check className="w-3 h-3 text-emerald-700" /> Instant UPI QR
+                </span>
               </div>
+
+              {/* UPI QR Exclusive Card */}
+              <div className="p-4 sm:p-5 rounded-2xl border-2 border-gold bg-gradient-to-br from-gold/10 via-cream-50 to-white shadow-sm space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-2xl bg-maroon text-gold-light flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <QrCode className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-xs sm:text-sm text-maroon flex items-center gap-1.5">
+                        <span>UPI QR Code Payment</span>
+                        <span className="text-[10px] text-emerald-700 font-extrabold uppercase bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Active</span>
+                      </p>
+                      <p className="text-[11px] text-brandText-muted mt-0.5">
+                        Scan dynamically generated QR code with any UPI app
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-5 h-5 rounded-full bg-maroon text-white flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
+                    <Check className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+
+                <div className="pt-2.5 border-t border-gold/20 flex flex-wrap items-center justify-between text-[11px] text-brandText-muted gap-2">
+                  <span className="flex items-center gap-1.5 text-brandText-muted">
+                    <Smartphone className="w-3.5 h-3.5 text-gold-dark" />
+                    <span>Google Pay • PhonePe • Paytm • BHIM • Cred UPI</span>
+                  </span>
+                  <span className="text-maroon font-mono font-bold bg-cream-100 px-2.5 py-0.5 rounded-lg border border-gold/30">
+                    9161772464@ptsbi
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-brandText-muted leading-relaxed">
+                💡 A dynamic QR code with the exact order amount (<strong>₹{total.toLocaleString('en-IN')}</strong>) will be presented upon clicking place order.
+              </p>
             </div>
 
           </div>
@@ -376,10 +368,8 @@ export default function CheckoutPage() {
                 <Lock className="w-4 h-4" />
                 <span>
                   {loading
-                    ? 'Processing Order...'
-                    : paymentMethod === 'UPI'
-                    ? `Pay ₹${total.toLocaleString('en-IN')} via UPI QR`
-                    : `Place Order (₹${total.toLocaleString('en-IN')})`}
+                    ? 'Generating UPI QR...'
+                    : `Pay ₹${total.toLocaleString('en-IN')} via UPI QR`}
                 </span>
               </button>
 
@@ -455,41 +445,6 @@ export default function CheckoutPage() {
               </button>
             </div>
 
-            {/* 3-Step Guide */}
-            <div className="grid grid-cols-3 gap-2 text-center text-[10px]">
-              <div className="p-2 rounded-xl bg-cream-50 border border-gold/20">
-                <span className="font-bold text-maroon block">1. Scan & Pay</span>
-                <span className="text-brandText-muted text-[9px]">Exact ₹{Number(qrData.amount).toLocaleString('en-IN')}</span>
-              </div>
-              <div className="p-2 rounded-xl bg-cream-50 border border-gold/20">
-                <span className="font-bold text-maroon block">2. Copy UTR</span>
-                <span className="text-brandText-muted text-[9px]">12-digit ref code</span>
-              </div>
-              <div className="p-2 rounded-xl bg-cream-50 border border-gold/20">
-                <span className="font-bold text-maroon block">3. Submit Below</span>
-                <span className="text-brandText-muted text-[9px]">Studio verifies</span>
-              </div>
-            </div>
-
-            {/* Transaction Reference (Mandatory) */}
-            <div className="p-3 bg-amber-50/60 rounded-2xl border border-amber-300/60 space-y-1.5">
-              <label className="block text-xs font-bold text-maroon">
-                Enter 12-Digit UPI Reference (UTR) Number *
-              </label>
-              <input
-                type="text"
-                required
-                maxLength={24}
-                placeholder="e.g. 431289567123 (from GPay / PhonePe / Paytm)"
-                value={upiRefInput}
-                onChange={(e) => setUpiRefInput(e.target.value.replace(/\s+/g, ''))}
-                className="w-full px-3 py-2.5 rounded-xl border-2 border-gold/40 text-xs bg-white font-mono tracking-wider focus:outline-none focus:border-maroon shadow-inner"
-              />
-              <p className="text-[10px] text-amber-900/80 leading-tight">
-                💡 <strong>Where to find:</strong> Open your UPI app (Google Pay, PhonePe, Paytm, or BHIM) &rarr; tap on this payment in History &rarr; copy the 12-digit <strong>UPI Ref No / UTR</strong>.
-              </p>
-            </div>
-
             {/* Error in Modal */}
             {error && (
               <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium">
@@ -502,10 +457,10 @@ export default function CheckoutPage() {
               type="button"
               onClick={handleConfirmUpiPayment}
               disabled={confirmingPayment}
-              className="w-full py-3.5 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-400 text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-4 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-400 hover:from-emerald-700 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>{confirmingPayment ? 'Submitting Reference...' : 'Submit 12-Digit UTR for Verification'}</span>
+              <CheckCircle2 className="w-5 h-5" />
+              <span>{confirmingPayment ? 'Verifying Payment...' : "I've Completed the Payment"}</span>
             </button>
 
             {/* Supported Apps */}

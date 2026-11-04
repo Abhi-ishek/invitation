@@ -52,17 +52,17 @@ export default function HeroSection() {
 
               {/* 3 Outlined Feature Pill Badges */}
               <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-white/20 backdrop-blur-sm text-[11px] sm:text-xs text-cream font-body">
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-gold/30 backdrop-blur-md text-[11px] sm:text-xs text-cream font-body shadow-sm">
                   <Video className="w-3.5 h-3.5 text-gold-light" />
-                  <span>HD Quality Videos</span>
+                  <span>Ultra-HD 4K Renders</span>
                 </div>
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-white/20 backdrop-blur-sm text-[11px] sm:text-xs text-cream font-body">
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-gold/30 backdrop-blur-md text-[11px] sm:text-xs text-cream font-body shadow-sm">
                   <UserCheck className="w-3.5 h-3.5 text-gold-light" />
                   <span>Custom Names & Details</span>
                 </div>
-                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-white/20 backdrop-blur-sm text-[11px] sm:text-xs text-cream font-body">
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-gold/30 backdrop-blur-md text-[11px] sm:text-xs text-cream font-body shadow-sm">
                   <Zap className="w-3.5 h-3.5 text-gold-light" />
-                  <span>Instant Delivery</span>
+                  <span>24H Express Delivery</span>
                 </div>
               </div>
 
@@ -70,9 +70,9 @@ export default function HeroSection() {
               <div className="pt-2">
                 <Link
                   to="/shop"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-[#f6e5ca] hover:bg-[#faeed9] text-[#2c0813] font-semibold text-xs sm:text-sm shadow-md hover:scale-105 transition-all duration-200 group font-body"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#E8C887] via-[#FFF3D6] to-[#D4A85A] hover:from-[#F4DEB2] hover:to-[#E8C887] text-[#2c0813] font-bold text-xs sm:text-sm tracking-wide shadow-[0_4px_25px_rgba(212,168,90,0.4)] hover:shadow-[0_6px_30px_rgba(212,168,90,0.6)] hover:scale-105 active:scale-95 transition-all duration-200 group font-body"
                 >
-                  <span>Shop Now</span>
+                  <span>Explore Royal Collection</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

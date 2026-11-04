@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Home, ShoppingBag, FileText, Heart, Search, User, LogOut, ShieldCheck, Film } from 'lucide-react';
+import { Home, ShoppingBag, FileText, Heart, Search, User, LogOut, ShieldCheck, Film, CreditCard } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -11,7 +11,7 @@ export default function Navbar() {
 
   const { items, toggleCart } = useCartStore();
   const { user, logout } = useAuthStore();
-  const totalCount = items.length || 2; // Default to 2 to match mockup if empty
+  const totalCount = items.length;
   const wishlistCount = user?.wishlist?.length || 0;
 
   const handleSearchSubmit = (e) => {
@@ -169,6 +169,13 @@ export default function Navbar() {
                     className="flex items-center gap-2 px-4 py-2 hover:bg-cream-100"
                   >
                     <Film className="w-4 h-4 text-brandText-light" /> My Invitations
+                  </Link>
+                  <Link
+                    to="/payments"
+                    onClick={() => setUserMenuOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2 hover:bg-cream-100"
+                  >
+                    <CreditCard className="w-4 h-4 text-brandText-light" /> Payment History
                   </Link>
                   <button
                     onClick={() => {

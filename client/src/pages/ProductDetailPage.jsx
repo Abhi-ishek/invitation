@@ -19,6 +19,7 @@ import {
   Heart,
   MessageSquare,
   Upload,
+  Calendar,
 } from 'lucide-react';
 
 export default function ProductDetailPage() {
@@ -310,16 +311,31 @@ export default function ProductDetailPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold text-brandText mb-1">
-                    Auspicious Wedding Date
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. 18th December 2026"
-                    value={weddingDate}
-                    onChange={(e) => setWeddingDate(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold"
-                  />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[11px] font-semibold text-brandText">
+                      Auspicious Wedding Date
+                    </label>
+                    {weddingDate && (
+                      <span className="text-[10px] font-bold text-maroon bg-gold/15 px-2 py-0.5 rounded-full border border-gold/30">
+                        {weddingDate}
+                      </span>
+                    )}
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="date"
+                      min={new Date().toISOString().split('T')[0]}
+                      value={weddingDate}
+                      onChange={(e) => setWeddingDate(e.target.value)}
+                      onClick={(e) => {
+                        if (typeof e.target.showPicker === 'function') {
+                          e.target.showPicker();
+                        }
+                      }}
+                      className="w-full pl-10 pr-3 py-2 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold cursor-pointer"
+                    />
+                    <Calendar className="w-4 h-4 text-gold-dark absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  </div>
                 </div>
 
                 <div>
