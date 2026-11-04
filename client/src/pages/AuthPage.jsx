@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { Sparkles, Lock, Mail, User, Phone, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export default function AuthPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  const noticeMessage = location.state?.message || '';
   const { login, register, sendPhoneOtp, loading, error } = useAuthStore();
 
   const [isLogin, setIsLogin] = useState(true);
@@ -19,7 +22,6 @@ export default function AuthPage() {
   const [otpSent, setOtpSent] = useState(false);
   const [otpCountdown, setOtpCountdown] = useState(0);
   const [sendingOtp, setSendingOtp] = useState(false);
-  const [devOtpHint, setDevOtpHint] = useState('');
   const [otpSuccessMsg, setOtpSuccessMsg] = useState('');
 
   // OTP Resend Countdown Timer
@@ -46,10 +48,7 @@ export default function AuthPage() {
     if (res.success) {
       setOtpSent(true);
       setOtpCountdown(res.data?.cooldownSeconds || 60);
-      setOtpSuccessMsg(`✨ Verification code sent to ${res.data?.phone || phone}`);
-      if (res.data?.devOtp) {
-        setDevOtpHint(res.data.devOtp);
-      }
+      setOtpSuccessMsg(`✨ Verification code sent via SMS to ${res.data?.phone || phone}`);
       return true;
     } else {
       setFormError(res.message);
@@ -64,7 +63,7 @@ export default function AuthPage() {
 
     if (isLogin) {
       const res = await login(email, password);
-      if (res.success) navigate('/');
+      if (res.success) navigate(from, { replace: true });
       else setFormError(res.message);
     } else {
       if (!name.trim()) {
@@ -100,7 +99,7 @@ export default function AuthPage() {
       }
 
       const res = await register(name, email, password, phone, otp);
-      if (res.success) navigate('/');
+      if (res.success) navigate(from, { replace: true });
       else setFormError(res.message);
     }
   };
@@ -111,7 +110,6 @@ export default function AuthPage() {
     setOtpSuccessMsg('');
     setOtp('');
     setOtpSent(false);
-    setDevOtpHint('');
   };
 
   const handlePrefill = (role) => {
@@ -146,6 +144,14 @@ export default function AuthPage() {
               : 'Join Wedding Wishcraft for personalized wedding cinema'}
           </p>
         </div>
+
+        {/* Notice Message if redirected */}
+        {noticeMessage && (
+          <div className="p-3.5 bg-amber-50 border border-gold/40 rounded-2xl flex items-center gap-2.5 text-xs text-maroon font-medium shadow-sm">
+            <Sparkles className="w-4 h-4 text-gold-dark flex-shrink-0" />
+            <span>{noticeMessage}</span>
+          </div>
+        )}
 
         {/* Tab Toggle */}
         <div className="grid grid-cols-2 p-1 bg-cream-50 rounded-2xl border border-gold/20 text-xs font-semibold">
@@ -209,7 +215,6 @@ export default function AuthPage() {
                       if (otpSent) {
                         setOtpSent(false);
                         setOtp('');
-                        setDevOtpHint('');
                         setOtpSuccessMsg('');
                       }
                     }}
@@ -228,16 +233,11 @@ export default function AuthPage() {
 
               {/* 6-Digit OTP Field */}
               {otpSent && (
-                <div className="p-3 rounded-2xl bg-cream-50 border border-gold/30 space-y-2 animate-fadeIn">
+                <div className="p-3.5 rounded-2xl bg-cream-50 border border-gold/30 space-y-2.5 animate-fadeIn">
                   <div className="flex items-center justify-between">
-                    <label className="block text-xs font-semibold text-brandText flex items-center gap-1">
-                      <ShieldCheck className="w-3.5 h-3.5 text-gold-dark inline" /> 6-Digit Phone OTP
+                    <label className="block text-xs font-semibold text-brandText flex items-center gap-1.5">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600 inline" /> Enter 6-Digit SMS Verification Code
                     </label>
-                    {devOtpHint && (
-                      <span className="text-[10px] bg-gold/20 text-maroon font-mono font-bold px-2 py-0.5 rounded-full border border-gold/30">
-                        Demo: {devOtpHint}
-                      </span>
-                    )}
                   </div>
                   <div className="relative">
                     <input
@@ -248,7 +248,7 @@ export default function AuthPage() {
                       placeholder="• • • • • •"
                       value={otp}
                       onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                      className="w-full px-4 py-2 rounded-xl border border-gold/40 text-center font-mono font-bold tracking-[0.4em] text-sm text-maroon bg-white focus:outline-none focus:border-maroon shadow-inner"
+                      className="w-full px-4 py-2.5 rounded-xl border border-gold/40 text-center font-mono font-bold tracking-[0.4em] text-base text-maroon bg-white focus:outline-none focus:border-maroon shadow-inner"
                     />
                   </div>
                   {otpSuccessMsg && (

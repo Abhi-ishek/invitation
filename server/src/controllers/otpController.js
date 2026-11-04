@@ -80,6 +80,13 @@ export const sendPhoneOtp = async (req, res, next) => {
       purpose,
     });
 
+    if (!dispatchResult.success) {
+      throw new ApiError(
+        502,
+        dispatchResult.error || 'Failed to dispatch SMS to your phone number'
+      );
+    }
+
     res.status(200).json(
       new ApiResponse(
         200,
@@ -87,8 +94,6 @@ export const sendPhoneOtp = async (req, res, next) => {
           phone: normalized,
           cooldownSeconds: RESEND_COOLDOWN_SECONDS,
           expiresInMinutes: OTP_EXPIRY_MINUTES,
-          simulated: dispatchResult.simulated || false,
-          ...(dispatchResult.devOtp && { devOtp: dispatchResult.devOtp }),
         },
         'OTP sent successfully to your phone number'
       )

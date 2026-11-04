@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { X, Trash2, ArrowRight, Sparkles, ShieldCheck, Tag } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
+import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
 
 export default function CartDrawer() {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
   const {
     items,
     isOpen,
@@ -46,6 +48,15 @@ export default function CartDrawer() {
 
   const handleCheckout = () => {
     closeCart();
+    if (!user) {
+      navigate('/login', {
+        state: {
+          from: '/checkout',
+          message: 'Please sign in or create an account to proceed to checkout.',
+        },
+      });
+      return;
+    }
     navigate('/checkout');
   };
 

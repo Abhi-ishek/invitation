@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import api from '../services/api';
+import { useCartStore } from './useCartStore';
 
 export const useAuthStore = create((set, get) => ({
   user: JSON.parse(localStorage.getItem('ww_user') || 'null'),
@@ -45,7 +46,14 @@ export const useAuthStore = create((set, get) => ({
     } finally {
       localStorage.removeItem('ww_user');
       localStorage.removeItem('ww_token');
+      localStorage.removeItem('ww_cart_items');
+      localStorage.removeItem('ww_cart_coupon');
       set({ user: null, token: null });
+      try {
+        useCartStore.getState().clearCart();
+      } catch (e) {
+        // ignore if not initialized
+      }
     }
   },
 

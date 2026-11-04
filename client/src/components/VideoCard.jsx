@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Play, Star, Heart, ShoppingBag, Check } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
@@ -7,6 +7,9 @@ import { useAuthStore } from '../store/useAuthStore';
 import SampleVideoModal from './SampleVideoModal';
 
 export default function VideoCard({ video }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [modalOpen, setModalOpen] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
 
@@ -28,10 +31,30 @@ export default function VideoCard({ video }) {
     e.preventDefault();
     e.stopPropagation();
     if (!user) {
-      alert('Please sign in to save templates to your Wishlist!');
+      navigate('/login', {
+        state: {
+          from: location.pathname + location.search,
+          message: 'Please sign in or create an account to save templates to your Wishlist.',
+        },
+      });
       return;
     }
     await toggleWishlist(video._id || video.id);
+  };
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) {
+      navigate('/login', {
+        state: {
+          from: location.pathname + location.search,
+          message: 'Please sign in or create an account to add items to your cart.',
+        },
+      });
+      return;
+    }
+    addItem(video);
   };
 
   const discountPercent =
@@ -165,7 +188,7 @@ export default function VideoCard({ video }) {
           {/* Full-Width Dark Maroon Pill Button: Add to Cart */}
           <div className="mt-3 pt-1">
             <button
-              onClick={() => addItem(video)}
+              onClick={handleAddToCart}
               className={`w-full py-2.5 px-3 rounded-full text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition-all duration-200 font-body ${
                 isInCart
                   ? 'bg-emerald-700 text-white shadow-emerald-700/20'

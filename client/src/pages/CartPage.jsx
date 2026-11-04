@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCartStore } from '../store/useCartStore';
+import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
 import { Trash2, ArrowRight, Sparkles, Tag, ShieldCheck, ArrowLeft } from 'lucide-react';
 
 export default function CartPage() {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
   const {
     items,
     removeItem,
@@ -230,7 +232,18 @@ export default function CartPage() {
               </div>
 
               <button
-                onClick={() => navigate('/checkout')}
+                onClick={() => {
+                  if (!user) {
+                    navigate('/login', {
+                      state: {
+                        from: '/checkout',
+                        message: 'Please sign in or create an account to proceed to checkout.',
+                      },
+                    });
+                    return;
+                  }
+                  navigate('/checkout');
+                }}
                 className="w-full py-4 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-maroon font-bold text-xs uppercase tracking-wider shadow-gold-glow hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 group"
               >
                 <span>Proceed to Checkout</span>

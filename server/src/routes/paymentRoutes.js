@@ -14,8 +14,8 @@ import { verifyJWT, optionalAuth, verifyAdmin } from '../middleware/authMiddlewa
 const router = Router();
 
 // UPI QR Payment
-router.post('/upi/generate-qr', optionalAuth, generateUpiQr);
-router.post('/upi/confirm', optionalAuth, confirmUpiPayment);
+router.post('/upi/generate-qr', verifyJWT, generateUpiQr);
+router.post('/upi/confirm', verifyJWT, confirmUpiPayment);
 
 // Payment History
 router.get('/history', verifyJWT, getPaymentHistory);

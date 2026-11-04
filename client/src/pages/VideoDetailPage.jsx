@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { videoService } from '../services/videoService';
 import { useCartStore } from '../store/useCartStore';
+import { useAuthStore } from '../store/useAuthStore';
 import { Sparkles, Play, Clock, Star, Music, CheckCircle2, ArrowLeft, ShieldCheck, ShoppingBag } from 'lucide-react';
 
 export default function VideoDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const { items, addItem } = useCartStore();
+  const { user } = useAuthStore();
 
   useEffect(() => {
     const loadVideo = async () => {
@@ -167,7 +171,18 @@ export default function VideoDetailPage() {
               </div>
 
               <button
-                onClick={() => addItem(video)}
+                onClick={() => {
+                  if (!user) {
+                    navigate('/login', {
+                      state: {
+                        from: location.pathname,
+                        message: 'Please sign in or create an account to select this video invitation.',
+                      },
+                    });
+                    return;
+                  }
+                  addItem(video);
+                }}
                 className={`w-full py-4 rounded-xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-300 ${
                   isInCart
                     ? 'bg-emerald-600 text-white shadow-md'

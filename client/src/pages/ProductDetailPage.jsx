@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import videoService from '../services/videoService';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
@@ -25,6 +25,7 @@ import {
 export default function ProductDetailPage() {
   const { identifier } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [product, setProduct] = useState(null);
   const [related, setRelated] = useState([]);
@@ -105,6 +106,15 @@ export default function ProductDetailPage() {
   });
 
   const handleAddToCart = () => {
+    if (!user) {
+      navigate('/login', {
+        state: {
+          from: location.pathname,
+          message: 'Please sign in or create an account to add items to your cart.',
+        },
+      });
+      return;
+    }
     addItem(product, {
       brideName,
       groomName,
@@ -117,6 +127,15 @@ export default function ProductDetailPage() {
   };
 
   const handleBuyNow = () => {
+    if (!user) {
+      navigate('/login', {
+        state: {
+          from: location.pathname,
+          message: 'Please sign in or create an account to purchase this invitation.',
+        },
+      });
+      return;
+    }
     handleAddToCart();
     navigate('/checkout');
   };

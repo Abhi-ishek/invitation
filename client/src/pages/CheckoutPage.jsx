@@ -46,6 +46,22 @@ export default function CheckoutPage() {
   const discount = getDiscountAmount();
   const total = getTotal();
 
+  React.useEffect(() => {
+    if (!user) {
+      navigate('/login', {
+        replace: true,
+        state: {
+          from: '/checkout',
+          message: 'Please sign in or create an account to complete your purchase.',
+        },
+      });
+    }
+  }, [user, navigate]);
+
+  if (!user) {
+    return null;
+  }
+
   if (items.length === 0) {
     navigate('/shop');
     return null;

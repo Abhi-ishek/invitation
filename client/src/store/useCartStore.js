@@ -1,53 +1,61 @@
 import { create } from 'zustand';
 
-export const useCartStore = create((set, get) => ({
-  items: JSON.parse(localStorage.getItem('ww_cart_items') || '[]'),
-  coupon: JSON.parse(localStorage.getItem('ww_cart_coupon') || 'null'),
-  isOpen: false,
+export const useCartStore = create((set, get) => {
+  const hasUser = Boolean(localStorage.getItem('ww_user'));
+  return {
+    items: hasUser ? JSON.parse(localStorage.getItem('ww_cart_items') || '[]') : [],
+    coupon: hasUser ? JSON.parse(localStorage.getItem('ww_cart_coupon') || 'null') : null,
+    isOpen: false,
 
-  openCart: () => set({ isOpen: true }),
-  closeCart: () => set({ isOpen: false }),
-  toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+    openCart: () => set({ isOpen: true }),
+    closeCart: () => set({ isOpen: false }),
+    toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
 
-  addItem: (product, customizationData = {}) => {
-    set((state) => {
-      const targetId = String(product?._id || product?.id || '');
-      const existingIndex = targetId
-        ? state.items.findIndex((item) => {
-            const itemProdId = String(item?.product?._id || item?.product?.id || '');
-            return itemProdId === targetId;
-          })
-        : -1;
-
-      let updatedItems;
-      if (existingIndex > -1) {
-        updatedItems = [...state.items];
-        updatedItems[existingIndex].customizationData = {
-          ...updatedItems[existingIndex].customizationData,
-          ...customizationData,
-        };
-      } else {
-        updatedItems = [
-          ...state.items,
-          {
-            product,
-            customizationData: {
-              brideName: customizationData.brideName || '',
-              groomName: customizationData.groomName || '',
-              weddingDate: customizationData.weddingDate || '',
-              venue: customizationData.venue || '',
-              language: customizationData.language || 'English & Hindi',
-              musicChoice: customizationData.musicChoice || 'Default Shehnai Symphony',
-              notes: customizationData.notes || '',
-              ...customizationData,
-            },
-          },
-        ];
+    addItem: (product, customizationData = {}) => {
+      const user = JSON.parse(localStorage.getItem('ww_user') || 'null');
+      if (!user) {
+        return { success: false, requireAuth: true };
       }
-      localStorage.setItem('ww_cart_items', JSON.stringify(updatedItems));
-      return { items: updatedItems, isOpen: true };
-    });
-  },
+
+      set((state) => {
+        const targetId = String(product?._id || product?.id || '');
+        const existingIndex = targetId
+          ? state.items.findIndex((item) => {
+              const itemProdId = String(item?.product?._id || item?.product?.id || '');
+              return itemProdId === targetId;
+            })
+          : -1;
+
+        let updatedItems;
+        if (existingIndex > -1) {
+          updatedItems = [...state.items];
+          updatedItems[existingIndex].customizationData = {
+            ...updatedItems[existingIndex].customizationData,
+            ...customizationData,
+          };
+        } else {
+          updatedItems = [
+            ...state.items,
+            {
+              product,
+              customizationData: {
+                brideName: customizationData.brideName || '',
+                groomName: customizationData.groomName || '',
+                weddingDate: customizationData.weddingDate || '',
+                venue: customizationData.venue || '',
+                language: customizationData.language || 'English & Hindi',
+                musicChoice: customizationData.musicChoice || 'Default Shehnai Symphony',
+                notes: customizationData.notes || '',
+                ...customizationData,
+              },
+            },
+          ];
+        }
+        localStorage.setItem('ww_cart_items', JSON.stringify(updatedItems));
+        return { items: updatedItems, isOpen: true };
+      });
+      return { success: true };
+    },
 
   updateCustomization: (productId, data) => {
     set((state) => {
@@ -111,4 +119,5 @@ export const useCartStore = create((set, get) => ({
     const discount = get().getDiscountAmount();
     return Math.max(0, subtotal - discount);
   },
-}));
+};
+});

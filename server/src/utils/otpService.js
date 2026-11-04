@@ -124,59 +124,21 @@ export const sendSmsOtp = async ({ phone, otp, purpose = 'phone_verification' })
       if (data.return) {
         console.log(`📱 SMS successfully dispatched via Fast2SMS to ${normalized}`);
         return { success: true, provider: 'fast2sms', data };
+      } else {
+        const errorMsg = data?.message || 'Fast2SMS rejected request';
+        console.error(`⚠️ Fast2SMS API response:`, errorMsg);
+        return { success: false, provider: 'fast2sms', error: errorMsg };
       }
     } catch (error) {
       console.error(`⚠️ Fast2SMS dispatch failed: ${error.message}`);
+      return { success: false, provider: 'fast2sms', error: error.message };
     }
   }
 
-  // Simulated Console Mode (default when no 3rd-party SMS provider credentials are set)
-  if (purpose === 'payment_confirmation') {
-    console.log(`
-╔═════════════════════════════════════════════════════════════════════╗
-║   💰  WEDDING WISHCRAFT — PAYMENT CONFIRMATION SMS                  ║
-╠═════════════════════════════════════════════════════════════════════╣
-║   📞  Recipient:    ${normalized.padEnd(44)}║
-║   🧾  Order No:     ${otp.padEnd(44)}║
-║   ✅  Status:       Payment Confirmed & Verified by Studio          ║
-║   💍  Message:      Thank you! Your bespoke wedding invitation      ║
-║                     video is now in active production.              ║
-║   ℹ️   Tip: Set TWILIO or FAST2SMS env vars for real carrier SMS    ║
-╚═════════════════════════════════════════════════════════════════════╝
-    `);
-  } else if (purpose === 'payment_submitted') {
-    console.log(`
-╔═════════════════════════════════════════════════════════════════════╗
-║   ⏳  WEDDING WISHCRAFT — UPI PAYMENT SUBMITTED SMS                 ║
-╠═════════════════════════════════════════════════════════════════════╣
-║   📞  Recipient:    ${normalized.padEnd(44)}║
-║   🧾  Order No:     ${otp.padEnd(44)}║
-║   🔍  Status:       UPI UTR Submitted — Verification in Progress    ║
-║   💍  Message:      We received your UPI payment reference. Our     ║
-║                     studio will verify & start video production!    ║
-║   ℹ️   Tip: Set TWILIO or FAST2SMS env vars for real carrier SMS    ║
-╚═════════════════════════════════════════════════════════════════════╝
-    `);
-  } else {
-    console.log(`
-╔═════════════════════════════════════════════════════════════════════╗
-║   📱  WEDDING WISHCRAFT — OTP SIMULATION CONSOLE                    ║
-╠═════════════════════════════════════════════════════════════════════╣
-║   📞  Recipient:  ${normalized.padEnd(46)}║
-║   🔑  OTP Code:   ${otp.padEnd(46)}║
-║   🎯  Purpose:    ${purpose.padEnd(46)}║
-║   ⏳  Validity:   10 minutes                                        ║
-║   ℹ️   Tip: Set TWILIO or FAST2SMS env vars for real carrier SMS    ║
-╚═════════════════════════════════════════════════════════════════════╝
-    `);
-  }
-
+  // Fallback when no SMS provider is configured
   return {
-    success: true,
-    simulated: true,
-    recipient: normalized,
-    // Only expose otp in simulated return object when not in strict production
-    ...(process.env.NODE_ENV !== 'production' && { devOtp: otp }),
+    success: false,
+    error: 'No SMS gateway configured. Please configure Fast2SMS or Twilio credentials.',
   };
 };
 
