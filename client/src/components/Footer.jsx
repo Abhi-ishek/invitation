@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Youtube, MessageCircle } from 'lucide-react';
+import { Instagram, Youtube, MessageCircle, Facebook, Phone } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -45,46 +45,46 @@ export default function Footer() {
 
             {/* Right: Social Media Icons + Copyright */}
             <div className="flex flex-col sm:flex-row items-center gap-4 text-xs text-cream/70 font-body">
-              {/* Social Icons */}
-              <div className="flex items-center space-x-3 text-cream/80">
+              {/* Social Icons & Contact */}
+              <div className="flex flex-wrap items-center gap-3 text-cream/80">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/weddingwishcraft?obrf=MmE5ZzkwNzZ4NXJl"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-gold transition-colors"
+                  className="hover:text-gold transition-colors p-1"
                   aria-label="Instagram"
+                  title="Instagram @weddingwishcraft"
                 >
                   <Instagram className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://youtube.com"
+                  href="https://www.facebook.com/share/1EFvMvu23e/"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-gold transition-colors"
-                  aria-label="YouTube"
+                  className="hover:text-gold transition-colors p-1"
+                  aria-label="Facebook"
+                  title="Facebook Page"
                 >
-                  <Youtube className="w-4 h-4" />
+                  <Facebook className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/917018353733?text=Hi%20Wedding%20Wishcraft!%20I%20would%20like%20to%20customize%20a%20wedding%20invitation%20video."
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-gold transition-colors"
+                  className="hover:text-gold transition-colors p-1"
                   aria-label="WhatsApp"
+                  title="WhatsApp Concierge"
                 >
                   <MessageCircle className="w-4 h-4" />
                 </a>
-                {/* Pinterest SVG */}
                 <a
-                  href="https://pinterest.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:text-gold transition-colors"
-                  aria-label="Pinterest"
+                  href="tel:+917018353733"
+                  className="hover:text-gold transition-colors flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#320a16] border border-gold/30 text-gold-light"
+                  aria-label="Call +91 70183 53733"
+                  title="Call Us"
                 >
-                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 0a12 12 0 0 0-4.37 23.18c-.07-.95-.13-2.42.03-3.46.14-.94.94-6.17.94-6.17s-.24-.48-.24-1.2c0-1.12.65-1.96 1.46-1.96.69 0 1.02.52 1.02 1.14 0 .7-.44 1.73-.67 2.69-.19.81.4 1.47 1.2 1.47 1.44 0 2.54-1.52 2.54-3.71 0-1.94-1.39-3.3-3.39-3.3-2.48 0-3.93 1.86-3.93 3.78 0 .75.29 1.55.65 1.99.07.09.08.17.06.26-.06.27-.21.86-.24.98-.04.16-.13.19-.3.12-1.13-.53-1.84-2.18-1.84-3.51 0-2.86 2.08-5.49 5.99-5.49 3.15 0 5.6 2.24 5.6 5.25 0 3.13-1.97 5.65-4.71 5.65-.92 0-1.78-.48-2.08-1.04l-.56 2.15c-.2 1.15-.75 2.59-1.12 3.49A12 12 0 1 0 12 0z"/>
-                  </svg>
+                  <Phone className="w-3 h-3 text-gold" />
+                  <span className="text-[11px] font-medium tracking-wide">7018353733</span>
                 </a>
               </div>
 
@@ -97,11 +97,11 @@ export default function Footer() {
 
       {/* Floating Bright Green WhatsApp Button on Bottom Right */}
       <a
-        href="https://wa.me/919876543210?text=Hi%20Wedding%20Wishcraft!%20I%20would%20like%20to%20customize%20a%20wedding%20invitation%20video."
+        href="https://wa.me/917018353733?text=Hi%20Wedding%20Wishcraft!%20I%20would%20like%20to%20customize%20a%20wedding%20invitation%20video."
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#25d366] hover:bg-[#20ba59] text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-all duration-300"
-        title="Chat on WhatsApp"
+        title="Chat on WhatsApp (7018353733)"
         aria-label="WhatsApp"
       >
         <MessageCircle className="w-6 h-6 fill-white text-white" />

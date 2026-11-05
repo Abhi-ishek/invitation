@@ -63,7 +63,7 @@ export default function OrderSuccessPage() {
           </Link>
 
           <a
-            href={`https://wa.me/919876543210?text=Hi%20Wedding%20Wishcraft!%20My%20order%20number%20is%20${encodeURIComponent(orderNumber || '')}`}
+            href={`https://wa.me/917018353733?text=Hi%20Wedding%20Wishcraft!%20My%20order%20number%20is%20${encodeURIComponent(orderNumber || '')}`}
             target="_blank"
             rel="noreferrer"
             className="w-full py-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center gap-2 border border-emerald-300 transition-colors"

@@ -64,7 +64,7 @@ export default function ContactPage() {
 
               <div className="space-y-3 pt-2 text-xs">
                 <a
-                  href="https://wa.me/919876543210"
+                  href="https://wa.me/917018353733?text=Hi%20Wedding%20Wishcraft!%20I%20would%20like%20to%20inquire%20about%20a%20wedding%20video."
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-3 p-3 rounded-2xl bg-black/30 hover:bg-black/50 transition-colors border border-gold/20"
@@ -72,7 +72,7 @@ export default function ContactPage() {
                   <MessageCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
                   <div>
                     <span className="font-bold block">WhatsApp Concierge</span>
-                    <span className="text-[11px] text-cream/70">+91 98765 43210 (24x7)</span>
+                    <span className="text-[11px] text-cream/70">+91 70183 53733 (24x7)</span>
                   </div>
                 </a>
 

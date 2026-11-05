@@ -233,7 +233,7 @@ export default function OrderTrackingPage() {
                   </a>
 
                   <a
-                    href={`https://wa.me/919876543210?text=Hi%20Atelier!%20I%20have%20reviewed%20video%20for%20order%20${encodeURIComponent(order.orderNumber)}.`}
+                    href={`https://wa.me/917018353733?text=Hi%20Atelier!%20I%20have%20reviewed%20video%20for%20order%20${encodeURIComponent(order.orderNumber)}.`}
                     target="_blank"
                     rel="noreferrer"
                     className="px-5 py-3 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs flex items-center gap-1.5 border border-emerald-300 hover:bg-emerald-100"

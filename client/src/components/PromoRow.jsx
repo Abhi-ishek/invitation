@@ -117,7 +117,7 @@ export default function PromoRow() {
               {/* Follow Button */}
               <div className="pt-2">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/weddingwishcraft?obrf=MmE5ZzkwNzZ4NXJl"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#2d0813] hover:bg-[#431020] text-white text-xs font-semibold shadow-sm transition-all font-body"
