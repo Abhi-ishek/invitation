@@ -25,8 +25,8 @@ export const generateUpiQr = async (req, res, next) => {
     }
 
     // Use configured UPI ID or default
-    const upiId = process.env.UPI_ID || '9161772464@ptsbi';
-    const payeeName = process.env.UPI_PAYEE_NAME || 'Wedding Wishcraft';
+    const upiId = process.env.UPI_ID || 'shivamthakur.shivi-5@okaxis';
+    const payeeName = process.env.UPI_PAYEE_NAME || 'Shivam Thakur';
     const transactionRef = `WW${Date.now()}${Math.floor(Math.random() * 1000)}`;
     const amountFixed = Number(amount).toFixed(2);
 
@@ -66,6 +66,7 @@ export const generateUpiQr = async (req, res, next) => {
         200,
         {
           qrDataUrl,
+          customQrImage: '/upi-qr.jpg',
           upiUri,
           upiId,
           payeeName,

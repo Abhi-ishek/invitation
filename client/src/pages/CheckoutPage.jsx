@@ -437,11 +437,11 @@ export default function CheckoutPage() {
 
             {/* QR Code Image */}
             <div className="flex justify-center">
-              <div className="p-3 bg-white rounded-2xl border-2 border-gold/30 shadow-md">
+              <div className="p-2 bg-white rounded-2xl border-2 border-gold/30 shadow-md overflow-hidden">
                 <img
-                  src={qrData.qrDataUrl}
-                  alt="UPI Payment QR Code"
-                  className="w-56 h-56 sm:w-64 sm:h-64 object-contain"
+                  src={qrData.customQrImage || '/upi-qr.jpg'}
+                  alt="UPI Payment QR Code - Shivam Thakur"
+                  className="w-60 sm:w-64 h-auto object-contain rounded-xl"
                 />
               </div>
             </div>
@@ -449,15 +449,18 @@ export default function CheckoutPage() {
             {/* UPI ID Display */}
             <div className="flex items-center justify-between p-3 bg-cream-50 rounded-xl border border-gold/20">
               <div>
-                <span className="text-[10px] text-brandText-muted block">UPI ID</span>
-                <span className="text-xs font-bold text-maroon font-mono">{qrData.upiId}</span>
+                <span className="text-[10px] text-brandText-muted block">
+                  Payee: <strong className="text-maroon font-semibold">{qrData.payeeName || 'Shivam Thakur'}</strong>
+                </span>
+                <span className="text-xs font-bold text-maroon font-mono">{qrData.upiId || 'shivamthakur.shivi-5@okaxis'}</span>
               </div>
               <button
                 type="button"
                 onClick={handleCopyUpi}
                 className="p-2 rounded-lg bg-maroon text-gold-light hover:bg-maroon-dark transition-all"
+                title="Copy UPI ID"
               >
-                {copiedUpi ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedUpi ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
             </div>
 
