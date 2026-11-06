@@ -200,3 +200,85 @@ export const getAllOrders = async (req, res, next) => {
     next(error);
   }
 };
+
+export const saveWeddingDetails = async (req, res, next) => {
+  try {
+    const { orderNumber } = req.params;
+    const formattedNumber = orderNumber.startsWith('#') ? orderNumber : `#${orderNumber}`;
+
+    const order = await Order.findOne({
+      $or: [
+        { orderNumber: formattedNumber.toUpperCase() },
+        { orderNumber: orderNumber.toUpperCase() },
+      ],
+    });
+
+    if (!order) {
+      throw new ApiError(404, `No wedding invitation order found matching: ${orderNumber}`);
+    }
+
+    const {
+      groomName = '',
+      groomMotherName = '',
+      groomFatherName = '',
+      brideName = '',
+      brideMotherName = '',
+      brideFatherName = '',
+      haldiDate = '',
+      haldiTimings = '',
+      haldiVenue = '',
+      weddingDate = '',
+      weddingTimings = '',
+      weddingVenue = '',
+      mehendiDate = '',
+      mehendiTimings = '',
+      mehendiVenue = '',
+      additionalNotes = '',
+    } = req.body;
+
+    order.weddingDetails = {
+      groomName: groomName.trim(),
+      groomMotherName: groomMotherName.trim(),
+      groomFatherName: groomFatherName.trim(),
+      brideName: brideName.trim(),
+      brideMotherName: brideMotherName.trim(),
+      brideFatherName: brideFatherName.trim(),
+      haldiDate: haldiDate.trim(),
+      haldiTimings: haldiTimings.trim(),
+      haldiVenue: haldiVenue.trim(),
+      weddingDate: weddingDate.trim(),
+      weddingTimings: weddingTimings.trim(),
+      weddingVenue: weddingVenue.trim(),
+      mehendiDate: mehendiDate.trim(),
+      mehendiTimings: mehendiTimings.trim(),
+      mehendiVenue: mehendiVenue.trim(),
+      additionalNotes: additionalNotes.trim(),
+      submittedAt: new Date(),
+    };
+
+    // Synchronize first item customizationData if available
+    if (order.items && order.items.length > 0) {
+      const itemCustom = order.items[0].customizationData || {};
+      if (brideName) itemCustom.brideName = brideName.trim();
+      if (groomName) itemCustom.groomName = groomName.trim();
+      if (weddingDate) itemCustom.weddingDate = weddingDate.trim();
+      if (weddingVenue) itemCustom.venue = weddingVenue.trim();
+      if (additionalNotes) itemCustom.notes = additionalNotes.trim();
+      order.items[0].customizationData = itemCustom;
+    }
+
+    order.statusHistory.push({
+      status: order.orderStatus,
+      note: 'Wedding and ceremony details submitted by couple.',
+      timestamp: new Date(),
+    });
+
+    await order.save();
+
+    res.status(200).json(
+      new ApiResponse(200, order, 'Wedding invitation details successfully saved')
+    );
+  } catch (error) {
+    next(error);
+  }
+};

@@ -154,7 +154,7 @@ export default function CheckoutPage() {
       setShowQrModal(false);
       fireConfetti();
       clearCart();
-      navigate(`/order-success/${encodeURIComponent(qrData.orderNumber)}`);
+      navigate(`/customize-order/${encodeURIComponent(qrData.orderNumber)}`);
     } catch (err) {
       setError(err.message || 'Payment confirmation failed. Please contact support.');
     } finally {

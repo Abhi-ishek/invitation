@@ -15,6 +15,7 @@ export const videoService = {
   createOrder: (orderData) => api.post('/orders', orderData),
   getMyOrders: () => api.get('/orders/my-orders'),
   trackOrder: (orderNumber) => api.get(`/orders/track/${orderNumber}`),
+  saveWeddingDetails: (orderNumber, data) => api.put(`/orders/${encodeURIComponent(orderNumber)}/wedding-details`, data),
   updateOrderStatus: (id, data) => api.put(`/orders/${id}/status`, data),
   getAllOrders: (params = {}) => api.get('/orders', { params }),
   

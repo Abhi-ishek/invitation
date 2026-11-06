@@ -55,8 +55,16 @@ export default function OrderSuccessPage() {
         {/* Actions */}
         <div className="space-y-3 pt-2">
           <Link
-            to={`/track/${encodeURIComponent(orderNumber || '')}`}
+            to={`/customize-order/${encodeURIComponent(orderNumber || '')}`}
             className="w-full py-3.5 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-maroon font-bold text-xs uppercase tracking-wider shadow-gold-glow hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>Update Wedding & Ceremony Details</span>
+          </Link>
+
+          <Link
+            to={`/track/${encodeURIComponent(orderNumber || '')}`}
+            className="w-full py-3.5 rounded-full bg-maroon text-gold-light hover:bg-maroon-dark font-bold text-xs uppercase tracking-wider shadow-md hover:scale-105 transition-all flex items-center justify-center gap-2"
           >
             <Activity className="w-4 h-4" />
             <span>Track Order Timeline</span>

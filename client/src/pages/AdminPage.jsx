@@ -17,6 +17,13 @@ import {
   Copy,
   Check,
   XCircle,
+  X,
+  Heart,
+  Calendar,
+  MapPin,
+  User,
+  Sparkles,
+  MessageCircle,
 } from 'lucide-react';
 
 export default function AdminPage() {
@@ -38,6 +45,10 @@ export default function AdminPage() {
   const [finalUrl, setFinalUrl] = useState('');
   const [statusNote, setStatusNote] = useState('');
   const [updating, setUpdating] = useState(false);
+
+  // Wedding details dossier modal
+  const [viewingWeddingDetails, setViewingWeddingDetails] = useState(null);
+  const [copiedDossier, setCopiedDossier] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -124,6 +135,62 @@ export default function AdminPage() {
     } finally {
       setUpdating(false);
     }
+  };
+
+  const generateDossierText = (order) => {
+    if (!order) return '';
+    const wd = order.weddingDetails || {};
+    const cd = order.items?.[0]?.customizationData || {};
+    const item = order.items?.[0] || {};
+
+    return `✨ WEDDING WISHCRAFT — VIDEO PRODUCTION BRIEF ✨
+--------------------------------------------------
+Order Ref: ${order.orderNumber}
+Customer: ${order.customerDetails?.name || 'N/A'} | Phone: ${order.customerDetails?.phone || 'N/A'}
+Email: ${order.customerDetails?.email || 'N/A'}
+Template: ${item.title || 'Wedding Video Invitation'}
+Status: ${order.orderStatus} | Total: ₹${order.totalAmount?.toLocaleString('en-IN') || 0}
+
+🤵 GROOM & FAMILY:
+• Groom Name: ${wd.groomName || cd.groomName || '—'}
+• Father's Name: ${wd.groomFatherName || '—'}
+• Mother's Name: ${wd.groomMotherName || '—'}
+
+👰 BRIDE & FAMILY:
+• Bride Name: ${wd.brideName || cd.brideName || '—'}
+• Father's Name: ${wd.brideFatherName || '—'}
+• Mother's Name: ${wd.brideMotherName || '—'}
+
+🌼 HALDI CEREMONY:
+• Date: ${wd.haldiDate || '—'}
+• Timings: ${wd.haldiTimings || '—'}
+• Venue: ${wd.haldiVenue || '—'}
+
+💍 WEDDING CEREMONY:
+• Date: ${wd.weddingDate || cd.weddingDate || '—'}
+• Timings: ${wd.weddingTimings || '—'}
+• Venue: ${wd.weddingVenue || cd.venue || '—'}
+
+🌿 MEHENDI CEREMONY:
+• Date: ${wd.mehendiDate || '—'}
+• Timings: ${wd.mehendiTimings || '—'}
+• Venue: ${wd.mehendiVenue || '—'}
+
+📝 SPECIAL NOTES / HASHTAG / AUDIO:
+${wd.additionalNotes || cd.notes || 'None provided'}
+--------------------------------------------------`;
+  };
+
+  const handleCopyDossier = (order) => {
+    const text = generateDossierText(order);
+    navigator.clipboard.writeText(text).catch(() => {});
+    setCopiedDossier(true);
+    setTimeout(() => setCopiedDossier(false), 2500);
+  };
+
+  const handleWhatsAppShare = (order) => {
+    const text = generateDossierText(order);
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   const totalSales = orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
@@ -237,9 +304,14 @@ export default function AdminPage() {
         {/* Orders Table */}
         {activeTab === 'orders' && (
           <div className="bg-white rounded-3xl border border-gold/25 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-gold/15 flex items-center justify-between">
-              <h3 className="font-heading text-lg font-bold text-maroon">Orders & Status Upgrades</h3>
-              <span className="text-xs text-brandText-muted">Click "Update Status" to upload video preview link</span>
+            <div className="p-6 border-b border-gold/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="font-heading text-lg font-bold text-maroon">Orders & Production Dossiers</h3>
+                <p className="text-xs text-brandText-muted">View all submitted wedding details, ceremony timings, venues, and deliver videos</p>
+              </div>
+              <span className="text-xs px-3 py-1 rounded-full bg-cream-50 border border-gold/30 text-maroon font-semibold">
+                {orders.length} Total Orders
+              </span>
             </div>
 
             <div className="overflow-x-auto">
@@ -248,57 +320,113 @@ export default function AdminPage() {
                   <tr>
                     <th className="p-4">Order #</th>
                     <th className="p-4">Customer Details</th>
-                    <th className="p-4">Personalization</th>
+                    <th className="p-4">Couple & Wedding Data</th>
                     <th className="p-4">Total</th>
                     <th className="p-4">Status</th>
                     <th className="p-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gold/10">
-                  {orders.map((ord) => (
-                    <tr key={ord._id} className="hover:bg-cream-50/50 transition-colors">
-                      <td className="p-4 font-bold text-maroon">{ord.orderNumber}</td>
-                      <td className="p-4">
-                        <span className="font-semibold block">{ord.customerDetails?.name}</span>
-                        <span className="text-brandText-muted block text-[11px]">{ord.customerDetails?.phone}</span>
-                        <span className="text-brandText-muted block text-[11px]">{ord.customerDetails?.email}</span>
-                      </td>
-                      <td className="p-4 max-w-xs truncate text-[11px] text-brandText-muted">
-                        {ord.items?.[0]?.customizationData?.brideName
-                          ? `${ord.items[0].customizationData.brideName} & ${ord.items[0].customizationData.groomName}`
-                          : 'General customization'}
-                      </td>
-                      <td className="p-4 font-bold text-maroon">
-                        ₹{ord.totalAmount?.toLocaleString('en-IN')}
-                      </td>
-                      <td className="p-4">
-                        <span
-                          className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                            ord.orderStatus === 'Completed'
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : ord.orderStatus === 'Preview Ready'
-                              ? 'bg-amber-100 text-amber-800'
-                              : 'bg-gold/20 text-maroon'
-                          }`}
-                        >
-                          {ord.orderStatus}
-                        </span>
-                      </td>
-                      <td className="p-4 text-right">
-                        <button
-                          onClick={() => {
-                            setSelectedOrder(ord);
-                            setNewStatus(ord.orderStatus);
-                            setPreviewUrl(ord.previewVideoUrl || '');
-                            setFinalUrl(ord.finalVideoUrl || '');
-                          }}
-                          className="px-3.5 py-1.5 rounded-xl bg-maroon text-gold-light hover:bg-maroon-light font-semibold text-[11px] shadow-sm transition-all"
-                        >
-                          Update Status
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {orders.map((ord) => {
+                    const wd = ord.weddingDetails || {};
+                    const cd = ord.items?.[0]?.customizationData || {};
+                    const hasWeddingDetails = !!(wd.groomName || wd.brideName || wd.submittedAt);
+                    const brideDisplay = wd.brideName || cd.brideName || 'Bride';
+                    const groomDisplay = wd.groomName || cd.groomName || 'Groom';
+                    const weddingDateDisplay = wd.weddingDate || cd.weddingDate;
+
+                    return (
+                      <tr key={ord._id} className="hover:bg-cream-50/50 transition-colors">
+                        <td className="p-4 font-bold text-maroon">
+                          <span className="block">{ord.orderNumber}</span>
+                          <span className="text-[10px] text-brandText-muted block font-normal">
+                            {new Date(ord.createdAt).toLocaleDateString('en-IN', {
+                              day: 'numeric',
+                              month: 'short',
+                            })}
+                          </span>
+                        </td>
+                        <td className="p-4">
+                          <span className="font-semibold block text-brandText">{ord.customerDetails?.name || 'Customer'}</span>
+                          <span className="text-brandText-muted block text-[11px] font-mono">{ord.customerDetails?.phone || 'N/A'}</span>
+                          <span className="text-brandText-muted block text-[11px]">{ord.customerDetails?.email || 'N/A'}</span>
+                        </td>
+                        <td className="p-4">
+                          <div className="space-y-1">
+                            <div className="font-semibold text-maroon text-xs flex items-center gap-1.5">
+                              <Heart className="w-3.5 h-3.5 text-rose-600 fill-rose-100 flex-shrink-0" />
+                              <span>{brideDisplay} & {groomDisplay}</span>
+                            </div>
+
+                            {hasWeddingDetails ? (
+                              <button
+                                type="button"
+                                onClick={() => setViewingWeddingDetails(ord)}
+                                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-semibold hover:bg-emerald-100 transition-all shadow-xs"
+                              >
+                                <Sparkles className="w-3 h-3 text-emerald-600" />
+                                <span>Wedding Details Ready 💍</span>
+                              </button>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-semibold">
+                                <Clock className="w-3 h-3 text-amber-600" />
+                                <span>Awaiting Ceremony Details</span>
+                              </span>
+                            )}
+
+                            {weddingDateDisplay && (
+                              <div className="text-[10px] text-brandText-muted flex items-center gap-1">
+                                <Calendar className="w-3 h-3 text-gold-dark" />
+                                <span>Date: {weddingDateDisplay}</span>
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                        <td className="p-4 font-bold text-maroon">
+                          ₹{ord.totalAmount?.toLocaleString('en-IN')}
+                        </td>
+                        <td className="p-4">
+                          <span
+                            className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                              ord.orderStatus === 'Completed'
+                                ? 'bg-emerald-100 text-emerald-800'
+                                : ord.orderStatus === 'Preview Ready'
+                                ? 'bg-amber-100 text-amber-800'
+                                : 'bg-gold/20 text-maroon'
+                            }`}
+                          >
+                            {ord.orderStatus}
+                          </span>
+                        </td>
+                        <td className="p-4 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setViewingWeddingDetails(ord)}
+                              className="px-3 py-1.5 rounded-xl bg-cream-100 text-maroon hover:bg-gold/25 font-bold text-[11px] border border-gold/30 transition-all flex items-center gap-1.5 shadow-sm"
+                              title="View Groom, Bride & Ceremony details"
+                            >
+                              <Heart className="w-3.5 h-3.5 text-rose-600" />
+                              <span>Wedding Data</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedOrder(ord);
+                                setNewStatus(ord.orderStatus);
+                                setPreviewUrl(ord.previewVideoUrl || '');
+                                setFinalUrl(ord.finalVideoUrl || '');
+                                setStatusNote('');
+                              }}
+                              className="px-3.5 py-1.5 rounded-xl bg-maroon text-gold-light hover:bg-maroon-light font-semibold text-[11px] shadow-sm transition-all"
+                            >
+                              Update Status
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -359,6 +487,15 @@ export default function AdminPage() {
                             <span className="text-[10px] text-amber-700 font-semibold px-2 py-0.5 rounded-full bg-amber-100 inline-block mt-1">
                               Payment Under Review
                             </span>
+                            {payment.order?.weddingDetails?.groomName && (
+                              <button
+                                type="button"
+                                onClick={() => setViewingWeddingDetails(payment.order)}
+                                className="block text-[10px] text-gold-dark font-bold hover:underline mt-1"
+                              >
+                                View Wedding Data 💍
+                              </button>
+                            )}
                           </td>
                           <td className="p-4">
                             <span className="font-semibold block text-brandText">{customerName}</span>
@@ -424,6 +561,8 @@ export default function AdminPage() {
             )}
           </div>
         )}
+
+        {/* Products Tab */}
         {activeTab === 'products' && (
           <div className="bg-white rounded-3xl border border-gold/25 shadow-sm p-6 space-y-4">
             <div className="flex items-center justify-between pb-4 border-b border-gold/15">
@@ -449,16 +588,327 @@ export default function AdminPage() {
 
       </div>
 
+      {/* Wedding Details & Production Dossier Modal */}
+      {viewingWeddingDetails && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="w-full max-w-3xl bg-white rounded-3xl border border-gold/30 shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
+            
+            {/* Modal Header */}
+            <div className="p-6 bg-cream-50 border-b border-gold/20 flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-gold/20 text-maroon font-bold text-[10px] uppercase tracking-wider">
+                    Wedding Customization Dossier
+                  </span>
+                  <span className="font-heading text-xs font-bold text-maroon">
+                    {viewingWeddingDetails.orderNumber}
+                  </span>
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-maroon mt-1 flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-rose-600 fill-rose-100" />
+                  <span>
+                    {viewingWeddingDetails.weddingDetails?.brideName || viewingWeddingDetails.items?.[0]?.customizationData?.brideName || 'Bride'}
+                    {' & '}
+                    {viewingWeddingDetails.weddingDetails?.groomName || viewingWeddingDetails.items?.[0]?.customizationData?.groomName || 'Groom'}
+                  </span>
+                </h3>
+                <p className="text-xs text-brandText-muted mt-0.5">
+                  Ordered by {viewingWeddingDetails.customerDetails?.name || 'Customer'} • {viewingWeddingDetails.customerDetails?.phone} • {viewingWeddingDetails.customerDetails?.email}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setViewingWeddingDetails(null)}
+                className="p-2 rounded-full hover:bg-gold/20 text-brandText-muted transition-all"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Quick Action Bar */}
+            <div className="px-6 py-3 bg-cream-100/50 border-b border-gold/15 flex items-center justify-between flex-wrap gap-2 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="text-brandText-muted text-[11px]">Template:</span>
+                <span className="font-bold text-maroon">
+                  {viewingWeddingDetails.items?.[0]?.title || 'Wedding Video Invitation'}
+                </span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-maroon/10 text-maroon font-semibold">
+                  Status: {viewingWeddingDetails.orderStatus}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleCopyDossier(viewingWeddingDetails)}
+                  className="px-3 py-1.5 rounded-xl bg-white border border-gold/30 text-maroon hover:bg-gold/15 font-bold text-[11px] shadow-xs flex items-center gap-1.5 transition-all"
+                >
+                  {copiedDossier ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-emerald-700">Copied to Clipboard!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-gold-dark" />
+                      <span>Copy Full Brief</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleWhatsAppShare(viewingWeddingDetails)}
+                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs flex items-center gap-1.5 transition-all"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>Share on WhatsApp</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable Modal Content */}
+            <div className="p-6 overflow-y-auto space-y-6">
+              
+              {/* Couple & Parents Details */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                {/* Groom Card */}
+                <div className="p-4 rounded-2xl bg-cream-50 border border-gold/25 space-y-3">
+                  <div className="flex items-center gap-2 pb-2 border-b border-gold/15">
+                    <span className="text-lg">🤵</span>
+                    <h4 className="font-heading text-sm font-bold text-maroon">Groom & Family Details</h4>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div>
+                      <span className="text-[10px] text-brandText-muted block uppercase font-bold tracking-wider">Groom Name</span>
+                      <span className="font-semibold text-brandText text-sm">
+                        {viewingWeddingDetails.weddingDetails?.groomName || viewingWeddingDetails.items?.[0]?.customizationData?.groomName || '—'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-brandText-muted block uppercase font-bold tracking-wider">Father's Name</span>
+                      <span className="font-medium text-brandText">
+                        {viewingWeddingDetails.weddingDetails?.groomFatherName || '—'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-brandText-muted block uppercase font-bold tracking-wider">Mother's Name</span>
+                      <span className="font-medium text-brandText">
+                        {viewingWeddingDetails.weddingDetails?.groomMotherName || '—'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bride Card */}
+                <div className="p-4 rounded-2xl bg-cream-50 border border-gold/25 space-y-3">
+                  <div className="flex items-center gap-2 pb-2 border-b border-gold/15">
+                    <span className="text-lg">👰</span>
+                    <h4 className="font-heading text-sm font-bold text-maroon">Bride & Family Details</h4>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div>
+                      <span className="text-[10px] text-brandText-muted block uppercase font-bold tracking-wider">Bride Name</span>
+                      <span className="font-semibold text-brandText text-sm">
+                        {viewingWeddingDetails.weddingDetails?.brideName || viewingWeddingDetails.items?.[0]?.customizationData?.brideName || '—'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-brandText-muted block uppercase font-bold tracking-wider">Father's Name</span>
+                      <span className="font-medium text-brandText">
+                        {viewingWeddingDetails.weddingDetails?.brideFatherName || '—'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-brandText-muted block uppercase font-bold tracking-wider">Mother's Name</span>
+                      <span className="font-medium text-brandText">
+                        {viewingWeddingDetails.weddingDetails?.brideMotherName || '—'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Ceremony Details */}
+              <div className="space-y-3">
+                <h4 className="font-heading text-sm font-bold text-maroon flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-gold-dark" />
+                  <span>Ceremonies, Timings & Venues</span>
+                </h4>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  
+                  {/* Haldi */}
+                  <div className="p-3.5 rounded-2xl bg-amber-50/40 border border-amber-200/60 space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-amber-900 pb-1 border-b border-amber-200/50">
+                      <span>🌼</span>
+                      <span>Haldi Ceremony</span>
+                    </div>
+                    <div className="text-xs space-y-1">
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Date:</span>
+                        <span className="font-bold text-maroon">{viewingWeddingDetails.weddingDetails?.haldiDate || '—'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Timings:</span>
+                        <span className="font-medium text-brandText">{viewingWeddingDetails.weddingDetails?.haldiTimings || '—'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Venue:</span>
+                        <span className="font-medium text-brandText">{viewingWeddingDetails.weddingDetails?.haldiVenue || '—'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Wedding Ceremony */}
+                  <div className="p-3.5 rounded-2xl bg-rose-50/40 border border-rose-200/60 space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-rose-900 pb-1 border-b border-rose-200/50">
+                      <span>💍</span>
+                      <span>Wedding Ceremony</span>
+                    </div>
+                    <div className="text-xs space-y-1">
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Date:</span>
+                        <span className="font-bold text-maroon">
+                          {viewingWeddingDetails.weddingDetails?.weddingDate || viewingWeddingDetails.items?.[0]?.customizationData?.weddingDate || '—'}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Timings:</span>
+                        <span className="font-medium text-brandText">{viewingWeddingDetails.weddingDetails?.weddingTimings || '—'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Venue:</span>
+                        <span className="font-medium text-brandText">
+                          {viewingWeddingDetails.weddingDetails?.weddingVenue || viewingWeddingDetails.items?.[0]?.customizationData?.venue || '—'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mehendi */}
+                  <div className="p-3.5 rounded-2xl bg-emerald-50/40 border border-emerald-200/60 space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-900 pb-1 border-b border-emerald-200/50">
+                      <span>🌿</span>
+                      <span>Mehendi Ceremony</span>
+                    </div>
+                    <div className="text-xs space-y-1">
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Date:</span>
+                        <span className="font-bold text-maroon">{viewingWeddingDetails.weddingDetails?.mehendiDate || '—'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Timings:</span>
+                        <span className="font-medium text-brandText">{viewingWeddingDetails.weddingDetails?.mehendiTimings || '—'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-brandText-muted block font-semibold">Venue:</span>
+                        <span className="font-medium text-brandText">{viewingWeddingDetails.weddingDetails?.mehendiVenue || '—'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Special Notes / Music */}
+              <div className="p-4 rounded-2xl bg-cream-50 border border-gold/25 space-y-1.5">
+                <span className="text-[10px] text-brandText-muted uppercase font-bold tracking-wider block">
+                  Special Notes, Hashtag & Audio Wishes
+                </span>
+                <p className="text-xs text-brandText whitespace-pre-wrap leading-relaxed">
+                  {viewingWeddingDetails.weddingDetails?.additionalNotes ||
+                    viewingWeddingDetails.items?.[0]?.customizationData?.notes ||
+                    'No special notes provided.'}
+                </p>
+              </div>
+
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-cream-50 border-t border-gold/20 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setViewingWeddingDetails(null)}
+                className="px-5 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-brandText transition-all"
+              >
+                Close
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const targetOrd = viewingWeddingDetails;
+                  setViewingWeddingDetails(null);
+                  setSelectedOrder(targetOrd);
+                  setNewStatus(targetOrd.orderStatus);
+                  setPreviewUrl(targetOrd.previewVideoUrl || '');
+                  setFinalUrl(targetOrd.finalVideoUrl || '');
+                  setStatusNote('');
+                }}
+                className="px-5 py-2.5 rounded-xl bg-maroon text-gold-light hover:bg-maroon-light font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
+              >
+                <span>Update Order Status & Preview</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
       {/* Update Order Modal */}
       {selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
           <div className="w-full max-w-lg bg-white rounded-3xl p-6 border border-gold/30 shadow-2xl space-y-4">
-            <h3 className="font-heading text-xl font-bold text-maroon">
-              Update Order: {selectedOrder.orderNumber}
-            </h3>
-            <p className="text-xs text-brandText-muted">
-              Updating the status triggers an automatic customer email notification.
-            </p>
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="font-heading text-xl font-bold text-maroon">
+                  Update Order: {selectedOrder.orderNumber}
+                </h3>
+                <p className="text-xs text-brandText-muted">
+                  Updating the status triggers an automatic customer email notification.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedOrder(null)}
+                className="p-1 rounded-full hover:bg-gold/20 text-brandText-muted"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Quick Wedding Details Info Card */}
+            <div className="p-3 bg-cream-50 rounded-2xl border border-gold/25 text-xs space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-maroon flex items-center gap-1">
+                  <Heart className="w-3.5 h-3.5 text-rose-600" />
+                  <span>
+                    {selectedOrder.weddingDetails?.brideName || selectedOrder.items?.[0]?.customizationData?.brideName || 'Bride'}
+                    {' & '}
+                    {selectedOrder.weddingDetails?.groomName || selectedOrder.items?.[0]?.customizationData?.groomName || 'Groom'}
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const ord = selectedOrder;
+                    setSelectedOrder(null);
+                    setViewingWeddingDetails(ord);
+                  }}
+                  className="text-[10px] text-gold-dark font-bold underline hover:text-maroon"
+                >
+                  View Full Dossier ↗
+                </button>
+              </div>
+              <p className="text-[11px] text-brandText-muted">
+                Wedding: {selectedOrder.weddingDetails?.weddingDate || selectedOrder.items?.[0]?.customizationData?.weddingDate || 'Date not set'} • {selectedOrder.weddingDetails?.weddingVenue || selectedOrder.items?.[0]?.customizationData?.venue || 'Venue not set'}
+              </p>
+            </div>
 
             <form onSubmit={handleUpdateStatus} className="space-y-3.5">
               <div>
@@ -516,7 +966,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedOrder(null)}
-                  className="flex-1 py-2.5 rounded-xl bg-gray-100 text-xs font-semibold"
+                  className="flex-1 py-2.5 rounded-xl bg-gray-100 text-xs font-semibold hover:bg-gray-200 transition-all"
                 >
                   Cancel
                 </button>

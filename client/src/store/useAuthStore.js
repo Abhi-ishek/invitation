@@ -23,10 +23,10 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  register: async (name, email, password, phone, otp) => {
+  register: async (name, email, password, phone) => {
     set({ loading: true, error: null });
     try {
-      const res = await api.post('/auth/register', { name, email, password, phone, otp });
+      const res = await api.post('/auth/register', { name, email, password, phone });
       const { user, accessToken } = res.data;
       localStorage.setItem('ww_user', JSON.stringify(user));
       localStorage.setItem('ww_token', accessToken);

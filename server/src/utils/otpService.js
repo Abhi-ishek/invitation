@@ -125,9 +125,15 @@ export const sendSmsOtp = async ({ phone, otp, purpose = 'phone_verification' })
         console.log(`📱 SMS successfully dispatched via Fast2SMS to ${normalized}`);
         return { success: true, provider: 'fast2sms', data };
       } else {
-        const errorMsg = data?.message || 'Fast2SMS rejected request';
-        console.error(`⚠️ Fast2SMS API response:`, errorMsg);
-        return { success: false, provider: 'fast2sms', error: errorMsg };
+        const rawMsg = data?.message || 'Fast2SMS rejected request';
+        let friendlyMsg = rawMsg;
+        if (data?.status_code === 996 || rawMsg.includes('website verification')) {
+          friendlyMsg = 'Fast2SMS Account Notice: You must complete one-time Website Verification in your Fast2SMS dashboard (Menu -> OTP Message) before Fast2SMS allows automated SMS delivery to Indian mobile networks.';
+        } else if (data?.status_code === 999) {
+          friendlyMsg = 'Fast2SMS Account Notice: You need to complete one wallet transaction of ₹100 or more in Fast2SMS before using API routes.';
+        }
+        console.error(`⚠️ Fast2SMS API response (status ${data?.status_code}):`, friendlyMsg);
+        return { success: false, provider: 'fast2sms', error: friendlyMsg };
       }
     } catch (error) {
       console.error(`⚠️ Fast2SMS dispatch failed: ${error.message}`);

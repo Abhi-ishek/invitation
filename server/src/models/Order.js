@@ -80,6 +80,30 @@ const orderSchema = new mongoose.Schema(
       enum: ['Razorpay', 'COD', 'UPI'],
       default: 'Razorpay',
     },
+    weddingDetails: {
+      groomName: { type: String, default: '' },
+      groomMotherName: { type: String, default: '' },
+      groomFatherName: { type: String, default: '' },
+
+      brideName: { type: String, default: '' },
+      brideMotherName: { type: String, default: '' },
+      brideFatherName: { type: String, default: '' },
+
+      haldiDate: { type: String, default: '' },
+      haldiTimings: { type: String, default: '' },
+      haldiVenue: { type: String, default: '' },
+
+      weddingDate: { type: String, default: '' },
+      weddingTimings: { type: String, default: '' },
+      weddingVenue: { type: String, default: '' },
+
+      mehendiDate: { type: String, default: '' },
+      mehendiTimings: { type: String, default: '' },
+      mehendiVenue: { type: String, default: '' },
+
+      additionalNotes: { type: String, default: '' },
+      submittedAt: { type: Date, default: null },
+    },
     razorpayOrderId: {
       type: String,
       default: null,

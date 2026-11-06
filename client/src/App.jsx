@@ -13,6 +13,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
+import OrderCustomizationPage from './pages/OrderCustomizationPage';
 import OrderTrackingPage from './pages/OrderTrackingPage';
 import WishlistPage from './pages/WishlistPage';
 import MyOrdersPage from './pages/MyOrdersPage';
@@ -46,6 +47,8 @@ export default function App() {
             <Route path="/video/:identifier" element={<ProductDetailPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/customize-order/:orderNumber" element={<OrderCustomizationPage />} />
+            <Route path="/order-customization/:orderNumber" element={<OrderCustomizationPage />} />
             <Route path="/order-success/:orderNumber" element={<OrderSuccessPage />} />
             <Route path="/track" element={<OrderTrackingPage />} />
             <Route path="/track/:orderNumber" element={<OrderTrackingPage />} />

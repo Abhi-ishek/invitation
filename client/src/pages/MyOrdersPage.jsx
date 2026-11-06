@@ -98,7 +98,14 @@ export default function MyOrdersPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto">
+                <div className="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+                  <Link
+                    to={`/customize-order/${encodeURIComponent(ord.orderNumber)}`}
+                    className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-gold/15 hover:bg-gold/30 text-maroon text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-gold/40 shadow-sm transition-all"
+                  >
+                    <span>Wedding Details</span>
+                  </Link>
+
                   <Link
                     to={`/track/${encodeURIComponent(ord.orderNumber)}`}
                     className="flex-1 sm:flex-none px-5 py-2.5 rounded-full bg-maroon text-gold-light hover:bg-maroon-light text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm transition-all"

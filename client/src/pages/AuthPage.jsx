@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-import { Sparkles, Lock, Mail, User, Phone, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Lock, Mail, User, Phone, ArrowRight } from 'lucide-react';
 
 export default function AuthPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || '/';
   const noticeMessage = location.state?.message || '';
-  const { login, register, sendPhoneOtp, loading, error } = useAuthStore();
+  const { login, register, loading, error } = useAuthStore();
 
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
@@ -17,49 +17,9 @@ export default function AuthPage() {
   const [password, setPassword] = useState('');
   const [formError, setFormError] = useState('');
 
-  // OTP Verification States for Registration
-  const [otp, setOtp] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpCountdown, setOtpCountdown] = useState(0);
-  const [sendingOtp, setSendingOtp] = useState(false);
-  const [otpSuccessMsg, setOtpSuccessMsg] = useState('');
-
-  // OTP Resend Countdown Timer
-  useEffect(() => {
-    if (otpCountdown > 0) {
-      const timer = setTimeout(() => setOtpCountdown((prev) => prev - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [otpCountdown]);
-
-  const handleSendOtp = async () => {
-    if (!phone || phone.trim().length < 10) {
-      setFormError('Please enter a valid phone number (at least 10 digits)');
-      return false;
-    }
-
-    setFormError('');
-    setSendingOtp(true);
-    setOtpSuccessMsg('');
-
-    const res = await sendPhoneOtp(phone.trim());
-    setSendingOtp(false);
-
-    if (res.success) {
-      setOtpSent(true);
-      setOtpCountdown(res.data?.cooldownSeconds || 60);
-      setOtpSuccessMsg(`✨ Verification code sent via SMS to ${res.data?.phone || phone}`);
-      return true;
-    } else {
-      setFormError(res.message);
-      return false;
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
-    setOtpSuccessMsg('');
 
     if (isLogin) {
       const res = await login(email, password);
@@ -83,22 +43,7 @@ export default function AuthPage() {
         return;
       }
 
-      // If OTP has not been sent yet, trigger sending OTP
-      if (!otpSent) {
-        const sent = await handleSendOtp();
-        if (sent) {
-          setOtpSuccessMsg('Please enter the 6-digit OTP code below to complete registration.');
-        }
-        return;
-      }
-
-      // If OTP was sent but not entered
-      if (!otp.trim()) {
-        setFormError('Please enter the 6-digit OTP code sent to your phone');
-        return;
-      }
-
-      const res = await register(name, email, password, phone, otp);
+      const res = await register(name.trim(), email.trim(), password, phone.trim());
       if (res.success) navigate(from, { replace: true });
       else setFormError(res.message);
     }
@@ -107,9 +52,6 @@ export default function AuthPage() {
   const handleTabSwitch = (loginTab) => {
     setIsLogin(loginTab);
     setFormError('');
-    setOtpSuccessMsg('');
-    setOtp('');
-    setOtpSent(false);
   };
 
   const handlePrefill = (role) => {
@@ -195,14 +137,7 @@ export default function AuthPage() {
               </div>
 
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-semibold text-brandText">WhatsApp Phone Number</label>
-                  {otpSent && (
-                    <span className="text-[10px] text-emerald-700 font-semibold flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3 text-emerald-600 inline" /> OTP Dispatched
-                    </span>
-                  )}
-                </div>
+                <label className="block text-xs font-semibold text-brandText mb-1">WhatsApp Phone Number</label>
                 <div className="relative">
                   <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brandText-light" />
                   <input
@@ -210,54 +145,11 @@ export default function AuthPage() {
                     required
                     placeholder="+91 98765 43210"
                     value={phone}
-                    onChange={(e) => {
-                      setPhone(e.target.value);
-                      if (otpSent) {
-                        setOtpSent(false);
-                        setOtp('');
-                        setOtpSuccessMsg('');
-                      }
-                    }}
-                    className="w-full pl-10 pr-24 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold"
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold"
                   />
-                  <button
-                    type="button"
-                    disabled={sendingOtp || otpCountdown > 0 || !phone.trim()}
-                    onClick={handleSendOtp}
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-lg bg-maroon text-gold-light text-[10px] font-semibold hover:bg-maroon-dark transition-all disabled:opacity-40 disabled:pointer-events-none shadow-sm"
-                  >
-                    {sendingOtp ? 'Sending...' : otpCountdown > 0 ? `${otpCountdown}s` : otpSent ? 'Resend' : 'Send OTP'}
-                  </button>
                 </div>
               </div>
-
-              {/* 6-Digit OTP Field */}
-              {otpSent && (
-                <div className="p-3.5 rounded-2xl bg-cream-50 border border-gold/30 space-y-2.5 animate-fadeIn">
-                  <div className="flex items-center justify-between">
-                    <label className="block text-xs font-semibold text-brandText flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-emerald-600 inline" /> Enter 6-Digit SMS Verification Code
-                    </label>
-                  </div>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      maxLength={6}
-                      autoFocus
-                      required
-                      placeholder="• • • • • •"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                      className="w-full px-4 py-2.5 rounded-xl border border-gold/40 text-center font-mono font-bold tracking-[0.4em] text-base text-maroon bg-white focus:outline-none focus:border-maroon shadow-inner"
-                    />
-                  </div>
-                  {otpSuccessMsg && (
-                    <p className="text-[11px] text-emerald-700 font-medium text-center">
-                      {otpSuccessMsg}
-                    </p>
-                  )}
-                </div>
-              )}
             </>
           )}
 
@@ -299,7 +191,7 @@ export default function AuthPage() {
 
           <button
             type="submit"
-            disabled={loading || sendingOtp}
+            disabled={loading}
             className="w-full py-3.5 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-maroon font-bold text-xs uppercase tracking-wider shadow-gold-glow hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <span>
@@ -307,9 +199,7 @@ export default function AuthPage() {
                 ? 'Please wait...'
                 : isLogin
                 ? 'Sign In'
-                : !otpSent
-                ? 'Get OTP & Register'
-                : 'Verify OTP & Create Account'}
+                : 'Create Account'}
             </span>
             <ArrowRight className="w-4 h-4" />
           </button>
