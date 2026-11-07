@@ -50,7 +50,7 @@ export default function ShopPage() {
           badge: badge !== 'All' ? badge : undefined,
           maxPrice: maxPrice < 7000 ? maxPrice : undefined,
           sort,
-          limit: 50,
+          limit: 100,
         });
         setProducts(res.data.products || []);
       } catch (err) {

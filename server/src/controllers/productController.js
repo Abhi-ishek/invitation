@@ -12,7 +12,7 @@ export const getProducts = async (req, res, next) => {
       badge,
       sort = 'featured',
       page = 1,
-      limit = 50,
+      limit = 100,
     } = req.query;
 
     const query = { isActive: true };

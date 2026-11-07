@@ -54,8 +54,8 @@ export default function AdminPage() {
     setLoading(true);
     try {
       const [orderRes, prodRes, verifRes] = await Promise.all([
-        videoService.getAllOrders({ limit: 50 }),
-        videoService.getProducts({ limit: 50 }),
+        videoService.getAllOrders({ limit: 100 }),
+        videoService.getProducts({ limit: 100 }),
         videoService.getPendingUpiVerifications().catch(() => ({ data: [] })),
       ]);
       setOrders(orderRes.data?.orders || []);
