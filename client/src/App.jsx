@@ -5,7 +5,6 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import CartDrawer from './components/CartDrawer';
 import MobileBottomNav from './components/MobileBottomNav';
-import IntroVideoOverlay from './components/IntroVideoOverlay';
 
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
@@ -28,9 +27,6 @@ export default function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col bg-cream text-brandText selection:bg-gold selection:text-maroon">
-        {/* Fullscreen 15-second Intro Video Overlay */}
-        <IntroVideoOverlay />
-
         {/* Sticky Luxury Navbar */}
         <Navbar />
 
