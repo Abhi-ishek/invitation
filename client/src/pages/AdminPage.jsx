@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
+import SEO from '../components/SEO';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ShieldCheck,
@@ -197,6 +198,7 @@ ${wd.additionalNotes || cd.notes || 'None provided'}
 
   return (
     <div className="min-h-screen bg-cream py-10 sm:py-14">
+      <SEO title="Studio Administration Atelier" noindex />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Header */}

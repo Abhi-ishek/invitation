@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import SEO from '../components/SEO';
 import VideoCard from '../components/VideoCard';
 import videoService from '../services/videoService';
 import { Search, SlidersHorizontal, Sparkles, Filter, X } from 'lucide-react';
@@ -27,7 +28,7 @@ export default function ShopPage() {
   const [search, setSearch] = useState(initialSearch);
   const [badge, setBadge] = useState('All');
   const [sort, setSort] = useState('popular');
-  const [maxPrice, setMaxPrice] = useState(7000);
+  const [maxPrice, setMaxPrice] = useState(1000);
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,7 +49,7 @@ export default function ShopPage() {
           category: category !== 'All' ? category : undefined,
           search: search || undefined,
           badge: badge !== 'All' ? badge : undefined,
-          maxPrice: maxPrice < 7000 ? maxPrice : undefined,
+          maxPrice: maxPrice < 1000 ? maxPrice : undefined,
           sort,
           limit: 100,
         });
@@ -66,6 +67,13 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-cream py-10 sm:py-16">
+      <SEO
+        title={category !== 'All' ? `${category} Video Invitations` : 'Browse Wedding Video Invitations'}
+        description={`Explore 57+ handcrafted video invitations. Filter by ${category !== 'All' ? category : '3D AI, Royal Palace, Hindi Nimantran'} with 4K delivery starting at ₹300.`}
+        canonicalUrl="/shop"
+        keywords={`wedding video invitations, ${category}, 3d ai wedding invite, shubh vivah video`}
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Title */}
@@ -168,9 +176,9 @@ export default function ShopPage() {
               <span className="text-brandText-muted">Max Price: ₹{maxPrice.toLocaleString('en-IN')}</span>
               <input
                 type="range"
-                min="1999"
-                max="7000"
-                step="500"
+                min="300"
+                max="1000"
+                step="50"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
                 className="accent-maroon cursor-pointer"
@@ -196,7 +204,7 @@ export default function ShopPage() {
                 setCategory('All');
                 setSearch('');
                 setBadge('All');
-                setMaxPrice(7000);
+                setMaxPrice(1000);
               }}
               className="mt-4 px-4 py-2 rounded-full bg-maroon text-gold-light text-xs font-semibold"
             >

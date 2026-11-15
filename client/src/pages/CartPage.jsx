@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
@@ -47,6 +48,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="min-h-[70vh] bg-cream flex items-center justify-center p-6">
+        <SEO title="Your Shopping Cart" noindex />
         <div className="text-center max-w-md space-y-4">
           <div className="w-16 h-16 mx-auto rounded-full bg-gold/15 flex items-center justify-center text-gold-dark">
             <Sparkles className="w-8 h-8" />
@@ -69,6 +71,7 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-cream py-10 sm:py-16">
+      <SEO title="Your Shopping Cart" noindex />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb */}

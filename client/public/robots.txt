@@ -1,0 +1,30 @@
+# Robots.txt for Wedding Wishcraft
+# https://weddingwishcraft.com
+
+User-agent: *
+Allow: /
+Allow: /shop
+Allow: /product/
+Allow: /catalog
+Allow: /about
+Allow: /contact
+
+# Disallow private user data, checkout flows & administration
+Disallow: /checkout
+Disallow: /cart
+Disallow: /customize-order/
+Disallow: /order-customization/
+Disallow: /order-success/
+Disallow: /track
+Disallow: /wishlist
+Disallow: /my-orders
+Disallow: /payments
+Disallow: /login
+Disallow: /register
+Disallow: /admin
+Disallow: /api/
+
+# Host & Sitemap
+Host: https://weddingwishcraft.com
+Sitemap: https://weddingwishcraft.com/sitemap.xml
+

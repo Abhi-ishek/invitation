@@ -16,7 +16,7 @@ const CLOUD_NAME = (process.env.CLOUDINARY_CLOUD_NAME || 'vrljkq9h').trim();
 const makeVideoUrl = (id) => `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/q_auto,vc_auto/${id}.mp4`;
 const makeThumbUrl = (id, sec = 1) => `https://res.cloudinary.com/${CLOUD_NAME}/video/upload/c_scale,f_auto,q_auto,so_${sec},w_600/${id}.jpg`;
 
-export const ALL_57_PRODUCTS = [
+const RAW_57_PRODUCTS = [
   // ==========================================
   // ORIGINAL 18 WEDDING SAMPLES (Sample_1 to Sample_18)
   // ==========================================
@@ -1120,6 +1120,41 @@ export const ALL_57_PRODUCTS = [
     salesCount: 310,
   },
 ];
+
+export function getPriceForVideo(previewVideoUrl) {
+  const url = previewVideoUrl || '';
+
+  // 1. 3D AI Hindi: 1600 50% discount 800
+  if (url.includes('3D_Ai_Wedding_Invitation_12_Hindi') || url.includes('3D_Ai_Wedding_Invitation_15_Hindi')) {
+    return { originalPrice: 1600, price: 800, discountPercent: 50 };
+  }
+
+  // 2. 3D AI Wedding: (1000) discount 50% show 500
+  if (url.includes('3D_Ai_Wedding_Invitation')) {
+    return { originalPrice: 1000, price: 500, discountPercent: 50 };
+  }
+
+  // 3. Hindi Sample: 1400 50% discount 700
+  if (url.includes('Hindi_Sample')) {
+    return { originalPrice: 1400, price: 700, discountPercent: 50 };
+  }
+
+  // 4. Engagement Sample: 600 50% discount 300
+  if (url.includes('Engagement_Sample')) {
+    return { originalPrice: 600, price: 300, discountPercent: 50 };
+  }
+
+  // 5. Wedding Sample (Sample_1 to 18, Caricature_Sample): 600 discount 50% show 300
+  return { originalPrice: 600, price: 300, discountPercent: 50 };
+}
+
+export const ALL_57_PRODUCTS = RAW_57_PRODUCTS.map((item) => {
+  const pricing = getPriceForVideo(item.previewVideo);
+  return {
+    ...item,
+    ...pricing,
+  };
+});
 
 export async function syncAllProducts() {
   console.log('Connecting to MongoDB Atlas...');

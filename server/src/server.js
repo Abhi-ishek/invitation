@@ -21,6 +21,7 @@ import couponRoutes from './routes/couponRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';
 import otpRoutes from './routes/otpRoutes.js';
+import seoRoutes from './routes/seoRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -81,6 +82,9 @@ app.get('/', (req, res) => {
     },
   });
 });
+
+// Root SEO routes (sitemap.xml & robots.txt)
+app.use('/', seoRoutes);
 
 // Mount Routes
 app.use('/api/health', healthRoutes);

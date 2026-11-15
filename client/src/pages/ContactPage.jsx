@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from '../components/SEO';
 import videoService from '../services/videoService';
 import { Mail, Phone, MapPin, MessageCircle, Send, CheckCircle2, Sparkles } from 'lucide-react';
 
@@ -36,6 +37,11 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-cream py-12 sm:py-20">
+      <SEO
+        title="Contact Wedding Concierge"
+        description="Get in touch with Wedding Wishcraft. Call or WhatsApp +91 7018353733 for custom 3D AI video invites, script alterations, and expedited 12-hour deliveries."
+        canonicalUrl="/contact"
+      />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

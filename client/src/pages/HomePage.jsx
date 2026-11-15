@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import HeroSection from '../components/HeroSection';
 import ShopByCategory from '../components/ShopByCategory';
 import VideoCard from '../components/VideoCard';
@@ -21,8 +22,8 @@ const DEFAULT_TRENDING = [
     tags: ['3D AI', 'Royal', 'Cinematic'],
     rating: 4.98,
     numReviews: 210,
-    price: 3499,
-    originalPrice: 6999,
+    price: 300,
+    originalPrice: 600,
     discountPercent: 50,
     badge: 'Bestseller',
     thumbnail: makeThumbUrl('Sample_1', 1),
@@ -36,8 +37,8 @@ const DEFAULT_TRENDING = [
     tags: ['Classic', 'Rajputana', 'Royal'],
     rating: 4.95,
     numReviews: 184,
-    price: 2499,
-    originalPrice: 4999,
+    price: 300,
+    originalPrice: 600,
     discountPercent: 50,
     badge: 'Bestseller',
     thumbnail: makeThumbUrl('Sample_2', 1),
@@ -51,8 +52,8 @@ const DEFAULT_TRENDING = [
     tags: ['Engagement', 'Rings', 'Save The Date'],
     rating: 4.94,
     numReviews: 160,
-    price: 1499,
-    originalPrice: 2999,
+    price: 300,
+    originalPrice: 600,
     discountPercent: 50,
     badge: 'New',
     thumbnail: makeThumbUrl('Engagement_Sample_1', 1),
@@ -66,9 +67,9 @@ const DEFAULT_TRENDING = [
     tags: ['Luxury', 'Grand', 'Dreamy'],
     rating: 4.93,
     numReviews: 118,
-    price: 3299,
-    originalPrice: 6499,
-    discountPercent: 49,
+    price: 300,
+    originalPrice: 600,
+    discountPercent: 50,
     badge: 'Bestseller',
     thumbnail: makeThumbUrl('Sample_6', 1),
     previewVideo: makeVideoUrl('Sample_6'),
@@ -127,6 +128,12 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#faf6f0]">
+      <SEO
+        title="Luxury 3D AI & Royal Wedding Invitation Videos"
+        description="Craft your personalized 4K wedding invitation video. Choose from 57+ luxury themes: 3D AI couple likeness, Royal Palace mandaps, and Hindi Shubh Vivah delivered in 24 hours."
+        canonicalUrl="/"
+      />
+
       {/* 1. Hero Section */}
       <HeroSection />
 

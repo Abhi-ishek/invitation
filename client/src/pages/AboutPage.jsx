@@ -1,9 +1,15 @@
 import React from 'react';
+import SEO from '../components/SEO';
 import { Sparkles, Heart, Film, Users, ShieldCheck, Clock } from 'lucide-react';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-cream py-16">
+      <SEO
+        title="About Our Atelier"
+        description="Learn about Wedding Wishcraft - A bespoke atelier of motion artists and sound designers crafting 4K 3D AI and royal Indian wedding invitation cinema."
+        canonicalUrl="/about"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Intro */}

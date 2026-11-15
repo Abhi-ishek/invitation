@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
@@ -172,6 +173,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-cream py-10 sm:py-16">
+      <SEO title="Secure Checkout" noindex />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <h1 className="font-heading text-3xl sm:text-4xl font-bold text-maroon mb-2 text-center sm:text-left">

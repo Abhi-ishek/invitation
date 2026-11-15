@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import SEO from '../components/SEO';
 import videoService from '../services/videoService';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
@@ -164,8 +165,46 @@ export default function ProductDetailPage() {
       ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
       : 0);
 
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.title,
+    image: [product.thumbnail, ...(product.galleryImages || [])],
+    description: product.description,
+    sku: product.slug,
+    category: product.category,
+    brand: {
+      '@type': 'Brand',
+      name: 'Wedding Wishcraft',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://weddingwishcraft.com/product/${product.slug}`,
+      priceCurrency: 'INR',
+      price: product.price,
+      priceValidUntil: '2027-12-31',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: product.rating || 4.95,
+      reviewCount: product.numReviews || 120,
+    },
+  };
+
   return (
     <div className="min-h-screen bg-cream py-10 sm:py-16">
+      <SEO
+        title={product.title}
+        description={`${product.description} Personalized 4K video invitation delivered in ${product.deliveryHours || 24} hours for ₹${product.price}.`}
+        canonicalUrl={`/product/${product.slug}`}
+        image={product.thumbnail}
+        type="product"
+        keywords={`${product.tags?.join(', ')}, ${product.category}, wedding video invitation`}
+        jsonLd={productJsonLd}
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb Navigation */}

@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://weddingwishcraft.com/</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/about</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/contact</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop?category=3D%20AI%20Invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop?category=Royal%20Traditional</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop?category=Caricature%20%26%20Save%20The%20Date</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop?category=Minimal%20%26%20Modern</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop?category=Muslim%20Invitations</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop?category=South%20Indian</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/shop?category=Custom%20Designs</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-hyper-real-royal-palace-ai-wedding-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_1.jpg</image:loc>
+      <image:title>3D Hyper-Real Royal Palace AI Wedding Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_1.jpg</video:thumbnail_loc>
+      <video:title>3D Hyper-Real Royal Palace AI Wedding Invitation</video:title>
+      <video:description>Experience your likeness rendered into a grand palace ballroom with 3D fireworks, customizable royal attire, and orchestral audio.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_1.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/jodhpur-umaid-palace-heritage-rajputana-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_2.jpg</image:loc>
+      <image:title>Jodhpur Umaid Palace Heritage Rajputana Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_2.jpg</video:thumbnail_loc>
+      <video:title>Jodhpur Umaid Palace Heritage Rajputana Invite</video:title>
+      <video:description>Regal arches, dancing royal peacocks, gold foil text reveal, and shehnai musical score for an opulent Rajputana celebration.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_2.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/sacred-vedic-saptapadi-and-golden-mandap-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_3.jpg</image:loc>
+      <image:title>Sacred Vedic Saptapadi &amp; Golden Mandap Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_3.jpg</video:thumbnail_loc>
+      <video:title>Sacred Vedic Saptapadi &amp; Golden Mandap Invite</video:title>
+      <video:description>Golden Kalash, sacred agni animations, Sanskrit shlokas, and traditional floral mandap setting for timeless Hindu weddings.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_3.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/kalyana-vaibhogam-south-indian-temple-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_4.jpg</image:loc>
+      <image:title>Kalyana Vaibhogam South Indian Temple Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_4.jpg</video:thumbnail_loc>
+      <video:title>Kalyana Vaibhogam South Indian Temple Invite</video:title>
+      <video:description>Authentic Carnatic instrumental, brass vilakku lamps, Kanjeevaram silk borders, and grand Gopuram architecture.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_4.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/emerald-and-gold-bismillah-nikah-mubarak-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_5.jpg</image:loc>
+      <image:title>Emerald &amp; Gold Bismillah Nikah Mubarak Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_5.jpg</video:thumbnail_loc>
+      <video:title>Emerald &amp; Gold Bismillah Nikah Mubarak Invitation</video:title>
+      <video:description>Quranic Ayah &quot;And We created you in pairs&quot; with intricate gold arabesque patterns, glowing lantern animations, and royal emerald hues.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_5.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-celestial-royal-mandap-ai-celebration-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_6.jpg</image:loc>
+      <image:title>3D Celestial Royal Mandap AI Celebration Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_6.jpg</video:thumbnail_loc>
+      <video:title>3D Celestial Royal Mandap AI Celebration Film</video:title>
+      <video:description>Floating golden chandeliers, starlight canopy, AI generated couple likenesses descending down palatial grand stairs.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_6.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/editorial-noir-and-champagne-velvet-e-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_7.jpg</image:loc>
+      <image:title>Editorial Noir &amp; Champagne Velvet E-Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_7.jpg</video:thumbnail_loc>
+      <video:title>Editorial Noir &amp; Champagne Velvet E-Invite</video:title>
+      <video:description>Ultra-modern typography with champagne particle dust, contemporary photo parallax, and deep maroon velvet aesthetics.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_7.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/udaipur-lake-palace-golden-shimmer-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_8.jpg</image:loc>
+      <image:title>Udaipur Lake Palace Golden Shimmer Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_8.jpg</video:thumbnail_loc>
+      <video:title>Udaipur Lake Palace Golden Shimmer Invite</video:title>
+      <video:description>Breathtaking lakeside palaces, golden hour reflections, royal crest emblems, and enchanting sitar symphony.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_8.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/tirupati-balaji-sacred-vilakku-south-indian-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_9.jpg</image:loc>
+      <image:title>Tirupati Balaji Sacred Vilakku South Indian Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_9.jpg</video:thumbnail_loc>
+      <video:title>Tirupati Balaji Sacred Vilakku South Indian Invite</video:title>
+      <video:description>Lord Venkateshwara auspicious motifs, sacred conch &amp; chakra, shimmering golden bells, and classical carnatic melody.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_9.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/mughal-miniature-garden-nikah-and-walima-teaser</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_10.jpg</image:loc>
+      <image:title>Mughal Miniature Garden Nikah &amp; Walima Teaser</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_10.jpg</video:thumbnail_loc>
+      <video:title>Mughal Miniature Garden Nikah &amp; Walima Teaser</video:title>
+      <video:description>Poetic miniature art style with blooming lotus ponds, nightingale songbirds, and golden Islamic arches.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_10.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/the-whimsical-couple-animated-love-story-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_11.jpg</image:loc>
+      <image:title>The Whimsical Couple Animated Love Story Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_11.jpg</video:thumbnail_loc>
+      <video:title>The Whimsical Couple Animated Love Story Film</video:title>
+      <video:description>Adorable custom animated caricatures detailing how you met, your favorite coffee spot, the proposal, and wedding dates.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_11.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/bespoke-haute-couture-luxury-wedding-masterpiece</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_12.jpg</image:loc>
+      <image:title>Bespoke Haute Couture Luxury Wedding Masterpiece</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_12.jpg</video:thumbnail_loc>
+      <video:title>Bespoke Haute Couture Luxury Wedding Masterpiece</video:title>
+      <video:description>Work 1-on-1 with our Creative Director to build a 100% tailor-made video invitation matching your exact wedding theme.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_12.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/jaipur-sheesh-mahal-mirror-reflection-royal-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_13.jpg</image:loc>
+      <image:title>Jaipur Sheesh Mahal Mirror Reflection Royal Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_13.jpg</video:thumbnail_loc>
+      <video:title>Jaipur Sheesh Mahal Mirror Reflection Royal Invite</video:title>
+      <video:description>Glittering Belgian glass mosaics, candle reflections, Rajasthani royal elephant procession, and regal sitar melodies.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_13.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-galaxy-fireworks-and-royal-entry-ai-e-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_14.jpg</image:loc>
+      <image:title>3D Galaxy Fireworks &amp; Royal Entry AI E-Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_14.jpg</video:thumbnail_loc>
+      <video:title>3D Galaxy Fireworks &amp; Royal Entry AI E-Invite</video:title>
+      <video:description>Cinematic drone shot flying through fireworks into an illuminated royal amphitheater where your 3D avatars greet the guests.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_14.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/royal-mayur-peacock-and-lotus-blossom-traditional-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_15.jpg</image:loc>
+      <image:title>Royal Mayur Peacock &amp; Lotus Blossom Traditional Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_15.jpg</video:thumbnail_loc>
+      <video:title>Royal Mayur Peacock &amp; Lotus Blossom Traditional Invite</video:title>
+      <video:description>Iridescent peacock feathers unfurling with blooming sacred lotus blossoms, gold foil shlokas, and flute melodies.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_15.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/madurai-meenakshi-traditional-mangalyam-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_16.jpg</image:loc>
+      <image:title>Madurai Meenakshi Traditional Mangalyam Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_16.jpg</video:thumbnail_loc>
+      <video:title>Madurai Meenakshi Traditional Mangalyam Invite</video:title>
+      <video:description>Auspicious Thaali Mangalyam animation with sacred jasmine garlands, brass deepams, and authentic Vedic chants.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_16.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/modern-luxe-monogram-glassmorphism-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_17.jpg</image:loc>
+      <image:title>Modern Luxe Monogram Glassmorphism Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_17.jpg</video:thumbnail_loc>
+      <video:title>Modern Luxe Monogram Glassmorphism Invite</video:title>
+      <video:description>Frosted glass UI cards, floating golden sparkles, clean luxury serif typography, and ambient acoustic chillhop soundtrack.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_17.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/grand-noor-mahal-royal-baraat-and-varmala-celebration</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_18.jpg</image:loc>
+      <image:title>Grand Noor Mahal Royal Baraat &amp; Varmala Celebration</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Sample_18.jpg</video:thumbnail_loc>
+      <video:title>Grand Noor Mahal Royal Baraat &amp; Varmala Celebration</video:title>
+      <video:description>Dhol nagada celebration, fireworks over Noor Mahal arches, ceremonial elephant procession, and joyful wedding vows.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Sample_18.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/royal-golden-ring-ceremony-and-save-the-date</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_1.jpg</image:loc>
+      <image:title>Royal Golden Ring Ceremony &amp; Save The Date</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_1.jpg</video:thumbnail_loc>
+      <video:title>Royal Golden Ring Ceremony &amp; Save The Date</video:title>
+      <video:description>Shimmering diamond ring exchange animation surrounded by palatial arches, gold glitter, and romantic orchestral strings.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_1.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/pastel-flora-roka-and-engagement-announcement</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_2.jpg</image:loc>
+      <image:title>Pastel Flora Roka &amp; Engagement Announcement</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_2.jpg</video:thumbnail_loc>
+      <video:title>Pastel Flora Roka &amp; Engagement Announcement</video:title>
+      <video:description>Soft blush peonies, eucalyptus leaves, watercolor calligraphy, and gentle acoustic guitar melody for intimate Roka ceremonies.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_2.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/bollywood-beats-grand-ring-exchange-teaser</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_3.jpg</image:loc>
+      <image:title>Bollywood Beats Grand Ring Exchange Teaser</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_3.jpg</video:thumbnail_loc>
+      <video:title>Bollywood Beats Grand Ring Exchange Teaser</video:title>
+      <video:description>High energy Bollywood dhol beats with sparkling confetti, neon ring accents, and celebratory dance energy.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_3.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/enchanted-garden-sagan-and-ring-ceremony-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_4.jpg</image:loc>
+      <image:title>Enchanted Garden Sagan &amp; Ring Ceremony Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_4.jpg</video:thumbnail_loc>
+      <video:title>Enchanted Garden Sagan &amp; Ring Ceremony Invite</video:title>
+      <video:description>Fairy lights twinkling through botanical arches, glowing fireflies, and romantic piano melodies for Sagan and engagement nights.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_4.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/royal-emerald-ring-exchange-and-sagan-ceremony-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_5.jpg</image:loc>
+      <image:title>Royal Emerald Ring Exchange &amp; Sagan Ceremony Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_5.jpg</video:thumbnail_loc>
+      <video:title>Royal Emerald Ring Exchange &amp; Sagan Ceremony Invite</video:title>
+      <video:description>Shimmering diamond ring exchange animation surrounded by emerald velvet foliage and sparkling champagne celebration music.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_5.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/imperial-velvet-engagement-celebration-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_6.jpg</image:loc>
+      <image:title>Imperial Velvet Engagement Celebration Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_6.jpg</video:thumbnail_loc>
+      <video:title>Imperial Velvet Engagement Celebration Film</video:title>
+      <video:description>Deep royal velvet backdrop with intricate zardozi embroidery animation, gold foil script, and royal shehnai prelude.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_6.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/sparkling-champagne-romance-save-the-date-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_7.jpg</image:loc>
+      <image:title>Sparkling Champagne Romance Save The Date Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_7.jpg</video:thumbnail_loc>
+      <video:title>Sparkling Champagne Romance Save The Date Film</video:title>
+      <video:description>Champagne toast bubbles, rose gold sparkles, and modern serif typography revealing your wedding dates in style.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_7.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/sunset-beachside-destination-engagement-teaser</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_8.jpg</image:loc>
+      <image:title>Sunset Beachside Destination Engagement Teaser</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Engagement_Sample_8.jpg</video:thumbnail_loc>
+      <video:title>Sunset Beachside Destination Engagement Teaser</video:title>
+      <video:description>Golden waves crashing on tropical shores, seaside cabana lantern glow, and romantic acoustic guitar chords.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Engagement_Sample_8.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-royal-mandap-grand-palatial-wedding-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_1.jpg</image:loc>
+      <image:title>3D AI Royal Mandap Grand Palatial Wedding Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_1.jpg</video:thumbnail_loc>
+      <video:title>3D AI Royal Mandap Grand Palatial Wedding Invitation</video:title>
+      <video:description>Cinematic 3D avatar likeness of bride &amp; groom entering an illuminated royal mandap with floating golden lanterns and personalized royal greetings.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_1.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-celestial-stardust-romance-wedding-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_2.jpg</image:loc>
+      <image:title>3D AI Celestial Stardust Romance Wedding Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_2.jpg</video:thumbnail_loc>
+      <video:title>3D AI Celestial Stardust Romance Wedding Film</video:title>
+      <video:description>Enchanting 3D fairy-tale ballroom with floating stardust, sparkling fireworks, and lifelike couple avatars dancing in royal couture.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_2.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-imperial-fort-heritage-vow-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_3.jpg</image:loc>
+      <image:title>3D AI Imperial Fort Heritage Vow Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_3.jpg</video:thumbnail_loc>
+      <video:title>3D AI Imperial Fort Heritage Vow Invitation</video:title>
+      <video:description>Majestic fortress arches, lit diya pathways, and 3D couple likeness dressed in royal sherwani and lehenga for a majestic celebration.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_3.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-royal-rajputana-royal-arch-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_5.jpg</image:loc>
+      <image:title>3D AI Royal Rajputana Royal Arch Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_5.jpg</video:thumbnail_loc>
+      <video:title>3D AI Royal Rajputana Royal Arch Invitation</video:title>
+      <video:description>Carved golden arches, blossoming marigold flowers, and lifelike AI couple walking down an imperial carpeted walkway.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_5.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-golden-chandelier-ballroom-wedding-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_6.jpg</image:loc>
+      <image:title>3D AI Golden Chandelier Ballroom Wedding Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_6.jpg</video:thumbnail_loc>
+      <video:title>3D AI Golden Chandelier Ballroom Wedding Invite</video:title>
+      <video:description>Opulent European-Indian fusion ballroom with massive crystal chandeliers, golden champagne fountains, and 3D couple avatars.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_6.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-sacred-temple-bell-divine-vivah-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_7.jpg</image:loc>
+      <image:title>3D AI Sacred Temple Bell Divine Vivah Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_7.jpg</video:thumbnail_loc>
+      <video:title>3D AI Sacred Temple Bell Divine Vivah Invite</video:title>
+      <video:description>Ringing golden temple bells, cascading rose petal rain, and 3D traditional attire couple likeness seeking auspicious blessings.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_7.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-grand-noor-darbar-regal-wedding-teaser</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_8.jpg</image:loc>
+      <image:title>3D AI Grand Noor Darbar Regal Wedding Teaser</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_8.jpg</video:thumbnail_loc>
+      <video:title>3D AI Grand Noor Darbar Regal Wedding Teaser</video:title>
+      <video:description>Towering palace gates opening to reveal 3D avatars of the bride &amp; groom accompanied by royal trumpets and celebratory fireworks.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_8.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-vintage-romance-floral-glasshouse-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_9.jpg</image:loc>
+      <image:title>3D AI Vintage Romance Floral Glasshouse Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_9.jpg</video:thumbnail_loc>
+      <video:title>3D AI Vintage Romance Floral Glasshouse Invite</video:title>
+      <video:description>Enchanting botanical conservatory lit with fairy lights, lush floral arrangements, and hyper-real 3D avatars celebrating their union.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_9.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-sheesh-mahal-royal-reflection-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_10.jpg</image:loc>
+      <image:title>3D AI Sheesh Mahal Royal Reflection Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_10.jpg</video:thumbnail_loc>
+      <video:title>3D AI Sheesh Mahal Royal Reflection Invite</video:title>
+      <video:description>Intricate glass mosaic palace with thousands of glittering reflections and 3D royal couple avatars in traditional velvet embroidery.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_10.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-floating-lotus-lake-palace-celebration</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_11.jpg</image:loc>
+      <image:title>3D AI Floating Lotus Lake Palace Celebration</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_11.jpg</video:thumbnail_loc>
+      <video:title>3D AI Floating Lotus Lake Palace Celebration</video:title>
+      <video:description>Serene lakeside palace at twilight with glowing floating lotus candles and 3D couple likeness descending a marble staircase.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_11.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-shubh-vivah-traditional-hindi-nimantran-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_12_Hindi.jpg</image:loc>
+      <image:title>3D AI Shubh Vivah Traditional Hindi Nimantran Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_12_Hindi.jpg</video:thumbnail_loc>
+      <video:title>3D AI Shubh Vivah Traditional Hindi Nimantran Film</video:title>
+      <video:description>Auspicious Hindi shlokas with personalized 3D avatar couple, golden Kalash, and Shubh Vivah calligraphy for an unforgettable royal invite.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_12_Hindi.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-sunset-royal-jharokha-heritage-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_13.jpg</image:loc>
+      <image:title>3D AI Sunset Royal Jharokha Heritage Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_13.jpg</video:thumbnail_loc>
+      <video:title>3D AI Sunset Royal Jharokha Heritage Invitation</video:title>
+      <video:description>Golden hour sunlight streaming through carved Jharokha palace windows framing the 3D couple likeness in opulent attire.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_13.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-emerald-royale-mughal-garden-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_14.jpg</image:loc>
+      <image:title>3D AI Emerald Royale Mughal Garden Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_14.jpg</video:thumbnail_loc>
+      <video:title>3D AI Emerald Royale Mughal Garden Invitation</video:title>
+      <video:description>Geometric Mughal gardens, fountain reflections, emerald gold arches, and 3D animated couple avatars greeting guests.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_14.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-shahi-vivah-sanskar-hindi-video-patrika</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_15_Hindi.jpg</image:loc>
+      <image:title>3D AI Shahi Vivah Sanskar Hindi Video Patrika</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_15_Hindi.jpg</video:thumbnail_loc>
+      <video:title>3D AI Shahi Vivah Sanskar Hindi Video Patrika</video:title>
+      <video:description>Divine Sanskrit Ganesh Vandana and Shahi Vivah calligraphy with hyper-realistic 3D couple likeness in traditional festive attire.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_15_Hindi.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-royal-swarn-mandir-divine-union-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_18.jpg</image:loc>
+      <image:title>3D AI Royal Swarn Mandir Divine Union Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_18.jpg</video:thumbnail_loc>
+      <video:title>3D AI Royal Swarn Mandir Divine Union Invite</video:title>
+      <video:description>Gleaming golden temple sanctum with sacred diya lights, chanting audio, and regal 3D couple likeness celebrating holy matrimony.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_18.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-maharaja-royal-pavilion-vivah-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_20.jpg</image:loc>
+      <image:title>3D AI Maharaja Royal Pavilion Vivah Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_20.jpg</video:thumbnail_loc>
+      <video:title>3D AI Maharaja Royal Pavilion Vivah Film</video:title>
+      <video:description>Carpeted Maharaja pavilions, royal fanfare trumpets, flower curtain reveals, and 3D avatars in regal bridal wear.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_20.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-golden-hour-palace-courtyard-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_21.jpg</image:loc>
+      <image:title>3D AI Golden Hour Palace Courtyard Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_21.jpg</video:thumbnail_loc>
+      <video:title>3D AI Golden Hour Palace Courtyard Invitation</video:title>
+      <video:description>Open palace courtyard bathed in warm golden twilight with dancing peacock motifs and 3D couple likeness.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_21.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/3d-ai-grand-baarat-and-varmala-royal-spectacle</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_22.jpg</image:loc>
+      <image:title>3D AI Grand Baarat &amp; Varmala Royal Spectacle</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/3D_Ai_Wedding_Invitation_22.jpg</video:thumbnail_loc>
+      <video:title>3D AI Grand Baarat &amp; Varmala Royal Spectacle</video:title>
+      <video:description>Grand royal wedding spectacle featuring animated 3D couple avatars exchange varmala amidst fireworks and palace celebrations.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/3D_Ai_Wedding_Invitation_22.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/whimsical-illustrated-couple-cute-love-story-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_1.jpg</image:loc>
+      <image:title>Whimsical Illustrated Couple Cute Love Story Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_1.jpg</video:thumbnail_loc>
+      <video:title>Whimsical Illustrated Couple Cute Love Story Invite</video:title>
+      <video:description>Charming animated couple caricatures portraying your first meet, coffee dates, proposal, and wedding celebration dates.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Caricature_Sample_1.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/animated-travel-adventure-couple-caricature-e-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_2.jpg</image:loc>
+      <image:title>Animated Travel Adventure Couple Caricature E-Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_2.jpg</video:thumbnail_loc>
+      <video:title>Animated Travel Adventure Couple Caricature E-Invite</video:title>
+      <video:description>Quirky hand-drawn caricature animation highlighting the globe-trotting couple with airplanes, passports, and destination wedding dates.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Caricature_Sample_2.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/fairytale-storybook-illustrated-wedding-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_4.jpg</image:loc>
+      <image:title>Fairytale Storybook Illustrated Wedding Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_4.jpg</video:thumbnail_loc>
+      <video:title>Fairytale Storybook Illustrated Wedding Invitation</video:title>
+      <video:description>Vintage storybook pages turning to reveal fairytale animated caricatures of the bride &amp; groom embarking on their happily ever after.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Caricature_Sample_4.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/bollywood-cinema-filmy-couple-animated-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_5.jpg</image:loc>
+      <image:title>Bollywood Cinema Filmy Couple Animated Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Caricature_Sample_5.jpg</video:thumbnail_loc>
+      <video:title>Bollywood Cinema Filmy Couple Animated Invitation</video:title>
+      <video:description>Total Bollywood drama! Playful animated couple caricatures posing like cinematic superstars with dhol beats and movie poster titles.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Caricature_Sample_5.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/shubh-vivah-sanskrit-shloka-traditional-hindi-e-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_1.jpg</image:loc>
+      <image:title>Shubh Vivah Sanskrit Shloka Traditional Hindi E-Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_1.jpg</video:thumbnail_loc>
+      <video:title>Shubh Vivah Sanskrit Shloka Traditional Hindi E-Invite</video:title>
+      <video:description>Pure traditional Hindi Vivah Nimantran with auspicious Vedic shlokas &quot;Vakratunda Mahakaya&quot;, golden Kalash, and ornate Toran borders.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_1.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/rajasthani-rajwada-shubh-vivah-nimantran-patrika</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_2.jpg</image:loc>
+      <image:title>Rajasthani Rajwada Shubh Vivah Nimantran Patrika</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_2.jpg</video:thumbnail_loc>
+      <video:title>Rajasthani Rajwada Shubh Vivah Nimantran Patrika</video:title>
+      <video:description>Royal Rajasthani palace arches, dancing peacocks, shehnai chords, and traditional Hindi text honoring bride, groom, and parivar.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_2.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/mangalam-bhagwan-vishnu-auspicious-hindi-wedding-film</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_3.jpg</image:loc>
+      <image:title>Mangalam Bhagwan Vishnu Auspicious Hindi Wedding Film</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_3.jpg</video:thumbnail_loc>
+      <video:title>Mangalam Bhagwan Vishnu Auspicious Hindi Wedding Film</video:title>
+      <video:description>Auspicious Mangal shlokas with Lord Vishnu &amp; Goddess Lakshmi blessings, shimmering gold foil motifs, and sacred agni mandap animation.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_3.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/royal-shehnai-and-dholak-shubh-vivah-video-nimantran</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_4.jpg</image:loc>
+      <image:title>Royal Shehnai &amp; Dholak Shubh Vivah Video Nimantran</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_4.jpg</video:thumbnail_loc>
+      <video:title>Royal Shehnai &amp; Dholak Shubh Vivah Video Nimantran</video:title>
+      <video:description>Celebratory dholak &amp; shehnai beats accompanied by traditional marigold garland animations and elegant Devnagari calligraphy.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_4.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/radha-krishna-divine-rasleela-hindi-wedding-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_5.jpg</image:loc>
+      <image:title>Radha Krishna Divine Rasleela Hindi Wedding Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_5.jpg</video:thumbnail_loc>
+      <video:title>Radha Krishna Divine Rasleela Hindi Wedding Invite</video:title>
+      <video:description>Divine flute melody, Vrindavan peacock feathers, celestial Radha Krishna blessings, and heartfelt Hindi wedding invitations.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_5.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/awadhi-shahi-darbar-shubh-vivah-video-patrika</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_6.jpg</image:loc>
+      <image:title>Awadhi Shahi Darbar Shubh Vivah Video Patrika</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_6.jpg</video:thumbnail_loc>
+      <video:title>Awadhi Shahi Darbar Shubh Vivah Video Patrika</video:title>
+      <video:description>Graceful Awadhi palatial corridors, illuminated chandeliers, royal red velvet banners, and dignified Hindi invitation poetry.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_6.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/mandap-vivah-sanskar-sacred-hindi-video-invitation</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_7.jpg</image:loc>
+      <image:title>Mandap Vivah Sanskar Sacred Hindi Video Invitation</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_7.jpg</video:thumbnail_loc>
+      <video:title>Mandap Vivah Sanskar Sacred Hindi Video Invitation</video:title>
+      <video:description>Sacred saat phere vows, sindoor and mangalsutra motifs rendered in shimmering gold with traditional Hindi Vivah Sanskar verses.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_7.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/golden-peacock-mayur-pankh-shubh-vivah-e-patrika</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_8.jpg</image:loc>
+      <image:title>Golden Peacock Mayur Pankh Shubh Vivah E-Patrika</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_8.jpg</video:thumbnail_loc>
+      <video:title>Golden Peacock Mayur Pankh Shubh Vivah E-Patrika</video:title>
+      <video:description>Majestic dancing golden peacocks, blooming lotus pond, and sparkling gold script honoring the union of two royal families in Hindi.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_8.mp4</video:content_loc>
+    </video:video>
+  </url>
+  <url>
+    <loc>https://weddingwishcraft.com/product/shubh-lagan-and-band-baaja-baraat-hindi-wedding-invite</loc>
+    <lastmod>2026-11-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_9.jpg</image:loc>
+      <image:title>Shubh Lagan &amp; Band Baaja Baraat Hindi Wedding Invite</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://res.cloudinary.com/vrljkq9h/video/upload/c_scale,f_auto,q_auto,so_1,w_600/Hindi_Sample_9.jpg</video:thumbnail_loc>
+      <video:title>Shubh Lagan &amp; Band Baaja Baraat Hindi Wedding Invite</video:title>
+      <video:description>Grand Indian wedding spirit with trumpets, horses, baraat procession, and vibrant celebratory Hindi invitation wording.</video:description>
+      <video:content_loc>https://res.cloudinary.com/vrljkq9h/video/upload/q_auto,vc_auto/Hindi_Sample_9.mp4</video:content_loc>
+    </video:video>
+  </url>
+</urlset>
