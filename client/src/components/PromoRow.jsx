@@ -13,7 +13,7 @@ export default function PromoRow() {
             {/* Background Couple Image on Right */}
             <div className="absolute right-0 top-0 bottom-0 w-1/2 z-0">
               <img
-                src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80"
+                src="/special-offer-banner.jpg"
                 alt="Couple Special Offer"
                 className="w-full h-full object-cover object-center"
               />
