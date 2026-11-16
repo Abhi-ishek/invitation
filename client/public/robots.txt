@@ -1,5 +1,5 @@
 # Robots.txt for Wedding Wishcraft
-# https://weddingwishcraft.com
+# https://weddingwishcraft.in
 
 User-agent: *
 Allow: /
@@ -25,6 +25,6 @@ Disallow: /admin
 Disallow: /api/
 
 # Host & Sitemap
-Host: https://weddingwishcraft.com
-Sitemap: https://weddingwishcraft.com/sitemap.xml
+Host: https://weddingwishcraft.in
+Sitemap: https://weddingwishcraft.in/sitemap.xml
 
