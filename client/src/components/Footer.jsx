@@ -31,16 +31,18 @@ export default function Footer() {
             </Link>
 
             {/* Middle: Horizontal Nav Links separated by | */}
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-cream/80 font-body">
+            <div className="flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs text-cream/80 font-body">
               <Link to="/" className="hover:text-gold transition-colors">Home</Link>
               <span className="text-cream/30">|</span>
               <Link to="/shop" className="hover:text-gold transition-colors">Shop</Link>
               <span className="text-cream/30">|</span>
-              <Link to="/my-orders" className="hover:text-gold transition-colors">My Orders</Link>
-              <span className="text-cream/30">|</span>
               <Link to="/about" className="hover:text-gold transition-colors">About Us</Link>
               <span className="text-cream/30">|</span>
               <Link to="/contact" className="hover:text-gold transition-colors">Contact</Link>
+              <span className="text-cream/30">|</span>
+              <Link to="/terms" className="hover:text-gold transition-colors">Terms & Conditions</Link>
+              <span className="text-cream/30">|</span>
+              <Link to="/privacy" className="hover:text-gold transition-colors">Privacy Policy</Link>
             </div>
 
             {/* Right: Social Media Icons + Copyright */}
@@ -76,15 +78,6 @@ export default function Footer() {
                   title="WhatsApp Concierge"
                 >
                   <MessageCircle className="w-4 h-4" />
-                </a>
-                <a
-                  href="tel:+917018353733"
-                  className="hover:text-gold transition-colors flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#320a16] border border-gold/30 text-gold-light"
-                  aria-label="Call +91 70183 53733"
-                  title="Call Us"
-                >
-                  <Phone className="w-3 h-3 text-gold" />
-                  <span className="text-[11px] font-medium tracking-wide">7018353733</span>
                 </a>
               </div>
 

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ContactSection from './components/ContactSection';
 import CartDrawer from './components/CartDrawer';
 import MobileBottomNav from './components/MobileBottomNav';
 
@@ -20,6 +21,8 @@ import AuthPage from './pages/AuthPage';
 import AdminPage from './pages/AdminPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import NotFoundPage from './pages/NotFoundPage';
 import PaymentHistoryPage from './pages/PaymentHistoryPage';
 
@@ -56,12 +59,19 @@ export default function App() {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/terms-and-conditions" element={<TermsPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
 
         {/* Mobile-First Bottom Tab Navigation */}
         <MobileBottomNav />
+
+        {/* Contact Section before Footer */}
+        <ContactSection />
 
         {/* Footer with Floating WhatsApp Button */}
         <Footer />

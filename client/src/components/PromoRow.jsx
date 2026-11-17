@@ -8,47 +8,18 @@ export default function PromoRow() {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 items-stretch">
           
-          {/* 1. Special Offer Banner */}
-          <div className="relative rounded-2xl overflow-hidden bg-[#2d0813] text-white p-6 sm:p-7 flex items-center justify-between border border-gold/20 shadow-sm min-h-[220px]">
-            {/* Background Couple Image on Right */}
-            <div className="absolute right-0 top-0 bottom-0 w-1/2 z-0">
-              <img
-                src="/special-offer-banner.jpg"
-                alt="Couple Special Offer"
-                className="w-full h-full object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#2d0813] via-[#2d0813]/80 to-transparent" />
-            </div>
-
-            {/* Left Content */}
-            <div className="relative z-10 max-w-[65%] space-y-2.5">
-              <span className="font-script text-xl text-[#f3d9a2] block">
-                Special Offer
-              </span>
-              <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white leading-tight">
-                Get 10% OFF
-              </h3>
-              <p className="text-xs text-white/80 font-body">
-                on your first order
-              </p>
-
-              {/* Promo Code Pill */}
-              <div className="inline-block px-3 py-1 rounded-full border border-gold/60 bg-[#420f1e]/80 text-[#f3d9a2] text-[10px] font-bold tracking-wider font-body">
-                USE CODE: <span className="text-white font-black">WELCOME10</span>
-              </div>
-
-              {/* Shop Now CTA */}
-              <div className="pt-2">
-                <Link
-                  to="/shop"
-                  className="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light hover:scale-105 text-maroon font-bold text-xs transition-all font-body shadow-md"
-                >
-                  <span>Claim Offer</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-          </div>
+          {/* 1. Special Offer Banner (Image Only) */}
+          <Link
+            to="/shop"
+            className="group relative rounded-2xl overflow-hidden border border-gold/25 hover:border-gold/60 shadow-luxury transition-all duration-300 transform hover:-translate-y-1 block min-h-[220px]"
+          >
+            <img
+              src="/special-offer-banner.jpg"
+              alt="Wedding Wishcraft Special Offer"
+              className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-maroon-dark/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </Link>
 
           {/* 2. Why Choose Us? */}
           <div className="rounded-2xl bg-white border border-gold/25 hover:border-gold/50 p-6 sm:p-7 flex flex-col justify-between shadow-luxury transition-all">

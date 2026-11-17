@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import HeroSection from '../components/HeroSection';
 import ShopByCategory from '../components/ShopByCategory';
-import CeremonyBannersGrid from '../components/CeremonyBannersGrid';
+import CeremonyScrollSlider from '../components/CeremonyScrollSlider';
 import VideoCard from '../components/VideoCard';
 import PromoRow from '../components/PromoRow';
 import videoService from '../services/videoService';
@@ -141,8 +141,8 @@ export default function HomePage() {
       {/* 2. Shop By Category Strip */}
       <ShopByCategory />
 
-      {/* Ceremony Banners Grid (Mehendi, Ring Ceremony, Haldi, Royal Wedding) */}
-      <CeremonyBannersGrid />
+      {/* Ceremony Banners Slider with Smooth Scroll Effect */}
+      <CeremonyScrollSlider />
 
       {/* 3. Trending Invitations Section */}
       <section className="py-8 sm:py-10 bg-[#faf6f0]">

@@ -1,6 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Home, ShoppingBag, FileText, Heart, Search, User, LogOut, ShieldCheck, Film, CreditCard } from 'lucide-react';
+import {
+  Home,
+  ShoppingBag,
+  FileText,
+  Heart,
+  Search,
+  User,
+  LogOut,
+  ShieldCheck,
+  Film,
+  CreditCard,
+  Info,
+  ShieldAlert,
+  Lock,
+} from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -9,10 +23,11 @@ export default function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  const userDropdownRef = useRef(null);
+
   const { items, toggleCart } = useCartStore();
   const { user, logout } = useAuthStore();
   const totalCount = items.length;
-  const wishlistCount = user?.wishlist?.length || 0;
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +35,17 @@ export default function Navbar() {
       navigate(`/shop?search=${encodeURIComponent(search.trim())}`);
     }
   };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (userDropdownRef.current && !userDropdownRef.current.contains(e.target)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-[#25070f] text-cream border-b border-gold/20 shadow-md transition-all">
@@ -70,8 +96,8 @@ export default function Navbar() {
             </div>
           </form>
 
-          {/* Right Navigation & Icons: Home, Shop, My Orders, Wishlist, User, Cart */}
-          <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-5 text-cream/90 text-xs sm:text-[13px] font-body flex-shrink-0">
+          {/* Right Navigation: Home, Shop, About Us, Terms & Conditions, Wishlist, User Profile, Cart */}
+          <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4 lg:space-x-5 text-cream/90 text-xs sm:text-[13px] font-body flex-shrink-0">
             {/* Home */}
             <NavLink
               to="/"
@@ -98,17 +124,30 @@ export default function Navbar() {
               <span>Shop</span>
             </NavLink>
 
-            {/* My Orders */}
+            {/* About Us button at Navbar */}
             <NavLink
-              to="/my-orders"
+              to="/about"
               className={({ isActive }) =>
                 `hidden md:flex items-center gap-1.5 hover:text-gold transition-colors ${
                   isActive ? 'text-gold font-semibold' : 'text-cream/90'
                 }`
               }
             >
-              <FileText className="w-3.5 h-3.5" />
-              <span>My Orders</span>
+              <Info className="w-3.5 h-3.5" />
+              <span>About Us</span>
+            </NavLink>
+
+            {/* Terms and Conditions button at Navbar */}
+            <NavLink
+              to="/terms"
+              className={({ isActive }) =>
+                `hidden lg:flex items-center gap-1.5 hover:text-gold transition-colors ${
+                  isActive ? 'text-gold font-semibold' : 'text-cream/90'
+                }`
+              }
+            >
+              <ShieldAlert className="w-3.5 h-3.5" />
+              <span>Terms & Conditions</span>
             </NavLink>
 
             {/* Wishlist */}
@@ -129,68 +168,106 @@ export default function Navbar() {
               <Heart className="w-4 h-4" />
             </Link>
 
-            {/* Account / User */}
-            <div className="relative">
-              {user ? (
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center justify-center w-8 h-8 rounded-full border border-gold/40 text-cream hover:border-gold transition-all"
-                >
-                  <User className="w-4 h-4" />
-                </button>
-              ) : (
-                <Link
-                  to="/login"
-                  className="flex items-center justify-center p-1.5 text-cream/90 hover:text-gold transition-colors"
-                  title="Account"
-                >
-                  <User className="w-4 h-4" />
-                </Link>
-              )}
+            {/* Profile Section (with My Orders moved inside) */}
+            <div className="relative" ref={userDropdownRef}>
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center justify-center w-8 h-8 rounded-full border border-gold/40 text-cream hover:border-gold transition-all"
+                aria-label="User Profile Menu"
+              >
+                <User className="w-4 h-4" />
+              </button>
 
-              {user && userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-luxury border border-gold/25 py-2 z-50 text-brandText text-xs">
-                  <div className="px-4 py-2 border-b border-gold/15">
-                    <p className="font-bold text-maroon truncate">{user.name}</p>
-                    <p className="text-[10px] text-brandText-muted truncate">{user.email}</p>
-                  </div>
-                  {user.role === 'admin' && (
-                    <Link
-                      to="/admin"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gold/10 text-maroon font-semibold"
-                    >
-                      <ShieldCheck className="w-4 h-4 text-gold-dark" /> Admin Atelier
-                    </Link>
+              {userMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-luxury border border-gold/25 py-2.5 z-50 text-brandText text-xs animate-in fade-in slide-in-from-top-2 duration-150">
+                  {user ? (
+                    <div className="px-4 py-2 border-b border-gold/15 mb-1">
+                      <p className="font-bold text-maroon truncate">{user.name}</p>
+                      <p className="text-[10px] text-brandText-muted truncate">{user.email}</p>
+                    </div>
+                  ) : (
+                    <div className="px-4 py-2 border-b border-gold/15 mb-1 flex items-center justify-between">
+                      <div>
+                        <p className="font-bold text-maroon">Guest Account</p>
+                        <p className="text-[10px] text-brandText-muted">Track orders & videos</p>
+                      </div>
+                      <Link
+                        to="/login"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="px-2.5 py-1 rounded-full bg-gold/15 hover:bg-gold/30 text-maroon font-bold text-[10px] transition-colors"
+                      >
+                        Sign In
+                      </Link>
+                    </div>
                   )}
+
+                  {/* My Orders button moved here inside Profile Section */}
                   <Link
                     to="/my-orders"
                     onClick={() => setUserMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-cream-100"
+                    className="flex items-center gap-2.5 px-4 py-2 hover:bg-gold/10 text-maroon font-semibold transition-colors"
                   >
-                    <Film className="w-4 h-4 text-brandText-light" /> My Invitations
+                    <FileText className="w-4 h-4 text-gold-dark flex-shrink-0" />
+                    <span>My Orders</span>
                   </Link>
+
                   <Link
                     to="/payments"
                     onClick={() => setUserMenuOpen(false)}
-                    className="flex items-center gap-2 px-4 py-2 hover:bg-cream-100"
+                    className="flex items-center gap-2.5 px-4 py-2 hover:bg-gold/10 text-brandText transition-colors"
                   >
-                    <CreditCard className="w-4 h-4 text-brandText-light" /> Payment History
+                    <CreditCard className="w-4 h-4 text-brandText-muted flex-shrink-0" />
+                    <span>Payment History</span>
                   </Link>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setUserMenuOpen(false);
-                    }}
-                    className="w-full text-left flex items-center gap-2 px-4 py-2 hover:bg-rose-50 text-rose-600 border-t border-gold/10"
-                  >
-                    <LogOut className="w-4 h-4" /> Sign Out
-                  </button>
+
+                  {user?.role === 'admin' && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2 hover:bg-gold/10 text-maroon font-semibold border-t border-gold/15"
+                    >
+                      <ShieldCheck className="w-4 h-4 text-gold-dark flex-shrink-0" />
+                      <span>Admin Atelier</span>
+                    </Link>
+                  )}
+
+                  {/* Policy & Info links */}
+                  <div className="border-t border-gold/15 pt-1 mt-1">
+                    <Link
+                      to="/terms"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-1.5 hover:bg-cream-100 text-brandText-muted text-[11px]"
+                    >
+                      <ShieldAlert className="w-3.5 h-3.5" />
+                      <span>Terms & Conditions</span>
+                    </Link>
+                    <Link
+                      to="/privacy"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-1.5 hover:bg-cream-100 text-brandText-muted text-[11px]"
+                    >
+                      <Lock className="w-3.5 h-3.5" />
+                      <span>Privacy Policy</span>
+                    </Link>
+                  </div>
+
+                  {user && (
+                    <button
+                      onClick={() => {
+                        logout();
+                        setUserMenuOpen(false);
+                      }}
+                      className="w-full text-left flex items-center gap-2 px-4 py-2 hover:bg-rose-50 text-rose-600 border-t border-gold/15 mt-1"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Sign Out</span>
+                    </button>
+                  )}
                 </div>
               )}
             </div>
 
-            {/* Cart with Gold Badge "2" */}
+            {/* Cart with Gold Badge */}
             <button
               onClick={toggleCart}
               className="relative p-1.5 text-cream/90 hover:text-gold transition-colors"
@@ -205,8 +282,8 @@ export default function Navbar() {
 
         </div>
 
-        {/* Mobile Search Bar below header */}
-        <div className="sm:hidden pb-3">
+        {/* Mobile Navigation bar with Search and Quick Links */}
+        <div className="sm:hidden pb-3 space-y-2">
           <form onSubmit={handleSearchSubmit} className="relative flex items-center">
             <input
               type="text"
@@ -223,6 +300,17 @@ export default function Navbar() {
               <Search className="w-3.5 h-3.5" />
             </button>
           </form>
+
+          {/* Mobile Quick Strip */}
+          <div className="flex items-center justify-between text-[11px] text-cream/80 px-1 pt-1 font-body">
+            <Link to="/about" className="hover:text-gold transition-colors">About Us</Link>
+            <span className="text-gold/40">•</span>
+            <Link to="/terms" className="hover:text-gold transition-colors">Terms</Link>
+            <span className="text-gold/40">•</span>
+            <Link to="/privacy" className="hover:text-gold transition-colors">Privacy</Link>
+            <span className="text-gold/40">•</span>
+            <Link to="/my-orders" className="hover:text-gold transition-colors">My Orders</Link>
+          </div>
         </div>
       </div>
     </header>
