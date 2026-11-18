@@ -158,7 +158,7 @@ export default function TermsPage() {
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-gold-dark" />
-                Email: <a href="mailto:support@weddingwishcraft.in" className="text-maroon font-medium hover:underline">support@weddingwishcraft.in</a>
+                Email: <a href="mailto:support@weddingwishcraft.in" className="text-maroon font-medium hover:underline">support@weddingwishcraft.in</a> / <a href="mailto:weddingwishcraft@gmail.com" className="text-maroon font-medium hover:underline">weddingwishcraft@gmail.com</a>
               </p>
             </div>
           </section>

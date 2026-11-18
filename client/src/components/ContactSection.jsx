@@ -88,10 +88,7 @@ export default function ContactSection() {
                 </a>
 
                 {/* Email */}
-                <a
-                  href="mailto:support@weddingwishcraft.in"
-                  className="flex items-start gap-3 p-3 rounded-2xl bg-cream-50 hover:bg-gold/10 border border-gold/20 transition-all group"
-                >
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-cream-50 hover:bg-gold/10 border border-gold/20 transition-all group">
                   <div className="w-9 h-9 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <Mail className="w-4 h-4 text-maroon" />
                   </div>
@@ -99,11 +96,20 @@ export default function ContactSection() {
                     <span className="block text-[9px] font-bold uppercase tracking-wider text-gold-dark">
                       Email
                     </span>
-                    <span className="font-bold text-maroon text-xs sm:text-sm">
+                    <a
+                      href="mailto:support@weddingwishcraft.in"
+                      className="block font-bold text-maroon text-xs sm:text-sm hover:underline"
+                    >
                       support@weddingwishcraft.in
-                    </span>
+                    </a>
+                    <a
+                      href="mailto:weddingwishcraft@gmail.com"
+                      className="block font-bold text-maroon text-xs sm:text-sm hover:underline mt-0.5"
+                    >
+                      weddingwishcraft@gmail.com
+                    </a>
                   </div>
-                </a>
+                </div>
 
                 {/* Instagram */}
                 <a

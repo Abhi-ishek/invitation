@@ -94,10 +94,7 @@ export default function ContactPage() {
                 </a>
 
                 {/* Email */}
-                <a
-                  href="mailto:support@weddingwishcraft.in"
-                  className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-cream-50 hover:bg-gold/10 border border-gold/20 transition-all group"
-                >
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-cream-50 hover:bg-gold/10 border border-gold/20 transition-all group">
                   <div className="w-10 h-10 rounded-xl bg-maroon/10 text-maroon flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <Mail className="w-5 h-5 text-maroon" />
                   </div>
@@ -105,14 +102,23 @@ export default function ContactPage() {
                     <span className="block text-[10px] font-bold uppercase tracking-wider text-gold-dark">
                       Email
                     </span>
-                    <span className="font-bold text-maroon text-sm">
+                    <a
+                      href="mailto:support@weddingwishcraft.in"
+                      className="block font-bold text-maroon text-sm hover:underline"
+                    >
                       support@weddingwishcraft.in
-                    </span>
-                    <p className="text-[11px] text-brandText-muted mt-0.5">
+                    </a>
+                    <a
+                      href="mailto:weddingwishcraft@gmail.com"
+                      className="block font-bold text-maroon text-sm hover:underline mt-0.5"
+                    >
+                      weddingwishcraft@gmail.com
+                    </a>
+                    <p className="text-[11px] text-brandText-muted mt-1">
                       For bespoke inquiries & collaborations
                     </p>
                   </div>
-                </a>
+                </div>
 
                 {/* Instagram */}
                 <a
