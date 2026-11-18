@@ -81,7 +81,12 @@ export default function Footer() {
                 </a>
               </div>
 
-              <span>© 2025 Wedding Wishcraft. All rights reserved.</span>
+              <div className="flex flex-col sm:items-end text-center sm:text-right">
+                <span>© 2025 Wedding Wishcraft. All rights reserved.</span>
+                <span className="text-[11px] text-gold/80 tracking-wide font-medium">
+                 <strong className="text-gold font-semibold tracking-wider">SHIIVAM INFRASTRUCTURE</strong>
+                </span>
+              </div>
             </div>
 
           </div>
