@@ -23,8 +23,8 @@ const paymentSchema = new mongoose.Schema(
     },
     method: {
       type: String,
-      enum: ['UPI', 'Razorpay', 'COD', 'Cards'],
-      default: 'UPI',
+      enum: ['UPI', 'Cashfree', 'Razorpay', 'COD', 'Cards'],
+      default: 'Cashfree',
     },
     status: {
       type: String,

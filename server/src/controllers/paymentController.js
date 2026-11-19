@@ -6,6 +6,264 @@ import { ApiResponse } from '../utils/apiResponse.js';
 import { ApiError } from '../utils/apiError.js';
 import { sendSmsOtp, normalizePhone } from '../utils/otpService.js';
 import { sendEmailNotification } from '../utils/mailer.js';
+import {
+  createCashfreeOrderService,
+  fetchCashfreeOrderService,
+  fetchCashfreeOrderPaymentsService,
+  verifyCashfreeWebhookSignature,
+  getCashfreeConfig,
+} from '../utils/cashfreeService.js';
+
+/**
+ * Get Cashfree Configuration Status (public for frontend SDK setup)
+ * GET /api/payment/cashfree/config
+ */
+export const getCashfreePublicConfig = async (req, res, next) => {
+  try {
+    const config = getCashfreeConfig();
+    res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          env: config.env,
+          isConfigured: config.isConfigured,
+        },
+        'Cashfree configuration status'
+      )
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Create a Cashfree Payment Session for an order
+ * POST /api/payment/cashfree/create-order
+ */
+export const createCashfreeOrder = async (req, res, next) => {
+  try {
+    const { orderId } = req.body;
+
+    if (!orderId) {
+      throw new ApiError(400, 'Order ID is required');
+    }
+
+    const order = await Order.findById(orderId);
+    if (!order) {
+      throw new ApiError(404, 'Order not found');
+    }
+
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    const returnUrl = `${clientUrl}/order-success/${encodeURIComponent(order.orderNumber)}?cf_order_id={order_id}`;
+    const notifyUrl = `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/payment/cashfree/webhook`;
+
+    // Business logic executed via cashfreeService in utils
+    const cfOrder = await createCashfreeOrderService({
+      orderId: order.orderNumber,
+      orderAmount: order.totalAmount,
+      orderCurrency: 'INR',
+      customerDetails: {
+        customerId: req.user?._id ? String(req.user._id) : `cust_${order._id}`,
+        name: order.customerDetails?.name || 'Customer',
+        email: order.customerDetails?.email || 'orders@weddingwishcraft.in',
+        phone: order.customerDetails?.phone || '',
+      },
+      returnUrl,
+      notifyUrl,
+    });
+
+    // Create or update pending Payment record in DB
+    let payment = await Payment.findOne({ order: order._id, method: 'Cashfree' });
+    if (payment) {
+      payment.amount = order.totalAmount;
+      payment.status = 'pending';
+      payment.transactionId = cfOrder.cf_order_id ? String(cfOrder.cf_order_id) : cfOrder.order_id;
+      await payment.save();
+    } else {
+      payment = await Payment.create({
+        order: order._id,
+        user: req.user?._id || order.user || null,
+        amount: order.totalAmount,
+        currency: 'INR',
+        method: 'Cashfree',
+        status: 'pending',
+        transactionId: cfOrder.cf_order_id ? String(cfOrder.cf_order_id) : cfOrder.order_id,
+        customerDetails: order.customerDetails,
+        notes: `Cashfree payment session created: ${cfOrder.payment_session_id}`,
+      });
+    }
+
+    res.status(200).json(
+      new ApiResponse(
+        200,
+        {
+          paymentSessionId: cfOrder.payment_session_id,
+          orderId: cfOrder.order_id,
+          cfOrderId: cfOrder.cf_order_id,
+          orderExpiryTime: cfOrder.order_expiry_time,
+          orderAmount: order.totalAmount,
+          orderNumber: order.orderNumber,
+          paymentId: payment._id,
+        },
+        'Cashfree payment session created successfully'
+      )
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Verify Cashfree Payment status
+ * POST /api/payment/cashfree/verify
+ */
+export const verifyCashfreePayment = async (req, res, next) => {
+  try {
+    const { orderId, cfOrderId } = req.body;
+    const lookupId = cfOrderId || orderId;
+
+    if (!lookupId) {
+      throw new ApiError(400, 'Order ID or Cashfree Order ID is required');
+    }
+
+    // Call Cashfree API to verify the genuine status
+    const cfOrder = await fetchCashfreeOrderService(lookupId);
+
+    // Find the order in our database
+    const order = await Order.findOne({
+      $or: [
+        { orderNumber: cfOrder.order_id },
+        { _id: req.body.dbOrderId || null },
+      ],
+    });
+
+    if (!order) {
+      throw new ApiError(404, 'Associated order not found in database');
+    }
+
+    const isPaid = cfOrder.order_status === 'PAID';
+
+    // Find payment record
+    let payment = await Payment.findOne({ order: order._id, method: 'Cashfree' }).sort({ createdAt: -1 });
+
+    if (isPaid) {
+      order.paymentStatus = 'paid';
+      order.paymentMethod = 'Cashfree';
+      if (order.orderStatus === 'Order Placed') {
+        order.orderStatus = 'In Production';
+        order.statusHistory.push({
+          status: 'In Production',
+          note: `Payment of ₹${order.totalAmount} verified successfully via Cashfree.`,
+          timestamp: new Date(),
+        });
+      }
+      await order.save();
+
+      if (payment) {
+        payment.status = 'paid';
+        payment.paidAt = new Date();
+        payment.transactionId = String(cfOrder.cf_order_id || cfOrder.order_id);
+        await payment.save();
+      }
+
+      // Send SMS confirmation
+      const customerPhone = order.customerDetails?.phone;
+      if (customerPhone) {
+        const normalized = normalizePhone(customerPhone);
+        await sendSmsOtp({
+          phone: normalized,
+          otp: order.orderNumber,
+          purpose: 'payment_confirmation',
+        }).catch((err) => console.error('SMS notification error:', err));
+      }
+
+      return res.status(200).json(
+        new ApiResponse(
+          200,
+          {
+            verified: true,
+            status: 'paid',
+            orderNumber: order.orderNumber,
+            cfOrder,
+          },
+          'Payment verified successfully'
+        )
+      );
+    } else {
+      return res.status(200).json(
+        new ApiResponse(
+          200,
+          {
+            verified: false,
+            status: cfOrder.order_status,
+            orderNumber: order.orderNumber,
+            cfOrder,
+          },
+          `Payment not yet completed: current status is ${cfOrder.order_status}`
+        )
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Handle Cashfree Server-to-Server Webhook
+ * POST /api/payment/cashfree/webhook
+ */
+export const handleCashfreeWebhook = async (req, res, next) => {
+  try {
+    const signature = req.headers['x-webhook-signature'];
+    const timestamp = req.headers['x-webhook-timestamp'];
+    const rawBody = typeof req.body === 'string' ? req.body : JSON.stringify(req.body);
+
+    // Verify webhook authenticity
+    if (signature && timestamp) {
+      const isValid = verifyCashfreeWebhookSignature(rawBody, signature, timestamp);
+      if (!isValid) {
+        return res.status(400).json(new ApiResponse(400, null, 'Invalid webhook signature'));
+      }
+    }
+
+    const event = req.body;
+    const orderData = event.data?.order;
+    const paymentData = event.data?.payment;
+
+    if (orderData?.order_id) {
+      const order = await Order.findOne({ orderNumber: orderData.order_id });
+      if (order && (paymentData?.payment_status === 'SUCCESS' || orderData.order_status === 'PAID')) {
+        order.paymentStatus = 'paid';
+        order.paymentMethod = 'Cashfree';
+        if (order.orderStatus === 'Order Placed') {
+          order.orderStatus = 'In Production';
+          order.statusHistory.push({
+            status: 'In Production',
+            note: 'Payment captured via Cashfree webhook.',
+            timestamp: new Date(),
+          });
+        }
+        await order.save();
+
+        await Payment.findOneAndUpdate(
+          { order: order._id },
+          {
+            status: 'paid',
+            paidAt: new Date(),
+            transactionId: paymentData?.cf_payment_id ? String(paymentData.cf_payment_id) : String(orderData.cf_order_id),
+            method: 'Cashfree',
+          },
+          { new: true }
+        );
+      }
+    }
+
+    res.status(200).json({ status: 'OK' });
+  } catch (error) {
+    console.error('Webhook processing error:', error);
+    res.status(200).json({ status: 'ERROR_LOGGED' });
+  }
+};
 
 /**
  * Generate UPI payment QR code with the exact order amount

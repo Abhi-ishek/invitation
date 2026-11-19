@@ -1,5 +1,9 @@
 import { Router } from 'express';
 import {
+  getCashfreePublicConfig,
+  createCashfreeOrder,
+  verifyCashfreePayment,
+  handleCashfreeWebhook,
   generateUpiQr,
   confirmUpiPayment,
   getPaymentHistory,
@@ -13,19 +17,35 @@ import { verifyJWT, optionalAuth, verifyAdmin } from '../middleware/authMiddlewa
 
 const router = Router();
 
-// UPI QR Payment
-router.post('/upi/generate-qr', verifyJWT, generateUpiQr);
-router.post('/upi/confirm', verifyJWT, confirmUpiPayment);
+// ========================
+// CASHFREE PAYMENT GATEWAY
+// ========================
+router.get('/cashfree/config', getCashfreePublicConfig);
+router.post('/cashfree/create-order', optionalAuth, createCashfreeOrder);
+router.post('/cashfree/verify', optionalAuth, verifyCashfreePayment);
+router.post('/cashfree/webhook', handleCashfreeWebhook);
 
-// Payment History
+// ========================
+// DIRECT UPI QR PAYMENT
+// ========================
+router.post('/upi/generate-qr', optionalAuth, generateUpiQr);
+router.post('/upi/confirm', optionalAuth, confirmUpiPayment);
+
+// ========================
+// PAYMENT HISTORY
+// ========================
 router.get('/history', verifyJWT, getPaymentHistory);
 router.get('/order/:orderId', optionalAuth, getPaymentByOrder);
 
-// Admin UPI Verification
+// ========================
+// ADMIN VERIFICATION
+// ========================
 router.get('/admin/pending', verifyJWT, verifyAdmin, getPendingVerifications);
 router.patch('/admin/verify', verifyJWT, verifyAdmin, verifyUpiPaymentByAdmin);
 
-// Legacy Razorpay
+// ========================
+// LEGACY RAZORPAY (OPTIONAL)
+// ========================
 router.post('/razorpay/order', createRazorpayOrder);
 router.post('/razorpay/verify', verifyPayment);
 

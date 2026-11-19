@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import SEO from '../components/SEO';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
-import { ShieldCheck, CheckCircle2, ArrowRight, CreditCard, Banknote, Smartphone, Lock, QrCode, X, Copy, Check, Calendar } from 'lucide-react';
+import SEO from '../components/SEO';
+import {
+  ShieldCheck,
+  CreditCard,
+  QrCode,
+  Sparkles,
+  ArrowRight,
+  Copy,
+  Check,
+  Calendar,
+  Lock,
+  ChevronRight,
+  Gift,
+  Zap,
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const formatReadableDate = (dateStr) => {
   if (!dateStr) return '';
   try {
-    const d = new Date(dateStr.includes('T') ? dateStr : `${dateStr}T00:00:00`);
-    if (isNaN(d.getTime())) return dateStr;
+    const d = new Date(dateStr);
     return d.toLocaleDateString('en-IN', {
       weekday: 'short',
       day: 'numeric',
@@ -32,11 +44,16 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState(user?.email || '');
   const [phone, setPhone] = useState(user?.phone || '');
   const [weddingDate, setWeddingDate] = useState(items[0]?.customizationData?.weddingDate || '');
-  const [paymentMethod, setPaymentMethod] = useState('UPI');
+  
+  // Payment Method selection: 'Cashfree' (Default) or 'UPI' (Direct QR)
+  const [paymentMethod, setPaymentMethod] = useState('Cashfree');
+  const [cashfreeAvailable, setCashfreeAvailable] = useState(true);
+  const [cashfreeEnv, setCashfreeEnv] = useState('TEST');
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // UPI QR Modal State
+  // UPI QR Modal State (Fallback / Alternative)
   const [showQrModal, setShowQrModal] = useState(false);
   const [qrData, setQrData] = useState(null);
   const [confirmingPayment, setConfirmingPayment] = useState(false);
@@ -47,36 +64,33 @@ export default function CheckoutPage() {
   const discount = getDiscountAmount();
   const total = getTotal();
 
-  React.useEffect(() => {
-    if (!user) {
-      navigate('/login', {
-        replace: true,
-        state: {
-          from: '/checkout',
-          message: 'Please sign in or create an account to complete your purchase.',
-        },
-      });
-    }
-  }, [user, navigate]);
-
-  if (!user) {
-    return null;
-  }
-
-  if (items.length === 0) {
-    navigate('/shop');
-    return null;
-  }
+  // Check Cashfree config from backend on mount
+  useEffect(() => {
+    const checkConfig = async () => {
+      try {
+        const res = await videoService.getCashfreeConfig();
+        if (res.data) {
+          setCashfreeAvailable(res.data.isConfigured);
+          setCashfreeEnv(res.data.env || 'TEST');
+          if (!res.data.isConfigured) {
+            setPaymentMethod('UPI');
+          }
+        }
+      } catch (e) {
+        console.warn('Cashfree config check returned error, default to UPI fallback if needed', e);
+      }
+    };
+    checkConfig();
+  }, []);
 
   const fireConfetti = () => {
     try {
       confetti({
-        particleCount: 100,
+        particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#D4A85A', '#E8C887', '#3A0A1E', '#5A1030'],
       });
-    } catch (err) {}
+    } catch {}
   };
 
   const handlePlaceOrder = async (e) => {
@@ -101,14 +115,54 @@ export default function CheckoutPage() {
           phone,
           weddingDate,
         },
-        paymentMethod: 'UPI',
+        paymentMethod: paymentMethod,
         couponCode: coupon?.code,
       };
 
       const res = await videoService.createOrder(orderPayload);
       const createdOrder = res.data;
 
-      // If UPI selected, show QR code modal
+      // 1. CASHFREE PAYMENT GATEWAY
+      if (paymentMethod === 'Cashfree') {
+        try {
+          const cfRes = await videoService.createCashfreeOrder({
+            orderId: createdOrder._id,
+          });
+
+          const { paymentSessionId } = cfRes.data;
+
+          if (!paymentSessionId) {
+            throw new Error('Could not obtain Cashfree payment session');
+          }
+
+          // Initialize Cashfree Web SDK
+          if (window.Cashfree) {
+            const cashfree = window.Cashfree({
+              mode: cashfreeEnv === 'PRODUCTION' ? 'production' : 'sandbox',
+            });
+
+            const checkoutOptions = {
+              paymentSessionId: paymentSessionId,
+              redirectTarget: '_self', // Smooth redirect to order success page
+            };
+
+            clearCart();
+            cashfree.checkout(checkoutOptions);
+            return;
+          } else {
+            throw new Error('Cashfree SDK is still loading. Please try again.');
+          }
+        } catch (cfErr) {
+          console.error('Cashfree order creation failed, switching to UPI QR fallback:', cfErr);
+          // If Cashfree fails or is not yet configured, automatically fall back to UPI QR
+          setPaymentMethod('UPI');
+          setError(cfErr.message || 'Cashfree payment session could not be initialized. Please use UPI QR.');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // 2. DIRECT UPI QR CODE PAYMENT
       if (paymentMethod === 'UPI') {
         try {
           const qrRes = await videoService.generateUpiQr({
@@ -129,7 +183,7 @@ export default function CheckoutPage() {
         }
       }
 
-      // For Cards/COD or if QR failed
+      // Fallback
       fireConfetti();
       clearCart();
       navigate(`/order-success/${encodeURIComponent(createdOrder.orderNumber)}`);
@@ -150,6 +204,7 @@ export default function CheckoutPage() {
       await videoService.confirmUpiPayment({
         orderId: qrData.orderId,
         paymentId: qrData.paymentId,
+        upiTransactionRef: upiRefInput.trim(),
       });
 
       setShowQrModal(false);
@@ -202,10 +257,10 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Aditi Sharma"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold"
+                    placeholder="e.g. Priya Sharma"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold font-body"
                   />
                 </div>
 
@@ -216,12 +271,14 @@ export default function CheckoutPage() {
                   <input
                     type="tel"
                     required
-                    placeholder="e.g. +91 98765 43210"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold"
+                    placeholder="e.g. 9876543210"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold font-body"
                   />
-                  <span className="text-[10px] text-brandText-muted">Your video will be delivered here</span>
+                  <span className="text-[10px] text-brandText-muted mt-1 block">
+                    Your final 4K video invitation will be delivered here
+                  </span>
                 </div>
 
                 <div>
@@ -231,11 +288,14 @@ export default function CheckoutPage() {
                   <input
                     type="email"
                     required
-                    placeholder="e.g. aditi@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold"
+                    placeholder="e.g. priya@gmail.com"
+                    className="w-full px-4 py-2.5 rounded-xl border border-gold/30 text-xs bg-cream-50 focus:outline-none focus:border-gold font-body"
                   />
+                  <span className="text-[10px] text-brandText-muted mt-1 block">
+                    Receipt and download link backup
+                  </span>
                 </div>
 
                 <div className="sm:col-span-2">
@@ -271,223 +331,281 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Payment Method - Exclusively UPI */}
+            {/* Payment Method - Cashfree Gateway & Direct UPI QR */}
             <div className="p-6 sm:p-7 bg-white rounded-3xl border border-gold/25 shadow-sm space-y-4">
               <div className="flex items-center justify-between pb-2 border-b border-gold/15">
                 <h3 className="font-heading text-lg font-bold text-maroon">
-                  2. Payment Method
+                  2. Select Payment Method
                 </h3>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                  <Check className="w-3 h-3 text-emerald-700" /> Instant UPI QR
+                  <ShieldCheck className="w-3 h-3 text-emerald-700" /> 100% Secure Checkout
                 </span>
               </div>
 
-              {/* UPI QR Exclusive Card */}
-              <div className="p-4 sm:p-5 rounded-2xl border-2 border-gold bg-gradient-to-br from-gold/10 via-cream-50 to-white shadow-sm space-y-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-2xl bg-maroon text-gold-light flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <QrCode className="w-5 h-5" />
+              <div className="space-y-3">
+                {/* Option 1: Cashfree Gateway (UPI, Cards, NetBanking, Wallets) */}
+                <label
+                  onClick={() => setPaymentMethod('Cashfree')}
+                  className={`p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex items-start justify-between gap-3 ${
+                    paymentMethod === 'Cashfree'
+                      ? 'border-gold bg-gradient-to-br from-gold/15 via-cream-50 to-white shadow-sm'
+                      : 'border-gold/20 hover:border-gold/40 bg-white'
+                  }`}
+                >
+                  <div className="flex items-start gap-3.5">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="Cashfree"
+                      checked={paymentMethod === 'Cashfree'}
+                      onChange={() => setPaymentMethod('Cashfree')}
+                      className="mt-1 text-gold focus:ring-gold"
+                    />
+                    <div className="w-10 h-10 rounded-xl bg-maroon text-gold-light flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <CreditCard className="w-5 h-5" />
                     </div>
                     <div>
                       <p className="font-bold text-xs sm:text-sm text-maroon flex items-center gap-1.5">
-                        <span>UPI QR Code Payment</span>
-                        <span className="text-[10px] text-emerald-700 font-extrabold uppercase bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Active</span>
+                        <span>Cashfree Payment Gateway</span>
+                        <span className="text-[10px] text-emerald-700 font-extrabold uppercase bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                          Recommended
+                        </span>
                       </p>
                       <p className="text-[11px] text-brandText-muted mt-0.5">
-                        Scan dynamically generated QR code with any UPI app
+                        Google Pay, PhonePe, Paytm, Cards (Visa/Mastercard/RuPay), NetBanking & EMI
                       </p>
                     </div>
                   </div>
-                  <div className="w-5 h-5 rounded-full bg-maroon text-white flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
-                    <Check className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+                  <span className="text-xs font-bold text-maroon hidden sm:block">Instant</span>
+                </label>
 
-                <div className="pt-2.5 border-t border-gold/20 flex flex-wrap items-center justify-between text-[11px] text-brandText-muted gap-2">
-                  <span className="flex items-center gap-1.5 text-brandText-muted">
-                    <Smartphone className="w-3.5 h-3.5 text-gold-dark" />
-                    <span>Google Pay • PhonePe • Paytm • BHIM • Cred UPI</span>
-                  </span>
-                  <span className="text-maroon font-mono font-bold bg-cream-100 px-2.5 py-0.5 rounded-lg border border-gold/30">
-                    9161772464@ptsbi
-                  </span>
-                </div>
+                {/* Option 2: Direct UPI QR Code Scan */}
+                <label
+                  onClick={() => setPaymentMethod('UPI')}
+                  className={`p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex items-start justify-between gap-3 ${
+                    paymentMethod === 'UPI'
+                      ? 'border-gold bg-gradient-to-br from-gold/15 via-cream-50 to-white shadow-sm'
+                      : 'border-gold/20 hover:border-gold/40 bg-white'
+                  }`}
+                >
+                  <div className="flex items-start gap-3.5">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="UPI"
+                      checked={paymentMethod === 'UPI'}
+                      onChange={() => setPaymentMethod('UPI')}
+                      className="mt-1 text-gold focus:ring-gold"
+                    />
+                    <div className="w-10 h-10 rounded-xl bg-[#2d0813] text-gold-light flex items-center justify-center flex-shrink-0 shadow-sm">
+                      <QrCode className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-xs sm:text-sm text-maroon">
+                        Direct UPI QR Code Scan
+                      </p>
+                      <p className="text-[11px] text-brandText-muted mt-0.5">
+                        Scan dynamic QR code on screen with any UPI mobile app
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs font-bold text-maroon hidden sm:block">Zero Fee</span>
+                </label>
               </div>
 
-              <p className="text-[11px] text-brandText-muted leading-relaxed">
-                💡 A dynamic QR code with the exact order amount (<strong>₹{total.toLocaleString('en-IN')}</strong>) will be presented upon clicking place order.
-              </p>
+              <div className="p-3 rounded-xl bg-gold/10 border border-gold/20 flex items-center gap-2 text-xs text-brandText-muted">
+                <Lock className="w-4 h-4 text-gold-dark flex-shrink-0" />
+                <span>256-bit encrypted bank transmission • Verified by Cashfree & NPCI</span>
+              </div>
             </div>
 
           </div>
 
-          {/* Right Column: Order Summary & Place Order */}
+          {/* Right Column: Order Summary */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="p-6 sm:p-7 bg-white rounded-3xl border border-gold/25 shadow-luxury space-y-4">
+            
+            <div className="p-6 sm:p-7 bg-white rounded-3xl border border-gold/25 shadow-luxury space-y-6 sticky top-28">
               <h3 className="font-heading text-lg font-bold text-maroon pb-2 border-b border-gold/15">
-                Order Review
+                Order Summary ({items.length} {items.length === 1 ? 'Design' : 'Designs'})
               </h3>
 
-              <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
-                {items.map(({ product, customizationData }) => (
-                  <div key={product._id} className="flex gap-3 items-center text-xs">
+              {/* Items List */}
+              <div className="space-y-4 max-h-60 overflow-y-auto pr-1">
+                {items.map((item, idx) => (
+                  <div key={idx} className="flex gap-3 items-center py-2 border-b border-gold/10 last:border-0">
                     <img
-                      src={product.thumbnail}
-                      alt={product.title}
-                      className="w-12 h-16 object-cover rounded-lg border border-gold/20"
+                      src={item.product.thumbnail}
+                      alt={item.product.title}
+                      className="w-14 h-14 rounded-xl object-cover border border-gold/20 flex-shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h5 className="font-bold text-maroon truncate">{product.title}</h5>
-                      <span className="text-[10px] text-brandText-muted block">
-                        {customizationData.brideName ? `${customizationData.brideName} & ${customizationData.groomName}` : 'Customized with couple names'}
-                      </span>
-                      <span className="font-bold text-maroon">₹{product.price?.toLocaleString('en-IN')}</span>
+                      <h4 className="font-heading font-bold text-xs text-maroon truncate">
+                        {item.product.title}
+                      </h4>
+                      <p className="text-[10px] text-brandText-muted truncate">
+                        Theme: {item.customizationData?.language || 'English & Hindi'}
+                      </p>
+                      <p className="text-xs font-bold text-gold-dark mt-0.5">
+                        ₹{item.product.price}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="space-y-2 text-xs text-brandText-muted pt-3 border-t border-gold/15">
-                <div className="flex justify-between">
+              {/* Price Calculation */}
+              <div className="space-y-2 border-t border-gold/15 pt-4 text-xs font-body">
+                <div className="flex justify-between text-brandText-muted">
                   <span>Subtotal</span>
-                  <span>₹{subtotal.toLocaleString('en-IN')}</span>
+                  <span className="font-semibold text-brandText">₹{subtotal}</span>
                 </div>
 
                 {discount > 0 && (
                   <div className="flex justify-between text-emerald-700 font-semibold">
-                    <span>Discount ({coupon.code})</span>
-                    <span>-₹{discount.toLocaleString('en-IN')}</span>
+                    <span className="flex items-center gap-1">
+                      <Gift className="w-3.5 h-3.5" /> Coupon Discount ({coupon?.code})
+                    </span>
+                    <span>-₹{discount}</span>
                   </div>
                 )}
 
-                <div className="flex justify-between">
-                  <span>Turnaround Time</span>
-                  <span className="text-emerald-700 font-semibold">24 Hours (Express)</span>
+                <div className="flex justify-between text-brandText-muted">
+                  <span>4K Video Rendering & Express Queue</span>
+                  <span className="text-emerald-700 font-bold uppercase text-[10px] bg-emerald-50 px-2 py-0.5 rounded">
+                    FREE
+                  </span>
                 </div>
 
-                <div className="flex justify-between text-base font-bold text-maroon font-heading pt-3 border-t border-gold/15">
-                  <span>Total Due</span>
-                  <span>₹{total.toLocaleString('en-IN')}</span>
+                <div className="flex justify-between text-brandText-muted">
+                  <span>Delivery via WhatsApp</span>
+                  <span className="text-emerald-700 font-bold uppercase text-[10px] bg-emerald-50 px-2 py-0.5 rounded">
+                    Included (24 Hours)
+                  </span>
+                </div>
+
+                <div className="border-t border-gold/20 pt-3 flex justify-between items-baseline">
+                  <span className="font-heading font-bold text-sm text-maroon">Total Payable</span>
+                  <div className="text-right">
+                    <span className="font-heading text-2xl font-black text-maroon">
+                      ₹{total}
+                    </span>
+                    <span className="block text-[10px] text-brandText-muted">All taxes included</span>
+                  </div>
                 </div>
               </div>
 
               {error && (
-                <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl">
+                <div className="p-3 rounded-xl bg-red-50 text-red-700 text-xs border border-red-200">
                   {error}
                 </div>
               )}
 
+              {/* Submit CTA */}
               <button
                 type="submit"
-                disabled={loading}
-                className="w-full py-4 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-maroon font-bold text-xs uppercase tracking-wider shadow-gold-glow hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                disabled={loading || items.length === 0}
+                className="w-full py-4 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light hover:brightness-105 text-maroon font-extrabold text-sm uppercase tracking-wider shadow-gold-glow hover:scale-[1.02] transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
               >
-                <Lock className="w-4 h-4" />
-                <span>
-                  {loading
-                    ? 'Generating UPI QR...'
-                    : `Pay ₹${total.toLocaleString('en-IN')} via UPI QR`}
-                </span>
+                <span>{loading ? 'Initiating Payment...' : `Pay ₹${total} & Place Order`}</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
-              <div className="flex items-center justify-center gap-2 text-[11px] text-brandText-muted pt-2 text-center">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>256-Bit SSL Encrypted & 100% Satisfaction Guaranteed</span>
+              <div className="text-center">
+                <span className="text-[10px] text-brandText-muted">
+                  ✨ Instant preview ready within 24 hours of payment verification
+                </span>
               </div>
+
             </div>
+
           </div>
 
         </form>
 
       </div>
 
-      {/* UPI QR Code Payment Modal */}
+      {/* UPI QR Modal (Fallback / Manual Scan) */}
       {showQrModal && qrData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl border border-gold/30 shadow-luxury max-w-md w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5 relative">
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-gold/40 shadow-2xl space-y-5 text-center relative animate-in fade-in zoom-in-95 duration-200">
             
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setShowQrModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-cream-50 border border-gold/20 flex items-center justify-center hover:bg-rose-50 transition-all"
-            >
-              <X className="w-4 h-4 text-brandText-muted" />
-            </button>
+            <div className="flex justify-between items-center pb-3 border-b border-gold/15">
+              <span className="font-heading text-lg font-bold text-maroon">
+                Scan & Pay with any UPI App
+              </span>
+              <button
+                onClick={() => setShowQrModal(false)}
+                className="text-gray-400 hover:text-gray-600 text-sm font-bold"
+              >
+                ✕
+              </button>
+            </div>
 
-            {/* Header */}
-            <div className="text-center space-y-1">
-              <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-tr from-gold to-gold-light p-[2px] shadow-gold-glow flex items-center justify-center">
-                <div className="w-full h-full bg-maroon rounded-full flex items-center justify-center">
-                  <QrCode className="w-5 h-5 text-gold-light" />
-                </div>
-              </div>
-              <h2 className="font-heading text-xl font-bold text-maroon">Scan & Pay via UPI</h2>
-              <p className="text-[11px] text-brandText-muted">
-                Order {qrData.orderNumber} • Open any UPI app to scan
+            {/* Branded QR Code */}
+            <div className="bg-[#FFF8F0] p-4 rounded-2xl border-2 border-gold/40 inline-block mx-auto shadow-inner">
+              <img
+                src={qrData.qrDataUrl || qrData.customQrImage}
+                alt="UPI Payment QR"
+                className="w-56 h-56 mx-auto rounded-lg object-contain"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-xs text-brandText-muted">Amount to Pay</span>
+              <p className="font-heading text-2xl font-extrabold text-maroon">
+                ₹{qrData.amount}
+              </p>
+              <p className="text-[11px] text-gray-500">
+                Order ID: <span className="font-mono font-bold text-maroon">{qrData.orderNumber}</span>
               </p>
             </div>
 
-            {/* Amount Display */}
-            <div className="text-center py-3 bg-cream-50 rounded-2xl border border-gold/20">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-brandText-muted">Amount to Pay</span>
-              <p className="font-heading text-3xl font-bold text-maroon mt-1">
-                ₹{Number(qrData.amount).toLocaleString('en-IN')}
-              </p>
-            </div>
-
-            {/* QR Code Image */}
-            <div className="flex justify-center">
-              <div className="p-2 bg-white rounded-2xl border-2 border-gold/30 shadow-md overflow-hidden">
-                <img
-                  src={qrData.customQrImage || '/upi-qr.jpg'}
-                  alt="UPI Payment QR Code - Shivam Thakur"
-                  className="w-60 sm:w-64 h-auto object-contain rounded-xl"
-                />
-              </div>
-            </div>
-
-            {/* UPI ID Display */}
-            <div className="flex items-center justify-between p-3 bg-cream-50 rounded-xl border border-gold/20">
-              <div>
-                <span className="text-[10px] text-brandText-muted block">
-                  Payee: <strong className="text-maroon font-semibold">{qrData.payeeName || 'Shivam Thakur'}</strong>
+            {/* UPI ID Copy Field */}
+            <div className="p-3 rounded-xl bg-cream-50 border border-gold/25 flex items-center justify-between gap-2 text-left">
+              <div className="min-w-0">
+                <span className="text-[10px] text-brandText-muted block uppercase">UPI ID</span>
+                <span className="text-xs font-mono font-bold text-maroon truncate block">
+                  {qrData.upiId}
                 </span>
-                <span className="text-xs font-bold text-maroon font-mono">{qrData.upiId || 'shivamthakur.shivi-5@okaxis'}</span>
               </div>
               <button
                 type="button"
                 onClick={handleCopyUpi}
-                className="p-2 rounded-lg bg-maroon text-gold-light hover:bg-maroon-dark transition-all"
-                title="Copy UPI ID"
+                className="px-3 py-1.5 rounded-lg bg-gold/20 hover:bg-gold/30 text-maroon font-bold text-xs flex items-center gap-1 transition-colors flex-shrink-0"
               >
-                {copiedUpi ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedUpi ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedUpi ? 'Copied' : 'Copy'}</span>
               </button>
             </div>
 
-            {/* Error in Modal */}
-            {error && (
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium">
-                {error}
-              </div>
-            )}
+            {/* UTR Input */}
+            <div className="text-left space-y-1">
+              <label className="text-[11px] font-semibold text-brandText block">
+                Enter 12-Digit UPI Ref / UTR No. (Optional)
+              </label>
+              <input
+                type="text"
+                value={upiRefInput}
+                onChange={(e) => setUpiRefInput(e.target.value)}
+                placeholder="e.g. 431289456123"
+                className="w-full px-3 py-2 rounded-xl border border-gold/30 text-xs focus:ring-2 focus:ring-gold/60 focus:outline-none"
+              />
+            </div>
 
-            {/* Confirm Payment Button */}
+            {/* Confirm Payment CTA */}
             <button
-              type="button"
               onClick={handleConfirmUpiPayment}
               disabled={confirmingPayment}
-              className="w-full py-4 rounded-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-400 hover:from-emerald-700 hover:to-emerald-500 text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-3.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs uppercase tracking-wider shadow-md hover:scale-[1.01] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              <CheckCircle2 className="w-5 h-5" />
-              <span>{confirmingPayment ? 'Verifying Payment...' : "I've Completed the Payment"}</span>
+              <Check className="w-4 h-4" />
+              <span>{confirmingPayment ? 'Confirming...' : 'I Have Made The Payment'}</span>
             </button>
 
-            {/* Supported Apps */}
-            <p className="text-center text-[10px] text-brandText-muted">
-              Works with Google Pay • PhonePe • Paytm • BHIM • Any UPI App
+            <p className="text-[10px] text-brandText-muted">
+              Once clicked, your invitation video will immediately enter the production queue.
             </p>
+
           </div>
         </div>
       )}
