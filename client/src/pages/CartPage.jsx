@@ -255,7 +255,7 @@ export default function CartPage() {
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-brandText-muted pt-2 border-t border-gold/15">
                 <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Instant UPI QR Payment (GPay, PhonePe, Paytm, BHIM)</span>
+                <span>Razorpay Secure Payments (Cards, UPI, NetBanking) • Instant UPI QR</span>
               </div>
             </div>
 

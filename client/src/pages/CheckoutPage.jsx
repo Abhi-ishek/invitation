@@ -45,10 +45,10 @@ export default function CheckoutPage() {
   const [phone, setPhone] = useState(user?.phone || '');
   const [weddingDate, setWeddingDate] = useState(items[0]?.customizationData?.weddingDate || '');
   
-  // Payment Method selection: 'Cashfree' (Default) or 'UPI' (Direct QR)
-  const [paymentMethod, setPaymentMethod] = useState('Cashfree');
-  const [cashfreeAvailable, setCashfreeAvailable] = useState(true);
-  const [cashfreeEnv, setCashfreeEnv] = useState('TEST');
+  // Payment Method selection: 'Razorpay' (Default) or 'UPI' (Direct QR)
+  const [paymentMethod, setPaymentMethod] = useState('Razorpay');
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+  const [razorpayKeyId, setRazorpayKeyId] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -64,23 +64,37 @@ export default function CheckoutPage() {
   const discount = getDiscountAmount();
   const total = getTotal();
 
-  // Check Cashfree config from backend on mount
+  // Check Razorpay SDK & config from backend on mount
   useEffect(() => {
-    const checkConfig = async () => {
-      try {
-        const res = await videoService.getCashfreeConfig();
-        if (res.data) {
-          setCashfreeAvailable(res.data.isConfigured);
-          setCashfreeEnv(res.data.env || 'TEST');
-          if (!res.data.isConfigured) {
+    // Check if Razorpay Checkout.js is loaded
+    const checkRazorpay = () => {
+      if (window.Razorpay) {
+        setRazorpayLoaded(true);
+      } else {
+        // Retry after a short delay in case script is still loading
+        setTimeout(() => {
+          setRazorpayLoaded(Boolean(window.Razorpay));
+          if (!window.Razorpay) {
+            console.warn('Razorpay Checkout.js not loaded. Falling back to UPI.');
             setPaymentMethod('UPI');
           }
-        }
-      } catch (e) {
-        console.warn('Cashfree config check returned error, default to UPI fallback if needed', e);
+        }, 2000);
       }
     };
-    checkConfig();
+    checkRazorpay();
+
+    // Fetch Razorpay public config
+    const fetchConfig = async () => {
+      try {
+        const res = await videoService.getRazorpayConfig();
+        if (res.data?.keyId) {
+          setRazorpayKeyId(res.data.keyId);
+        }
+      } catch (e) {
+        console.warn('Razorpay config fetch failed:', e);
+      }
+    };
+    fetchConfig();
   }, []);
 
   const fireConfetti = () => {
@@ -122,41 +136,81 @@ export default function CheckoutPage() {
       const res = await videoService.createOrder(orderPayload);
       const createdOrder = res.data;
 
-      // 1. CASHFREE PAYMENT GATEWAY
-      if (paymentMethod === 'Cashfree') {
+      // 1. RAZORPAY PAYMENT GATEWAY
+      if (paymentMethod === 'Razorpay') {
         try {
-          const cfRes = await videoService.createCashfreeOrder({
+          const rzpRes = await videoService.createRazorpayOrder({
             orderId: createdOrder._id,
           });
 
-          const { paymentSessionId } = cfRes.data;
+          const { razorpayOrderId, amount, currency, keyId } = rzpRes.data;
 
-          if (!paymentSessionId) {
-            throw new Error('Could not obtain Cashfree payment session');
+          if (!razorpayOrderId) {
+            throw new Error('Could not create Razorpay order');
           }
 
-          // Initialize Cashfree Web SDK
-          if (window.Cashfree) {
-            const cashfree = window.Cashfree({
-              mode: cashfreeEnv === 'PRODUCTION' ? 'production' : 'sandbox',
-            });
-
-            const checkoutOptions = {
-              paymentSessionId: paymentSessionId,
-              redirectTarget: '_self', // Smooth redirect to order success page
-            };
-
-            clearCart();
-            cashfree.checkout(checkoutOptions);
-            return;
-          } else {
-            throw new Error('Cashfree SDK is still loading. Please try again.');
+          const activeKey = keyId || razorpayKeyId;
+          if (!activeKey || activeKey === 'your_razorpay_key_id') {
+            throw new Error('Razorpay is not configured with active API keys yet in server/.env. Please configure RAZORPAY_KEY_ID.');
           }
-        } catch (cfErr) {
-          console.error('Cashfree order creation failed, switching to UPI QR fallback:', cfErr);
-          // If Cashfree fails or is not yet configured, automatically fall back to UPI QR
+
+          if (!window.Razorpay) {
+            throw new Error('Razorpay SDK is still loading. Please try again.');
+          }
+
+          const options = {
+            key: activeKey,
+            amount: amount,
+            currency: currency || 'INR',
+            name: 'Wedding Wishcraft',
+            description: `Wedding Invitation Video - ${createdOrder.orderNumber}`,
+            order_id: razorpayOrderId,
+            prefill: {
+              name: name,
+              email: email,
+              contact: phone,
+            },
+            theme: { color: '#3A0A1E' },
+            handler: async function (response) {
+              // On success: verify payment
+              try {
+                const verifyRes = await videoService.verifyRazorpayPayment({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  dbOrderId: createdOrder._id,
+                });
+                if (verifyRes.data?.verified) {
+                  fireConfetti();
+                  clearCart();
+                  navigate(`/order-success/${encodeURIComponent(createdOrder.orderNumber)}`);
+                } else {
+                  setError('Payment verification pending. Please check order status.');
+                }
+              } catch (err) {
+                setError('Payment verification failed. Please contact support.');
+              }
+              setLoading(false);
+            },
+            modal: {
+              ondismiss: function () {
+                setLoading(false);
+                setError('Payment was cancelled. You can try again.');
+              },
+            },
+          };
+
+          const rzp = new window.Razorpay(options);
+          rzp.on('payment.failed', function (response) {
+            setLoading(false);
+            setError(`Payment failed: ${response.error.description}`);
+          });
+          rzp.open();
+          return;
+        } catch (rzpErr) {
+          console.error('Razorpay order creation failed, switching to UPI QR fallback:', rzpErr);
           setPaymentMethod('UPI');
-          setError(cfErr.message || 'Cashfree payment session could not be initialized. Please use UPI QR.');
+          setError(rzpErr.message || 'Razorpay payment could not be initialized. Please use UPI QR.');
           setLoading(false);
           return;
         }
@@ -331,7 +385,7 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Payment Method - Cashfree Gateway & Direct UPI QR */}
+            {/* Payment Method - Razorpay Gateway & Direct UPI QR */}
             <div className="p-6 sm:p-7 bg-white rounded-3xl border border-gold/25 shadow-sm space-y-4">
               <div className="flex items-center justify-between pb-2 border-b border-gold/15">
                 <h3 className="font-heading text-lg font-bold text-maroon">
@@ -343,11 +397,11 @@ export default function CheckoutPage() {
               </div>
 
               <div className="space-y-3">
-                {/* Option 1: Cashfree Gateway (UPI, Cards, NetBanking, Wallets) */}
+                {/* Option 1: Razorpay Secure Payment (UPI, Cards, NetBanking, Wallets) */}
                 <label
-                  onClick={() => setPaymentMethod('Cashfree')}
+                  onClick={() => setPaymentMethod('Razorpay')}
                   className={`p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex items-start justify-between gap-3 ${
-                    paymentMethod === 'Cashfree'
+                    paymentMethod === 'Razorpay'
                       ? 'border-gold bg-gradient-to-br from-gold/15 via-cream-50 to-white shadow-sm'
                       : 'border-gold/20 hover:border-gold/40 bg-white'
                   }`}
@@ -356,9 +410,9 @@ export default function CheckoutPage() {
                     <input
                       type="radio"
                       name="paymentMethod"
-                      value="Cashfree"
-                      checked={paymentMethod === 'Cashfree'}
-                      onChange={() => setPaymentMethod('Cashfree')}
+                      value="Razorpay"
+                      checked={paymentMethod === 'Razorpay'}
+                      onChange={() => setPaymentMethod('Razorpay')}
                       className="mt-1 text-gold focus:ring-gold"
                     />
                     <div className="w-10 h-10 rounded-xl bg-maroon text-gold-light flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -366,7 +420,7 @@ export default function CheckoutPage() {
                     </div>
                     <div>
                       <p className="font-bold text-xs sm:text-sm text-maroon flex items-center gap-1.5">
-                        <span>Cashfree Payment Gateway</span>
+                        <span>Razorpay Secure Payment</span>
                         <span className="text-[10px] text-emerald-700 font-extrabold uppercase bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                           Recommended
                         </span>
@@ -415,7 +469,7 @@ export default function CheckoutPage() {
 
               <div className="p-3 rounded-xl bg-gold/10 border border-gold/20 flex items-center gap-2 text-xs text-brandText-muted">
                 <Lock className="w-4 h-4 text-gold-dark flex-shrink-0" />
-                <span>256-bit encrypted bank transmission • Verified by Cashfree & NPCI</span>
+                <span>256-bit encrypted bank transmission • Verified by Razorpay & RBI</span>
               </div>
             </div>
 

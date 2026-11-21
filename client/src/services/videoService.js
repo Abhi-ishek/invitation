@@ -22,13 +22,9 @@ export const videoService = {
   // Coupons
   validateCoupon: (code) => api.post('/coupons/validate', { code }),
   
-  // Cashfree Payment Gateway
-  getCashfreeConfig: () => api.get('/payment/cashfree/config'),
-  createCashfreeOrder: (data) => api.post('/payment/cashfree/create-order', data),
-  verifyCashfreePayment: (data) => api.post('/payment/cashfree/verify', data),
-
-  // Payments (Legacy Razorpay)
-  createRazorpayOrder: (data) => api.post('/payment/razorpay/order', data),
+  // Razorpay Payment Gateway
+  getRazorpayConfig: () => api.get('/payment/razorpay/config'),
+  createRazorpayOrder: (data) => api.post('/payment/razorpay/create-order', data),
   verifyRazorpayPayment: (data) => api.post('/payment/razorpay/verify', data),
   
   // Reviews

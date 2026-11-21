@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useSearchParams, Link } from 'react-router-dom';
-import { CheckCircle2, Sparkles, ArrowRight, Activity, MessageCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { CheckCircle2, Sparkles, ArrowRight, Activity, MessageCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import videoService from '../services/videoService';
 
 export default function OrderSuccessPage() {
   const { orderNumber } = useParams();
-  const [searchParams] = useSearchParams();
-  const cfOrderId = searchParams.get('cf_order_id');
-
-  const [verifying, setVerifying] = useState(Boolean(cfOrderId));
-  const [paymentVerified, setPaymentVerified] = useState(!cfOrderId);
-  const [verifyMessage, setVerifyMessage] = useState('');
 
   useEffect(() => {
     try {
@@ -21,57 +14,26 @@ export default function OrderSuccessPage() {
         origin: { y: 0.5 },
       });
     } catch (e) {}
-
-    // If redirected back from Cashfree with a cf_order_id, verify payment with backend
-    if (cfOrderId) {
-      const verify = async () => {
-        try {
-          const res = await videoService.verifyCashfreePayment({
-            orderId: orderNumber,
-            cfOrderId: cfOrderId,
-          });
-
-          if (res.data?.verified) {
-            setPaymentVerified(true);
-            setVerifyMessage('Your Cashfree payment was verified and approved by the bank.');
-          } else {
-            setVerifyMessage(`Cashfree payment status: ${res.data?.status || 'Pending'}. Our studio will verify your transaction shortly.`);
-          }
-        } catch (err) {
-          console.error('Error verifying Cashfree payment on success page:', err);
-          setVerifyMessage('Payment registered. Verification will automatically complete in studio queue.');
-        } finally {
-          setVerifying(false);
-        }
-      };
-      verify();
-    }
-  }, [cfOrderId, orderNumber]);
+  }, []);
 
   return (
     <div className="min-h-[75vh] bg-cream flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full bg-white rounded-3xl p-8 border border-gold/30 shadow-luxury text-center space-y-6">
         
-        {/* Verification Loader or Success Icon */}
-        {verifying ? (
-          <div className="w-20 h-20 mx-auto rounded-full bg-gold/15 border-2 border-gold flex items-center justify-center text-maroon animate-spin">
-            <Loader2 className="w-10 h-10" />
-          </div>
-        ) : (
-          <div className="w-20 h-20 mx-auto rounded-full bg-emerald-50 border-2 border-emerald-500/40 flex items-center justify-center text-emerald-600 shadow-md">
-            <CheckCircle2 className="w-10 h-10" />
-          </div>
-        )}
+        {/* Success Icon */}
+        <div className="w-20 h-20 mx-auto rounded-full bg-emerald-50 border-2 border-emerald-500/40 flex items-center justify-center text-emerald-600 shadow-md">
+          <CheckCircle2 className="w-10 h-10" />
+        </div>
 
         <div>
           <span className="text-xs font-bold uppercase tracking-widest text-gold-dark block">
-            {verifying ? 'Verifying Transaction...' : 'Order Confirmed!'}
+            Order Confirmed!
           </span>
           <h1 className="font-heading text-3xl font-bold text-maroon mt-1">
-            {verifying ? 'Confirming Payment' : 'Congratulations!'}
+            Congratulations!
           </h1>
           <p className="text-xs text-brandText-muted mt-2">
-            {verifyMessage || 'Your wedding invitation video request has been registered in our studio queue.'}
+            Your wedding invitation video request has been registered in our studio queue.
           </p>
         </div>
 
@@ -82,7 +44,7 @@ export default function OrderSuccessPage() {
             {orderNumber || '#WW12345'}
           </span>
           <p className="text-[10px] text-emerald-700 font-semibold">
-            Status: {paymentVerified ? 'Payment Verified • In Production' : 'Processing Payment'} • Estimated Preview: Within 24 Hours
+            Status: Payment Verified • In Production • Estimated Preview: Within 24 Hours
           </p>
         </div>
 

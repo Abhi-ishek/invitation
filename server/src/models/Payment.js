@@ -23,8 +23,8 @@ const paymentSchema = new mongoose.Schema(
     },
     method: {
       type: String,
-      enum: ['UPI', 'Cashfree', 'Razorpay', 'COD', 'Cards'],
-      default: 'Cashfree',
+      enum: ['UPI', 'Razorpay', 'COD', 'Cards'],
+      default: 'Razorpay',
     },
     status: {
       type: String,
@@ -62,6 +62,22 @@ const paymentSchema = new mongoose.Schema(
       email: String,
       phone: String,
     },
+    razorpayOrderId: {
+      type: String,
+      default: null,
+    },
+    razorpayPaymentId: {
+      type: String,
+      default: null,
+    },
+    razorpaySignature: {
+      type: String,
+      default: null,
+    },
+    paymentMethod: {
+      type: String,
+      default: null,
+    },
     notes: {
       type: String,
       default: '',
@@ -73,6 +89,7 @@ const paymentSchema = new mongoose.Schema(
 );
 
 paymentSchema.index({ order: 1 });
+paymentSchema.index({ razorpayOrderId: 1 });
 paymentSchema.index({ user: 1, createdAt: -1 });
 paymentSchema.index({ transactionId: 1 });
 paymentSchema.index({ upiTransactionRef: 1 });

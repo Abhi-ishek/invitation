@@ -62,6 +62,9 @@ app.use(
   })
 );
 
+// Razorpay webhook needs raw body BEFORE express.json() parses it
+app.use('/api/payment/razorpay/webhook', express.raw({ type: 'application/json' }));
+
 // Request parsing & logger
 app.use(express.json({ limit: '16kb' }));
 app.use(express.urlencoded({ extended: true, limit: '16kb' }));

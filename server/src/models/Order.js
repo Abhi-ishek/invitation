@@ -77,8 +77,8 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ['Cashfree', 'Razorpay', 'COD', 'UPI'],
-      default: 'Cashfree',
+      enum: ['Razorpay', 'COD', 'UPI'],
+      default: 'Razorpay',
     },
     weddingDetails: {
       groomName: { type: String, default: '' },
