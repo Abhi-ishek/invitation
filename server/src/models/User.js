@@ -78,7 +78,7 @@ userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     { id: this._id, email: this.email, role: this.role },
     process.env.ACCESS_TOKEN_SECRET || 'wedding_wishcraft_access_secret_key_2026',
-    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '1d' }
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '7d' }
   );
 };
 
@@ -87,7 +87,7 @@ userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     { id: this._id },
     process.env.REFRESH_TOKEN_SECRET || 'wedding_wishcraft_refresh_secret_key_2026',
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '7d' }
+    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY || '30d' }
   );
 };
 

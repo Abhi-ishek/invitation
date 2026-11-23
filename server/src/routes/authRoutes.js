@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { register, login, logout, getMe, toggleWishlist } from '../controllers/authController.js';
+import { register, login, logout, getMe, toggleWishlist, refreshAccessToken } from '../controllers/authController.js';
 import {
   sendPhoneOtp,
   verifyPhoneOtp,
@@ -12,6 +12,7 @@ const router = Router();
 router.post('/register', register);
 router.post('/login', login);
 router.post('/logout', verifyJWT, logout);
+router.post('/refresh-token', refreshAccessToken);
 router.get('/me', verifyJWT, getMe);
 router.post('/wishlist/toggle', verifyJWT, toggleWishlist);
 

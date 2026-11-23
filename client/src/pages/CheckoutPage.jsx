@@ -242,7 +242,16 @@ export default function CheckoutPage() {
       clearCart();
       navigate(`/order-success/${encodeURIComponent(createdOrder.orderNumber)}`);
     } catch (err) {
-      setError(err.message || 'Failed to place order. Please try again.');
+      const errMsg = err.message || '';
+      if (
+        errMsg.toLowerCase().includes('jwt') ||
+        errMsg.toLowerCase().includes('token') ||
+        errMsg.toLowerCase().includes('session')
+      ) {
+        setError('Your login session expired. Please click "Pay & Place Order" again to proceed.');
+      } else {
+        setError(errMsg || 'Failed to place order. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -433,38 +442,7 @@ export default function CheckoutPage() {
                   <span className="text-xs font-bold text-maroon hidden sm:block">Instant</span>
                 </label>
 
-                {/* Option 2: Direct UPI QR Code Scan */}
-                <label
-                  onClick={() => setPaymentMethod('UPI')}
-                  className={`p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex items-start justify-between gap-3 ${
-                    paymentMethod === 'UPI'
-                      ? 'border-gold bg-gradient-to-br from-gold/15 via-cream-50 to-white shadow-sm'
-                      : 'border-gold/20 hover:border-gold/40 bg-white'
-                  }`}
-                >
-                  <div className="flex items-start gap-3.5">
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value="UPI"
-                      checked={paymentMethod === 'UPI'}
-                      onChange={() => setPaymentMethod('UPI')}
-                      className="mt-1 text-gold focus:ring-gold"
-                    />
-                    <div className="w-10 h-10 rounded-xl bg-[#2d0813] text-gold-light flex items-center justify-center flex-shrink-0 shadow-sm">
-                      <QrCode className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-xs sm:text-sm text-maroon">
-                        Direct UPI QR Code Scan
-                      </p>
-                      <p className="text-[11px] text-brandText-muted mt-0.5">
-                        Scan dynamic QR code on screen with any UPI mobile app
-                      </p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-bold text-maroon hidden sm:block">Zero Fee</span>
-                </label>
+
               </div>
 
               <div className="p-3 rounded-xl bg-gold/10 border border-gold/20 flex items-center gap-2 text-xs text-brandText-muted">

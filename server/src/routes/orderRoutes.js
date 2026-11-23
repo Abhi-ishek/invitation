@@ -11,7 +11,7 @@ import { verifyJWT, optionalAuth, verifyAdmin } from '../middleware/authMiddlewa
 
 const router = Router();
 
-router.post('/', verifyJWT, createOrder);
+router.post('/', optionalAuth, createOrder);
 router.get('/my-orders', verifyJWT, getMyOrders);
 router.get('/track/:orderNumber', trackOrder);
 router.put('/:orderNumber/wedding-details', optionalAuth, saveWeddingDetails);

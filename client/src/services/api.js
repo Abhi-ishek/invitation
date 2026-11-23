@@ -24,7 +24,35 @@ api.interceptors.request.use(
 // Response interceptor
 api.interceptors.response.use(
   (response) => response.data,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Auto-refresh token if 401 occurs and not already retried
+    if (
+      error.response?.status === 401 &&
+      !originalRequest?._retry &&
+      !originalRequest?.url?.includes('/auth/')
+    ) {
+      originalRequest._retry = true;
+      try {
+        const refreshRes = await axios.post(
+          `${api.defaults.baseURL}/auth/refresh-token`,
+          {},
+          { withCredentials: true }
+        );
+        const newAccessToken = refreshRes.data?.data?.accessToken;
+        if (newAccessToken) {
+          localStorage.setItem('ww_token', newAccessToken);
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return api(originalRequest);
+        }
+      } catch (refreshErr) {
+        // Refresh token expired or unavailable: clear stale auth so user isn't stuck
+        localStorage.removeItem('ww_token');
+        localStorage.removeItem('ww_user');
+      }
+    }
+
     const customError = {
       message: error.response?.data?.message || error.message || 'Network error occurred',
       statusCode: error.response?.status || 500,

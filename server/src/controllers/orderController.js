@@ -60,9 +60,22 @@ export const createOrder = async (req, res, next) => {
     const randomSuffix = Math.floor(10000 + Math.random() * 90000);
     const orderNumber = `#WW${randomSuffix}`;
 
+    // Link to logged-in user or find existing account by customer email
+    let orderUserId = req.user?._id || null;
+    if (!orderUserId && customerDetails?.email) {
+      try {
+        const existingUser = await User.findOne({ email: customerDetails.email.toLowerCase().trim() });
+        if (existingUser) {
+          orderUserId = existingUser._id;
+        }
+      } catch (e) {
+        // Continue if lookup fails
+      }
+    }
+
     const order = await Order.create({
       orderNumber,
-      user: req.user?._id || null,
+      user: orderUserId,
       customerDetails,
       items: orderItems,
       totalAmount,

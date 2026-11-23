@@ -183,3 +183,48 @@ export const toggleWishlist = async (req, res, next) => {
     next(error);
   }
 };
+
+export const refreshAccessToken = async (req, res, next) => {
+  try {
+    const incomingRefreshToken =
+      req.cookies?.refreshToken || req.body?.refreshToken;
+
+    if (!incomingRefreshToken) {
+      throw new ApiError(401, 'Unauthorized request. No refresh token provided.');
+    }
+
+    const decodedToken = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET || 'wedding_wishcraft_refresh_secret_key_2026'
+    );
+
+    const user = await User.findById(decodedToken?.id).select('+refreshToken');
+    if (!user) {
+      throw new ApiError(401, 'Invalid refresh token or user no longer exists.');
+    }
+
+    if (user.refreshToken && user.refreshToken !== incomingRefreshToken) {
+      throw new ApiError(401, 'Refresh token has been revoked or used.');
+    }
+
+    const accessToken = user.generateAccessToken();
+    const newRefreshToken = user.generateRefreshToken();
+
+    user.refreshToken = newRefreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    res
+      .status(200)
+      .cookie('accessToken', accessToken, COOKIE_OPTIONS)
+      .cookie('refreshToken', newRefreshToken, COOKIE_OPTIONS)
+      .json(
+        new ApiResponse(
+          200,
+          { accessToken, refreshToken: newRefreshToken },
+          'Access token refreshed successfully'
+        )
+      );
+  } catch (error) {
+    next(new ApiError(401, error?.message || 'Invalid or expired refresh token'));
+  }
+};
