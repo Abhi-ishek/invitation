@@ -1123,35 +1123,39 @@ const RAW_57_PRODUCTS = [
   },
 ];
 
-export function getPriceForVideo(previewVideoUrl) {
+export function getPriceForVideo(previewVideoUrl, idx = 0) {
   const url = previewVideoUrl || '';
 
-  // 1. 3D AI Hindi: 1600 50% discount 800
+  // 1. 3D AI Hindi: 1670 50% discount 835
   if (url.includes('3D_Ai_Wedding_Invitation_12_Hindi') || url.includes('3D_Ai_Wedding_Invitation_15_Hindi')) {
-    return { originalPrice: 1600, price: 800, discountPercent: 50 };
+    return { originalPrice: 1670, price: 835, discountPercent: 50 };
   }
 
-  // 2. 3D AI Wedding: (1000) discount 50% show 500
+  // 2. 3D AI Wedding: 525, 535, 545
   if (url.includes('3D_Ai_Wedding_Invitation')) {
-    return { originalPrice: 1000, price: 500, discountPercent: 50 };
+    const prices500 = [525, 535, 545];
+    const price = prices500[idx % prices500.length];
+    return { originalPrice: price * 2, price, discountPercent: 50 };
   }
 
-  // 3. Hindi Sample: 1400 50% discount 700
+  // 3. Hindi Sample: 725, 735, 755
   if (url.includes('Hindi_Sample')) {
-    return { originalPrice: 1400, price: 700, discountPercent: 50 };
+    const prices700 = [725, 735, 755];
+    const price = prices700[idx % prices700.length];
+    return { originalPrice: price * 2, price, discountPercent: 50 };
   }
 
-  // 4. Engagement Sample: 600 50% discount 300
-  if (url.includes('Engagement_Sample')) {
-    return { originalPrice: 600, price: 300, discountPercent: 50 };
-  }
-
-  // 5. Wedding Sample (Sample_1 to 18, Caricature_Sample): 600 discount 50% show 300
-  return { originalPrice: 600, price: 300, discountPercent: 50 };
+  // 4. Engagement & Wedding Samples: 325, 335, 345
+  const prices300 = [325, 335, 345];
+  const price = prices300[idx % prices300.length];
+  return { originalPrice: price * 2, price, discountPercent: 50 };
 }
 
-export const ALL_57_PRODUCTS = RAW_57_PRODUCTS.map((item) => {
-  const pricing = getPriceForVideo(item.previewVideo);
+export const ALL_57_PRODUCTS = RAW_57_PRODUCTS.map((item, idx) => {
+  if (item.slug === '3d-ai-grand-baarat-and-varmala-royal-spectacle') {
+    return { ...item, price: 1, originalPrice: 500, discountPercent: 99 };
+  }
+  const pricing = getPriceForVideo(item.previewVideo, idx);
   return {
     ...item,
     ...pricing,
