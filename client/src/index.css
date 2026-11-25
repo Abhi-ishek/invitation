@@ -71,3 +71,24 @@
   transform: translateY(-4px);
   box-shadow: 0 16px 32px -8px rgba(58, 10, 30, 0.08), 0 0 0 1px rgba(212, 168, 90, 0.3);
 }
+
+/* Smooth Right-to-Left Flowing Marquee */
+@keyframes marquee-rtl {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-rtl {
+  display: flex;
+  width: max-content;
+  animation: marquee-rtl 34s linear infinite;
+  will-change: transform;
+}
+
+.marquee-wrapper:hover .animate-marquee-rtl {
+  animation-play-state: paused;
+}

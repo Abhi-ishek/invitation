@@ -17,6 +17,20 @@ const CATEGORIES = [
     link: '/shop?category=Royal%20Traditional',
   },
   {
+    id: 'engagement',
+    name: 'Engagement Invitations',
+    subtitle: 'Ring ceremony and Sagai special',
+    image: '/category-engagement.jpg',
+    link: '/shop?search=Engagement',
+  },
+  {
+    id: 'caricature',
+    name: 'Caricature Invitations',
+    subtitle: 'Playful illustrated love stories',
+    image: '/category-caricature.jpg',
+    link: '/shop?category=Caricature%20%26%20Save%20The%20Date',
+  },
+  {
     id: 'trending-500',
     name: 'Trending Wedding Invitation - Now Rs 500',
     subtitle: 'Flat 50% Off Premium Wedding Invitation',
@@ -34,7 +48,7 @@ const CATEGORIES = [
 
 export default function ShopByCategory() {
   return (
-    <section className="py-8 sm:py-10 bg-[#faf6f0] border-b border-[#ebd8c5]/70">
+    <section className="py-8 sm:py-10 bg-[#faf6f0] border-b border-[#ebd8c5]/70 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -50,26 +64,37 @@ export default function ShopByCategory() {
           </p>
         </div>
 
-        {/* Artwork Boxes Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto">
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat.id}
-              to={cat.link}
-              className="group relative rounded-2xl overflow-hidden border border-gold/30 hover:border-gold shadow-luxury hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 block bg-white aspect-[2/1]"
+      </div>
+
+      {/* Single-Row Continuous Right-to-Left Flowing Marquee */}
+      <div className="marquee-wrapper relative w-full overflow-hidden py-2">
+        {/* Soft Left & Right Edge Fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-20 bg-gradient-to-r from-[#faf6f0] to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-10 sm:w-20 bg-gradient-to-l from-[#faf6f0] to-transparent z-10" />
+
+        <div className="animate-marquee-rtl">
+          {[...CATEGORIES, ...CATEGORIES].map((cat, idx) => (
+            <div
+              key={`${cat.id}-${idx}`}
+              className="flex-shrink-0 pr-4 sm:pr-6"
             >
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-maroon-dark/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gold/25 group-hover:ring-gold/60 transition-all pointer-events-none" />
-            </Link>
+              <Link
+                to={cat.link}
+                className="group relative rounded-2xl overflow-hidden border border-gold/30 hover:border-gold shadow-luxury hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 block bg-white w-[270px] sm:w-[320px] lg:w-[350px] aspect-[2/1]"
+              >
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 select-none"
+                  loading="lazy"
+                  draggable="false"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-maroon-dark/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gold/25 group-hover:ring-gold/60 transition-all pointer-events-none" />
+              </Link>
+            </div>
           ))}
         </div>
-
       </div>
     </section>
   );
