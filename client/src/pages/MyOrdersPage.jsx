@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import videoService from '../services/videoService';
-import { Film, Activity, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Film, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
 
 export default function MyOrdersPage() {
   const { user } = useAuthStore();
@@ -104,14 +104,6 @@ export default function MyOrdersPage() {
                     className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-gold/15 hover:bg-gold/30 text-maroon text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 border border-gold/40 shadow-sm transition-all"
                   >
                     <span>Wedding Details</span>
-                  </Link>
-
-                  <Link
-                    to={`/track/${encodeURIComponent(ord.orderNumber)}`}
-                    className="flex-1 sm:flex-none px-5 py-2.5 rounded-full bg-maroon text-gold-light hover:bg-maroon-light text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-sm transition-all"
-                  >
-                    <Activity className="w-3.5 h-3.5" />
-                    <span>Track Status</span>
                   </Link>
                 </div>
               </div>

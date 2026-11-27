@@ -4,6 +4,7 @@ import { Product } from '../models/Product.js';
 import { ApiResponse } from '../utils/apiResponse.js';
 import { ApiError } from '../utils/apiError.js';
 import { sendEmailNotification } from '../utils/mailer.js';
+import { formatWeddingDetailsMessage, sendOwnerWhatsAppNotification } from '../utils/whatsappService.js';
 
 export const createOrder = async (req, res, next) => {
   try {
@@ -287,6 +288,11 @@ export const saveWeddingDetails = async (req, res, next) => {
     });
 
     await order.save();
+
+    // Non-blocking owner WhatsApp notification if a server-side WhatsApp provider is configured
+    sendOwnerWhatsAppNotification(formatWeddingDetailsMessage(order)).catch((err) => {
+      console.warn('Owner WhatsApp notification failed:', err.message);
+    });
 
     res.status(200).json(
       new ApiResponse(200, order, 'Wedding invitation details successfully saved')

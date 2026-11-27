@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+const OWNER_WHATSAPP_NUMBER = '917018353733';
+
 export default function OrderCustomizationPage() {
   const { orderNumber } = useParams();
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ export default function OrderCustomizationPage() {
   const [order, setOrder] = useState(null);
   const [error, setError] = useState('');
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState('');
 
   // Groom Details
   const [groomName, setGroomName] = useState('');
@@ -121,10 +124,79 @@ export default function OrderCustomizationPage() {
     } catch (e) {}
   };
 
+  const buildWeddingWhatsAppUrl = () => {
+    const customer = order?.customerDetails || {};
+    const items = Array.isArray(order?.items)
+      ? order.items.map((item) => item.title).filter(Boolean).join(', ')
+      : '';
+
+    const lines = [
+      '💍 *New Wedding Details Submitted*',
+      `*Order:* ${orderNumber || 'N/A'}`,
+    ];
+
+    if (customer.name || customer.phone || customer.email) {
+      lines.push('');
+      lines.push('*Customer Contact:*');
+      if (customer.name) lines.push(`• Name: ${customer.name}`);
+      if (customer.phone) lines.push(`• Phone: ${customer.phone}`);
+      if (customer.email) lines.push(`• Email: ${customer.email}`);
+    }
+
+    if (items) {
+      lines.push(`• Template: ${items}`);
+    }
+
+    lines.push('');
+    lines.push('*Groom & Family:*');
+    lines.push(`• Groom: ${groomName || 'N/A'}`);
+    if (groomFatherName) lines.push(`• Father: ${groomFatherName}`);
+    if (groomMotherName) lines.push(`• Mother: ${groomMotherName}`);
+
+    lines.push('');
+    lines.push('*Bride & Family:*');
+    lines.push(`• Bride: ${brideName || 'N/A'}`);
+    if (brideFatherName) lines.push(`• Father: ${brideFatherName}`);
+    if (brideMotherName) lines.push(`• Mother: ${brideMotherName}`);
+
+    if (haldiDate || haldiTimings || haldiVenue) {
+      lines.push('');
+      lines.push('*Haldi Ceremony:*');
+      if (haldiDate) lines.push(`• Date: ${haldiDate}`);
+      if (haldiTimings) lines.push(`• Timings: ${haldiTimings}`);
+      if (haldiVenue) lines.push(`• Venue: ${haldiVenue}`);
+    }
+
+    if (mehendiDate || mehendiTimings || mehendiVenue) {
+      lines.push('');
+      lines.push('*Mehendi Ceremony:*');
+      if (mehendiDate) lines.push(`• Date: ${mehendiDate}`);
+      if (mehendiTimings) lines.push(`• Timings: ${mehendiTimings}`);
+      if (mehendiVenue) lines.push(`• Venue: ${mehendiVenue}`);
+    }
+
+    lines.push('');
+    lines.push('*Wedding Ceremony (Main):*');
+    lines.push(`• Date: ${weddingDate || 'N/A'}`);
+    if (weddingTimings) lines.push(`• Timings: ${weddingTimings}`);
+    lines.push(`• Venue: ${weddingVenue || 'N/A'}`);
+
+    if (additionalNotes) {
+      lines.push('');
+      lines.push(`*Notes / Hashtag:* ${additionalNotes}`);
+    }
+
+    return `https://wa.me/${OWNER_WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSubmitting(true);
+
+    const waUrl = buildWeddingWhatsAppUrl();
+    // Open tab synchronously inside click handler so browser popup blockers allow it
+    const waWindow = window.open('', '_blank');
 
     try {
       const payload = {
@@ -147,14 +219,24 @@ export default function OrderCustomizationPage() {
       };
 
       await videoService.saveWeddingDetails(orderNumber, payload);
+      setWhatsappUrl(waUrl);
       setSavedSuccess(true);
       fireSuccessConfetti();
 
+      if (waWindow && !waWindow.closed) {
+        waWindow.location.href = waUrl;
+      }
+
       // Navigate to order-success after a short pleasant pause
       setTimeout(() => {
-        navigate(`/order-success/${encodeURIComponent(orderNumber)}`);
+        navigate(`/order-success/${encodeURIComponent(orderNumber)}`, {
+          state: { whatsappUrl: waUrl },
+        });
       }, 1200);
     } catch (err) {
+      if (waWindow && !waWindow.closed) {
+        waWindow.close();
+      }
       setError(err.message || 'Failed to save wedding details. Please try again.');
       setSubmitting(false);
     }
@@ -192,9 +274,22 @@ export default function OrderCustomizationPage() {
         )}
 
         {savedSuccess && (
-          <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-center gap-2">
-            <Check className="w-4 h-4 text-emerald-600" />
-            <span>Details saved successfully! Redirecting to confirmation...</span>
+          <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-emerald-600" />
+              <span>Details saved! Opening WhatsApp to send to +91 70183 53733...</span>
+            </div>
+            {whatsappUrl && (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>Send on WhatsApp</span>
+              </a>
+            )}
           </div>
         )}
 

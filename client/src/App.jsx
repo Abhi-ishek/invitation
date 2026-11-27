@@ -14,7 +14,6 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import OrderCustomizationPage from './pages/OrderCustomizationPage';
-import OrderTrackingPage from './pages/OrderTrackingPage';
 import WishlistPage from './pages/WishlistPage';
 import MyOrdersPage from './pages/MyOrdersPage';
 import AuthPage from './pages/AuthPage';
@@ -49,8 +48,6 @@ export default function App() {
             <Route path="/customize-order/:orderNumber" element={<OrderCustomizationPage />} />
             <Route path="/order-customization/:orderNumber" element={<OrderCustomizationPage />} />
             <Route path="/order-success/:orderNumber" element={<OrderSuccessPage />} />
-            <Route path="/track" element={<OrderTrackingPage />} />
-            <Route path="/track/:orderNumber" element={<OrderTrackingPage />} />
             <Route path="/wishlist" element={<WishlistPage />} />
             <Route path="/my-orders" element={<MyOrdersPage />} />
             <Route path="/payments" element={<PaymentHistoryPage />} />

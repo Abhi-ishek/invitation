@@ -173,15 +173,6 @@ export default function PaymentHistoryPage() {
                       </div>
                     </div>
 
-                    {payment.order?.orderNumber && (
-                      <Link
-                        to={`/track/${encodeURIComponent(payment.order.orderNumber)}`}
-                        className="px-4 py-2 rounded-full bg-maroon text-gold-light hover:bg-maroon-light text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm transition-all flex-shrink-0"
-                      >
-                        <span>Track Order</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    )}
                   </div>
                 );
               })}

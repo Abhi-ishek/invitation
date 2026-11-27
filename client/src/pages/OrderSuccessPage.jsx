@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { CheckCircle2, Sparkles, ArrowRight, Activity, MessageCircle } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { useParams, useLocation, Link } from 'react-router-dom';
+import { CheckCircle2, Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function OrderSuccessPage() {
   const { orderNumber } = useParams();
+  const location = useLocation();
+  const whatsappUrl =
+    location.state?.whatsappUrl ||
+    `https://wa.me/917018353733?text=Hi%20Wedding%20Wishcraft!%20My%20order%20number%20is%20${encodeURIComponent(orderNumber || '')}`;
 
   useEffect(() => {
     try {
@@ -62,22 +66,14 @@ export default function OrderSuccessPage() {
             <span>Update Wedding & Ceremony Details</span>
           </Link>
 
-          <Link
-            to={`/track/${encodeURIComponent(orderNumber || '')}`}
-            className="w-full py-3.5 rounded-full bg-maroon text-gold-light hover:bg-maroon-dark font-bold text-xs uppercase tracking-wider shadow-md hover:scale-105 transition-all flex items-center justify-center gap-2"
-          >
-            <Activity className="w-4 h-4" />
-            <span>Track Order Timeline</span>
-          </Link>
-
           <a
-            href={`https://wa.me/917018353733?text=Hi%20Wedding%20Wishcraft!%20My%20order%20number%20is%20${encodeURIComponent(orderNumber || '')}`}
+            href={whatsappUrl}
             target="_blank"
             rel="noreferrer"
             className="w-full py-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center gap-2 border border-emerald-300 transition-colors"
           >
             <MessageCircle className="w-4 h-4 text-emerald-600" />
-            <span>Open WhatsApp Atelier</span>
+            <span>{location.state?.whatsappUrl ? 'Send Wedding Details on WhatsApp' : 'Open WhatsApp Atelier'}</span>
           </a>
         </div>
 
