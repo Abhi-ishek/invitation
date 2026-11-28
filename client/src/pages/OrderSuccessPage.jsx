@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
-import { CheckCircle2, Sparkles, ArrowRight, MessageCircle } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { CheckCircle2, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function OrderSuccessPage() {
   const { orderNumber } = useParams();
-  const location = useLocation();
-  const whatsappUrl =
-    location.state?.whatsappUrl ||
-    `https://wa.me/917018353733?text=Hi%20Wedding%20Wishcraft!%20My%20order%20number%20is%20${encodeURIComponent(orderNumber || '')}`;
 
   useEffect(() => {
     try {
@@ -63,18 +59,8 @@ export default function OrderSuccessPage() {
             className="w-full py-3.5 rounded-full bg-gradient-to-r from-gold-dark via-gold to-gold-light text-maroon font-bold text-xs uppercase tracking-wider shadow-gold-glow hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2"
           >
             <Sparkles className="w-4 h-4" />
-            <span>Update Wedding & Ceremony Details</span>
+            <span> Fill Wedding & Ceremony Details</span>
           </Link>
-
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="w-full py-3 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center gap-2 border border-emerald-300 transition-colors"
-          >
-            <MessageCircle className="w-4 h-4 text-emerald-600" />
-            <span>{location.state?.whatsappUrl ? 'Send Wedding Details on WhatsApp' : 'Open WhatsApp Atelier'}</span>
-          </a>
         </div>
 
       </div>
